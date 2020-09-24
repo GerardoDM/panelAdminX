@@ -1,5 +1,35 @@
 <template>
-    <div class="container">
+
+
+
+
+
+<div>
+
+
+<div>
+
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Launch demo modal
+</button>
+  
+        
+  
+
+
+
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+          
       <form>
   <div class="form-group">
     <label>Nombre</label>
@@ -34,13 +64,60 @@
   <button type="button" class="btn btn-primary" v-on:click="insert(usuario)">Submit</button>
 </form>
     </div>
+
+
+        
+
+    
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+       <div class="container">
+        <table class="table table-hover table-dark">
+  <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>Apellido Paterno</th>
+        <th>Apellido Materno</th>
+        <th>Tipo Usuario</th>
+        <th>Acción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr v-for="usuario in usuarios" v-bind:key="usuario.clave">
+      <th>{{usuario.nombre}}</th>
+      <td>{{usuario.apepat}}</td>
+      <td>{{usuario.apemat}}</td>
+      <td>{{usuario.cve_tipousuario}}</td>
+      <td><button type="button" class="btn btn-danger" v-on:click="deleteU(usuario.clave)">Eliminar</button></td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+
+    </div>
+   
+    
+
+
+
   
 </template>
 
 <script>
 export default {
     mounted(){
-        console.log('Montado')
+        
     },
 
     data(){
@@ -68,6 +145,16 @@ export default {
 
     methods:{
         traer(){
+
+           self = this
+            axios.get('/api/usuarios')
+                .then(response => {
+                    this.usuarios = response.data;
+                })
+                .catch(e => {
+                    
+                    console.log(e);
+                })
             
         },
 
@@ -97,6 +184,7 @@ export default {
                     this.usuario.mail = ""
                     this.usuario.nickname = "" 
                     this.usuario.pass = ""
+                    this.traer();
 
                    
                 })
@@ -104,6 +192,42 @@ export default {
                     
                     console.log(e);
                 })
+
+        },
+
+         deleteU(clave){
+
+            self = this
+            axios.delete(`/api/usuarios/${clave}`)
+                .then(response => {
+                    this.traer();
+                })
+                .catch(e => {
+                    
+                    console.log(e);
+                })
+
+        },
+
+
+        fireSW(){
+            swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+                )
+            }
+            })
 
         }
 
@@ -115,3 +239,34 @@ export default {
 <style>
 
 </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

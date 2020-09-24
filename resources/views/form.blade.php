@@ -12,7 +12,6 @@
     <h1>Form</h1>
     <main id = "app">
         <form-component></form-component>
-        <prueba-component></prueba-component>
     </main>
 
 

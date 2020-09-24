@@ -16,7 +16,7 @@
       <td>{{usuario.apepat}}</td>
       <td>{{usuario.apemat}}</td>
       <td>{{usuario.cve_tipousuario}}</td>
-      <td><button type="button" class="btn btn-danger" v-on:click="fireSW">Eliminar</button></td>
+      <td><button type="button" class="btn btn-danger" v-on:click="deleteU(usuario.clave)">Eliminar</button></td>
     </tr>
   </tbody>
 </table>
@@ -27,7 +27,7 @@
 <script>
 export default {
     mounted(){
-        console.log('Montado')
+       
     },
 
     data(){
@@ -54,6 +54,20 @@ export default {
                     console.log(e);
                 })
             
+        },
+
+        deleteU(clave){
+
+            self = this
+            axios.delete(`/api/usuarios/${clave}`)
+                .then(response => {
+                    this.traer();
+                })
+                .catch(e => {
+                    
+                    console.log(e);
+                })
+
         },
 
 
