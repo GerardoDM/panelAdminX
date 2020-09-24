@@ -2017,46 +2017,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {},
   data: function data() {
@@ -2109,6 +2069,12 @@ __webpack_require__.r(__webpack_exports__);
         _this2.usuario.mail = "";
         _this2.usuario.nickname = "";
         _this2.usuario.pass = "";
+        swal.fire({
+          icon: 'success',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+          index: 0
+        });
 
         _this2.traer();
       })["catch"](function (e) {
@@ -2120,24 +2086,23 @@ __webpack_require__.r(__webpack_exports__);
 
       self = this;
       axios["delete"]("/api/usuarios/".concat(clave)).then(function (response) {
-        _this3.traer();
+        swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then(function (result) {
+          if (result.isConfirmed) {
+            swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+
+            _this3.traer();
+          }
+        });
       })["catch"](function (e) {
         console.log(e);
-      });
-    },
-    fireSW: function fireSW() {
-      swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-      }).then(function (result) {
-        if (result.isConfirmed) {
-          Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
-        }
       });
     }
   }
@@ -41062,21 +41027,8 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "container" }, [
     _c("div", [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          attrs: {
-            type: "button",
-            "data-toggle": "modal",
-            "data-target": "#exampleModal"
-          }
-        },
-        [_vm._v("\r\n  Launch demo modal\r\n")]
-      ),
-      _vm._v(" "),
       _c(
         "div",
         {
@@ -41270,56 +41222,76 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("Submit")]
+                      [_vm._v("Agregar")]
                     )
                   ])
                 ])
-              ]),
-              _vm._v(" "),
-              _vm._m(1)
+              ])
             ]
           )
         ]
       )
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "container" }, [
-      _c("table", { staticClass: "table table-hover table-dark" }, [
-        _vm._m(2),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          _vm._l(_vm.usuarios, function(usuario) {
-            return _c("tr", { key: usuario.clave }, [
-              _c("th", [_vm._v(_vm._s(usuario.nombre))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(usuario.apepat))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(usuario.apemat))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(usuario.cve_tipousuario))]),
-              _vm._v(" "),
-              _c("td", [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-danger",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.deleteU(usuario.clave)
+    _c(
+      "div",
+      {
+        staticClass: "container",
+        staticStyle: { height: "400px", "overflow-y": "scroll" }
+      },
+      [
+        _c("table", { staticClass: "table table-hover table-dark" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.usuarios, function(usuario) {
+              return _c("tr", { key: usuario.clave }, [
+                _c("th", [_vm._v(_vm._s(usuario.nombre))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(usuario.apepat))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(usuario.apemat))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(usuario.cve_tipousuario))]),
+                _vm._v(" "),
+                _vm._m(2, true),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.deleteU(usuario.clave)
+                        }
                       }
-                    }
-                  },
-                  [_vm._v("Eliminar")]
-                )
+                    },
+                    [_vm._v("Eliminar")]
+                  )
+                ])
               ])
-            ])
-          }),
-          0
-        )
-      ])
-    ])
+            }),
+            0
+          )
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        attrs: {
+          type: "button",
+          "data-toggle": "modal",
+          "data-target": "#exampleModal"
+        }
+      },
+      [_vm._v("Agregar")]
+    )
   ])
 }
 var staticRenderFns = [
@@ -41331,7 +41303,7 @@ var staticRenderFns = [
       _c(
         "h5",
         { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [_vm._v("Modal title")]
+        [_vm._v("Agregar usuario")]
       ),
       _vm._v(" "),
       _c(
@@ -41352,39 +41324,75 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("Close")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
-        [_vm._v("Save changes")]
-      )
+    return _c("thead", [
+      _c("tr", [
+        _c(
+          "th",
+          {
+            staticStyle: { position: "sticky", top: "0", background: "#000000" }
+          },
+          [_vm._v("Nombre")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticStyle: { position: "sticky", top: "0", background: "#000000" }
+          },
+          [_vm._v("Apellido Paterno")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticStyle: { position: "sticky", top: "0", background: "#000000" }
+          },
+          [_vm._v("Apellido Materno")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticStyle: { position: "sticky", top: "0", background: "#000000" }
+          },
+          [_vm._v("Tipo Usuario")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticStyle: { position: "sticky", top: "0", background: "#000000" }
+          },
+          [_vm._v("Acción")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticStyle: { position: "sticky", top: "0", background: "#000000" }
+          },
+          [_vm._v("Acción")]
+        )
+      ])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Nombre")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Apellido Paterno")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Apellido Materno")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Tipo Usuario")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Acción")])
-      ])
+    return _c("td", [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary",
+          attrs: {
+            type: "button",
+            "data-toggle": "modal",
+            "data-target": "#exampleModal"
+          }
+        },
+        [_vm._v("\n                   Editar\n                   ")]
+      )
     ])
   }
 ]

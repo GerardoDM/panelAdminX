@@ -9,10 +9,14 @@
 <body>
 @include('sweet::alert')
 
-    <h1>Form</h1>
+    <h1>-.-.-</h1>
     <main id = "app">
         <form-component></form-component>
+     
     </main>
+
+
+    <router-view></router-view>
 
 
 
