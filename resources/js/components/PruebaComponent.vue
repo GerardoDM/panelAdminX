@@ -7,6 +7,7 @@
         <th>Apellido Paterno</th>
         <th>Apellido Materno</th>
         <th>Tipo Usuario</th>
+        <th>Acción</th>
     </tr>
   </thead>
   <tbody>
@@ -15,6 +16,7 @@
       <td>{{usuario.apepat}}</td>
       <td>{{usuario.apemat}}</td>
       <td>{{usuario.cve_tipousuario}}</td>
+      <td><button type="button" class="btn btn-danger" v-on:click="fireSW">Eliminar</button></td>
     </tr>
   </tbody>
 </table>
@@ -52,10 +54,36 @@ export default {
                     console.log(e);
                 })
             
+        },
+
+
+        fireSW(){
+            swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+                )
+            }
+            })
+
         }
+
+        
+    
+}
     }
 
-}
+
 </script>
 
 <style>

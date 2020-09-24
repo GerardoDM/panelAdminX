@@ -7,6 +7,8 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import swal from 'sweetalert2'
+window.swal = swal;
 
 /**
  * The following block of code may be used to automatically register your
@@ -32,3 +34,12 @@ Vue.component('form-component', require( './components/FormComponent.vue').defau
 const app = new Vue({
     el: '#app',
 });
+
+
+const toast = swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000
+  });
+  window.toast = toast;
