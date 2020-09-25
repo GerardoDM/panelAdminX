@@ -2017,6 +2017,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {},
   data: function data() {
@@ -2071,8 +2072,8 @@ __webpack_require__.r(__webpack_exports__);
         _this2.usuario.pass = "";
         swal.fire({
           icon: 'success',
-          title: 'Oops...',
-          text: 'Something went wrong!',
+          title: 'Hecho',
+          text: 'El usuario se ha creado',
           index: 0
         });
 
@@ -2101,6 +2102,43 @@ __webpack_require__.r(__webpack_exports__);
             _this3.traer();
           }
         });
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    },
+    edit: function edit(usuario) {
+      // self = this
+      this.usuario.clave = usuario.clave;
+      this.usuario.nombre = usuario.nombre;
+      this.usuario.apepat = usuario.apepat;
+      this.usuario.apemat = usuario.apemat;
+      this.usuario.mail = usuario.mail;
+      this.usuario.nickname = usuario.nickname;
+      this.usuario.pass = usuario.pass;
+      console.log(this.usuario.clave);
+    },
+    update: function update(clave) {
+      var _this4 = this;
+
+      self = this;
+      axios.put("api/usuarios/".concat(clave), {
+        nombre: this.usuario.nombre,
+        apepat: this.usuario.apepat,
+        apemat: this.usuario.apemat,
+        mail: this.usuario.mail,
+        nickname: this.usuario.nickname,
+        pass: this.usuario.pass,
+        status: 1,
+        cve_tipousuario: 3
+      }).then(function (response) {
+        _this4.usuario.nombre = "";
+        _this4.usuario.apepat = "";
+        _this4.usuario.apemat = "";
+        _this4.usuario.mail = "";
+        _this4.usuario.nickname = "";
+        _this4.usuario.pass = "";
+
+        _this4.traer();
       })["catch"](function (e) {
         console.log(e);
       });
@@ -41223,6 +41261,20 @@ var render = function() {
                         }
                       },
                       [_vm._v("Agregar")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.update(_vm.usuario.clave)
+                          }
+                        }
+                      },
+                      [_vm._v("Actualizar")]
                     )
                   ])
                 ])
@@ -41255,7 +41307,25 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(usuario.cve_tipousuario))]),
                 _vm._v(" "),
-                _vm._m(2, true),
+                _c("td", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary",
+                      attrs: {
+                        type: "button",
+                        "data-toggle": "modal",
+                        "data-target": "#exampleModal"
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.edit(usuario)
+                        }
+                      }
+                    },
+                    [_vm._v("\n                   Editar\n                   ")]
+                  )
+                ]),
                 _vm._v(" "),
                 _c("td", [
                   _c(
@@ -41374,25 +41444,6 @@ var staticRenderFns = [
           [_vm._v("Acción")]
         )
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: {
-            type: "button",
-            "data-toggle": "modal",
-            "data-target": "#exampleModal"
-          }
-        },
-        [_vm._v("\n                   Editar\n                   ")]
-      )
     ])
   }
 ]

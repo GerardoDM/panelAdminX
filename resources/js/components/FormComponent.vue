@@ -37,6 +37,7 @@
                            <input type="password" class="form-control" v-model="usuario.pass">
                         </div>
                         <button type="button" class="btn btn-primary" v-on:click="insert(usuario)">Agregar</button>
+                         <button type="button" class="btn btn-primary" v-on:click="update(usuario.clave)">Actualizar</button>
                      </form>
                   </div>
                </div>
@@ -62,7 +63,7 @@
                   <td>{{usuario.apemat}}</td>
                   <td>{{usuario.cve_tipousuario}}</td>
                   <td>
-                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">
+                    <button type="button" class="btn btn-secondary" v-on:click="edit(usuario)" data-toggle="modal" data-target="#exampleModal">
                       Editar
                       </button>
                   </td>
@@ -149,8 +150,8 @@
    
                        swal.fire({
                          icon: 'success',
-                         title: 'Oops...',
-                         text: 'Something went wrong!',
+                         title: 'Hecho',
+                         text: 'El usuario se ha creado',
                          index: 0,
                         
                        })
@@ -204,6 +205,57 @@
                    })
    
            },
+
+           edit(usuario){
+
+             // self = this
+            this.usuario.clave = usuario.clave
+            this.usuario.nombre = usuario.nombre;
+            this.usuario.apepat = usuario.apepat;
+            this.usuario.apemat = usuario.apemat;
+            this.usuario.mail = usuario.mail;
+            this.usuario.nickname = usuario.nickname;
+            this.usuario.pass = usuario.pass;
+            console.log(this.usuario.clave)
+
+
+
+           },
+
+
+           update(clave){
+             self = this;
+             axios.put(`api/usuarios/${clave}`,
+              {
+                       nombre : this.usuario.nombre,
+                       apepat : this.usuario.apepat,
+                       apemat : this.usuario.apemat,
+                       mail : this.usuario.mail,
+                       nickname : this.usuario.nickname,
+                       pass : this.usuario.pass,
+                       status : 1,
+                       cve_tipousuario : 3
+                       })
+              
+              
+              .then(response => {
+
+               this.usuario.nombre = ""
+               this.usuario.apepat = ""
+               this.usuario.apemat = "" 
+               this.usuario.mail = ""
+               this.usuario.nickname = "" 
+               this.usuario.pass = "" 
+
+               this.traer();
+                       
+                   })
+                   .catch(e => {
+                       
+                       console.log(e);
+                   })
+               
+           }
    
        }
    
