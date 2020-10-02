@@ -21,3 +21,4 @@ Route::get('/usuarios', 'UsuarioController@index');
 Route::post('/usuarios', 'UsuarioController@create');
 Route::delete('/usuarios/{clave}', 'UsuarioController@delete');
 Route::put('/usuarios/{clave}', 'UsuarioController@update');
+

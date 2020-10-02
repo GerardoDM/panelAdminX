@@ -176,18 +176,18 @@
    
    
                       swal.fire({
-               title: 'Are you sure?',
-               text: "You won't be able to revert this!",
+               title: '¿Estás seguro?',
+               text: "No podrás revertir la acción",
                icon: 'warning',
                showCancelButton: true,
                confirmButtonColor: '#3085d6',
                cancelButtonColor: '#d33',
-               confirmButtonText: 'Yes, delete it!'
+               confirmButtonText: 'Si, eliminar'
                }).then((result) => {
                if (result.isConfirmed) {
                    swal.fire(
-                   'Deleted!',
-                   'Your file has been deleted.',
+                   'Eliminado',
+                   'El usuario ha sido borrado',
                    'success'
                    )
    
@@ -208,7 +208,6 @@
 
            edit(usuario){
 
-             // self = this
             this.usuario.clave = usuario.clave
             this.usuario.nombre = usuario.nombre;
             this.usuario.apepat = usuario.apepat;
@@ -216,9 +215,6 @@
             this.usuario.mail = usuario.mail;
             this.usuario.nickname = usuario.nickname;
             this.usuario.pass = usuario.pass;
-            console.log(this.usuario.clave)
-
-
 
            },
 
@@ -247,9 +243,19 @@
                this.usuario.nickname = "" 
                this.usuario.pass = "" 
 
+                      swal.fire({
+                         icon: 'success',
+                         title: 'Hecho',
+                         text: 'El usuario se ha actualizado',
+                         index: 0,
+                        
+                         })
+
                this.traer();
                        
                    })
+
+                   
                    .catch(e => {
                        
                        console.log(e);
@@ -262,6 +268,15 @@
    }
 </script>
 <style>
+
+.body{
+
+   background-color: darkslategrey;
+
+
+
+}
+
 </style>
 
 

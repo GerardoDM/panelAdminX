@@ -25,7 +25,7 @@ class UsuarioController extends Controller
         $usuario->apemat = $request->input('apemat');
         $usuario->mail = $request->input('mail');
         $usuario->nickname = $request->input('nickname');
-        $usuario->pass = $request->input('pass');
+        $usuario->pass = bcrypt($request->input('pass'));
         $usuario->status = 1;
         $usuario->cve_tipousuario = 3;
 

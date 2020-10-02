@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Usuario;
+
 return [
 
     /*
@@ -14,7 +16,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'usuario',
         'passwords' => 'users',
     ],
 
@@ -38,7 +40,7 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'user',
         ],
 
         'api' => [
@@ -46,6 +48,12 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'usuario' => [
+           // 'redirectTo' => 'usuario.home',
+            'driver' => 'session',
+            'provider' => 'usuario',
+           ],
     ],
 
     /*
@@ -68,8 +76,15 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => App\Usuario::class,
         ],
+
+        'usuario' => [
+            'driver' => 'custom',
+            'model' => App\Usuario::class,
+           ],
+
+        
 
         // 'users' => [
         //     'driver' => 'database',

@@ -6,11 +6,11 @@
     <link rel="stylesheet" href="{{mix('css/app.css')}}">
     <title>Document</title>
 </head>
-<body>
+<body style="background-color: darkslategray">
 @include('sweet::alert')
 
     <h1>-.-.-</h1>
-    <main id = "app">
+    <main id = "app" >
         <form-component></form-component>
      
     </main>
