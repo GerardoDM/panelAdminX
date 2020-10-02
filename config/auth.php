@@ -1,6 +1,8 @@
 <?php
 
-use App\Models\Usuario;
+use App\Usuario;
+use App\User;
+
 
 return [
 
@@ -50,7 +52,7 @@ return [
         ],
 
         'usuario' => [
-           // 'redirectTo' => 'usuario.home',
+         // 'redirectTo' => 'usuario.home',
             'driver' => 'session',
             'provider' => 'usuario',
            ],
@@ -76,7 +78,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Usuario::class,
+            'model' => App\User::class,
         ],
 
         'usuario' => [

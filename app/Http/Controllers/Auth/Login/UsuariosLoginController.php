@@ -11,15 +11,15 @@ use Illuminate\Support\Facades\Log;
 class UsuariosLoginController extends DefaultLoginController
 {
 
-
-    
-
     public $user;
 
     //protected $redirectTo = '/usuario/home';
 
     public function __construct()
     {
+
+        Auth::shouldUse('usuario');
+
         $this->middleware('guest:usuario')->except('logout');
     }
     public function showLoginForm()
@@ -33,7 +33,7 @@ class UsuariosLoginController extends DefaultLoginController
     protected function guard()
     {
 
-        Auth::shouldUse('custom');
+        //Auth::shouldUse('');
         return Auth::guard('usuario');
     }
 
@@ -47,9 +47,7 @@ class UsuariosLoginController extends DefaultLoginController
 
     protected function attemptLogin(Request $request)
     {
-          ($this->guard()->attempt(
-            $this->credentials($request)
-        ));
+          return $this->guard()->attempt($this->credentials($request));
     }
 
     protected function credentials(Request $request)
@@ -69,30 +67,38 @@ class UsuariosLoginController extends DefaultLoginController
     
         // return $this->sendFailedLoginResponse($request);
 
-        //  METHOD WITHOUT ATTEMPT , UNHASHED PASSWORD
+        //  METHOD WITHOUT ATTEMPT , UNHASHED PASSWORD, AUTH::LOGIN RETURNS NULL
 
-        //  $user = Usuario::where([
-        //     'mail' => $request->mail, 
-        //      'pass' => $request->pass
-        //  ])->first();
 
-        $this->validateLogin($request);
+           $user = Usuario::where([
+              'mail' => $request->mail, 
+               'pass' => $request->pass
+               ])->first();
+            
+            if($user->pass === $request->pass)
+            {
+                auth()->loginUsingId($user->clave);
+               // Auth::login($user);
+               dd(auth()->loginUsingId($user->clave));
+                return redirect('usuario/home');
+                        
+            }
 
-        if ($this->attemptLogin($request)){
+           //   $request = $user; IS WRONG BECAUSE VALIDATELOGIN() ONLY ACCEPTS REQUEST TYPE OBJECT, NOT USER
+           // ATTEMPTLOGIN() RETURNS FALSE
+
+        // $this->validateLogin($request);
+
+        // if ($this->attemptLogin($request)){
            
-            //dd($request);
-            return redirect('/usuario/home');
+        //     dd('ooooo');
+        //     return redirect('/usuario/home');
 
-        }
+        // }
 
-        dd($request);
-
-        //dd($this->credentials($request));
-
-        //     //Auth::login($user);
-        //     //dd($user);
+        // dd($this->attemptLogin($request));
         
     }
-    
-    
+
+        
 }

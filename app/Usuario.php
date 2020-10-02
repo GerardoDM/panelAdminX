@@ -8,7 +8,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth as ModelAuth;
 
-class Usuario extends ModelAuth implements AuthenticatableContract
+class Usuario extends Model implements AuthenticatableContract
 {
     
     protected $table = 'usuarios';
