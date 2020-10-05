@@ -76,7 +76,9 @@ class UsuariosLoginController extends DefaultLoginController
                ])->first();
             
             if($user->pass === $request->pass)
+
             {
+            
                 auth()->loginUsingId($user->clave);
                // Auth::login($user);
                dd(auth()->loginUsingId($user->clave));

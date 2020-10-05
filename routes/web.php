@@ -24,6 +24,14 @@ Route::get('form', function () {
     return view('form');
 });
 
+Route::get('productos', function () {
+    return view('pages.productos');
+});
+
+Route::get('proyectos', function () {
+    return view('pages.proyectos');
+});
+
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');

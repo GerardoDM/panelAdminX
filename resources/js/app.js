@@ -26,6 +26,9 @@ window.swal = swal;
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('prueba-component', require( './components/PruebaComponent.vue').default);
 Vue.component('form-component', require( './components/FormComponent.vue').default);
+Vue.component('productos-component', require( './components/ProductosComponent.vue').default);
+Vue.component('proyectos-component', require( './components/ProyectosComponent.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

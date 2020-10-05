@@ -22,3 +22,12 @@ Route::post('/usuarios', 'UsuarioController@create');
 Route::delete('/usuarios/{clave}', 'UsuarioController@delete');
 Route::put('/usuarios/{clave}', 'UsuarioController@update');
 
+Route::get('/productos', 'ProductoController@index');
+Route::post('/productos', 'ProductoController@create');
+Route::delete('/productos/{clave}', 'ProductoController@delete');
+Route::put('/productos/{clave}', 'ProductoController@update');
+
+Route::get('/proyectos', 'ProyectoController@index');
+Route::post('/proyectos', 'ProyectoController@create');
+Route::delete('/proyectos/{clave}', 'ProyectoController@delete');
+Route::put('/proyectos/{clave}', 'ProyectoController@update');
