@@ -26,7 +26,7 @@
                         </div>
                         <div class="form-group">
                            <label>Nomenclatura</label>
-                           <input type="email" class="form-control" v-model="proyecto.nomenclatura">
+                           <input type="text" class="form-control" v-model="proyecto.nomenclatura">
                         </div>
                        
                         <button type="button" class="btn btn-primary" v-on:click="insert(proyecto)">Agregar</button>

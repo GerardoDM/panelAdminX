@@ -2231,6 +2231,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {},
   data: function data() {
@@ -2242,13 +2250,53 @@ __webpack_require__.r(__webpack_exports__);
         edicion: "",
         logo_producto: "",
         nomenclatura: ""
-      }
+      },
+      imagePreview: null,
+      showPreview: false
     };
   },
   created: function created() {
     this.traer();
   },
   methods: {
+    onFileChange: function onFileChange(event) {
+      this.producto.logo_producto = event.target.files[0];
+      console.log(event.target.files[0]);
+      /*
+      Initialize a File Reader object
+      */
+
+      var reader = new FileReader();
+      /*
+      Add an event listener to the reader that when the file
+      has been loaded, we flag the show preview as true and set the
+      image to be what was read from the reader.
+      */
+
+      reader.addEventListener("load", function () {
+        this.showPreview = true;
+        this.imagePreview = reader.result;
+      }.bind(this), false);
+      /*
+      Check to see if the file is not empty.
+      */
+
+      if (this.producto.logo_producto) {
+        /*
+            Ensure the file is an image file.
+        */
+        if (/\.(jpe?g|png|gif)$/i.test(this.producto.logo_producto.name)) {
+          console.log("here");
+          /*
+          Fire the readAsDataURL method which will read the file in and
+          upon completion fire a 'load' event which we will listen to and
+          display the image in the preview.
+          */
+
+          reader.readAsDataURL(this.producto.logo_producto);
+        }
+      }
+    },
     traer: function traer() {
       var _this = this;
 
@@ -2264,15 +2312,18 @@ __webpack_require__.r(__webpack_exports__);
 
       self = this;
       axios.post('api/productos', {
+        clave: this.producto.clave,
         nombre: this.producto.nombre,
         edicion: this.producto.edicion,
-        logo_producto: this.producto.logo_producto,
+        logo_producto: this.producto.logo_producto.name,
         nomenclatura: this.producto.nomenclatura
       }).then(function (response) {
+        _this2.producto.clave = "";
         _this2.producto.nombre = "";
         _this2.producto.edicion = "";
         _this2.producto.logo_producto = "";
         _this2.producto.nomenclatura = "";
+        _this2.imagePreview = false;
         swal.fire({
           icon: 'success',
           title: 'Hecho',
@@ -42630,6 +42681,32 @@ var render = function() {
                 _c("div", { staticClass: "modal-body" }, [
                   _c("form", [
                     _c("div", { staticClass: "form-group" }, [
+                      _c("label", [_vm._v("Clave")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.producto.clave,
+                            expression: "producto.clave"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text" },
+                        domProps: { value: _vm.producto.clave },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.producto, "clave", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
                       _c("label", [_vm._v("Nombre")]),
                       _vm._v(" "),
                       _c("input", {
@@ -42660,7 +42737,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
-                      _c("label", [_vm._v("Apellido Paterno")]),
+                      _c("label", [_vm._v("Edicion")]),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
@@ -42690,37 +42767,17 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
-                      _c("label", [_vm._v("Apellido Materno")]),
+                      _c("label", [_vm._v("Logo Producto")]),
                       _vm._v(" "),
                       _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.producto.logo_producto,
-                            expression: "producto.logo_producto"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text" },
-                        domProps: { value: _vm.producto.logo_producto },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.producto,
-                              "logo_producto",
-                              $event.target.value
-                            )
-                          }
-                        }
+                        staticClass: "form-control-file",
+                        attrs: { type: "file" },
+                        on: { change: _vm.onFileChange }
                       })
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
-                      _c("label", [_vm._v("Mail")]),
+                      _c("label", [_vm._v("Nomenclatura")]),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
@@ -42732,7 +42789,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "email" },
+                        attrs: { type: "text" },
                         domProps: { value: _vm.producto.nomenclatura },
                         on: {
                           input: function($event) {
@@ -42748,6 +42805,22 @@ var render = function() {
                         }
                       })
                     ]),
+                    _vm._v(" "),
+                    _c("img", {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.showPreview,
+                          expression: "showPreview"
+                        }
+                      ],
+                      attrs: {
+                        src: _vm.imagePreview,
+                        width: "100",
+                        height: "100"
+                      }
+                    }),
                     _vm._v(" "),
                     _c(
                       "button",
@@ -42799,6 +42872,8 @@ var render = function() {
             "tbody",
             _vm._l(_vm.productos, function(producto) {
               return _c("tr", { key: producto.clave }, [
+                _c("th", [_vm._v(_vm._s(producto.clave))]),
+                _vm._v(" "),
                 _c("th", [_vm._v(_vm._s(producto.nombre))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(producto.edicion))]),
@@ -42896,6 +42971,14 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
+        _c(
+          "th",
+          {
+            staticStyle: { position: "sticky", top: "0", background: "#000000" }
+          },
+          [_vm._v("Clave")]
+        ),
+        _vm._v(" "),
         _c(
           "th",
           {
@@ -43091,7 +43174,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "email" },
+                        attrs: { type: "text" },
                         domProps: { value: _vm.proyecto.nomenclatura },
                         on: {
                           input: function($event) {

@@ -18,6 +18,7 @@ class ProductoController extends Controller
 
         $producto = new Producto();
 
+        $producto->clave = $request->input('clave');
         $producto->nombre = $request->input('nombre');
         $producto->edicion = $request->input('edicion');
         $producto->logo_producto = $request->input('logo_producto');

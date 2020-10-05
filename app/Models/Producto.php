@@ -9,6 +9,8 @@ class Producto extends Model
     protected $table = 'producto';
     protected $primaryKey = 'clave';
     protected $rememberTokenName = false;
+    public $incrementing = false;
+
 
     public $timestamps = false;
 }

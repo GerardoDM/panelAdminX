@@ -12,23 +12,29 @@
                   </div>
                   <div class="modal-body">
                      <form>
+                         <div class="form-group">
+                           <label>Clave</label>
+                           <input type="text" class="form-control" v-model="producto.clave">
+                        </div>
                         <div class="form-group">
                            <label>Nombre</label>
                            <input type="text" class="form-control" v-model="producto.nombre">
                         </div>
                         <div class="form-group">
-                           <label>Apellido Paterno</label>
+                           <label>Edicion</label>
                            <input type="text" class="form-control" v-model="producto.edicion">
                         </div>
                         <div class="form-group">
-                           <label>Apellido Materno</label>
-                           <input type="text" class="form-control" v-model="producto.logo_producto">
+                           <label>Logo Producto</label>
+                           <input type="file" class="form-control-file" @change="onFileChange" >
                         </div>
                         <div class="form-group">
-                           <label>Mail</label>
-                           <input type="email" class="form-control" v-model="producto.nomenclatura">
+                           <label>Nomenclatura</label>
+                           <input type="text" class="form-control" v-model="producto.nomenclatura">
                         </div>
-                       
+  
+                            <img v-bind:src="imagePreview" width="100" height="100" v-show="showPreview"/>
+                                           
                         <button type="button" class="btn btn-primary" v-on:click="insert(producto)">Agregar</button>
                          <button type="button" class="btn btn-primary" v-on:click="update(producto.clave)">Actualizar</button>
                      </form>
@@ -41,6 +47,7 @@
          <table class="table table-hover table-dark" >
             <thead>
                <tr>
+                <th style="position:sticky; top:0; background: #000000">Clave</th>
                   <th style="position:sticky; top:0; background: #000000">Nombre</th>
                   <th style="position:sticky; top:0; background: #000000">Edicion</th>
                   <th style="position:sticky; top:0; background: #000000">Logo</th>
@@ -51,6 +58,7 @@
             </thead>
             <tbody>
                <tr v-for="producto in productos" v-bind:key="producto.clave">
+                  <th>{{producto.clave}}</th> 
                   <th>{{producto.nombre}}</th>
                   <td>{{producto.edicion}}</td>
                   <td>{{producto.logo_producto}}</td>
@@ -84,7 +92,11 @@
                     edicion: "",
                     logo_producto: "",
                     nomenclatura: "",
+                   
                 },
+
+                imagePreview: null,
+                showPreview: false,
            }
    
        },
@@ -94,6 +106,48 @@
        },
    
        methods:{
+
+           onFileChange(event){
+
+            this.producto.logo_producto = event.target.files[0];
+            console.log(event.target.files[0]);
+
+                    /*
+            Initialize a File Reader object
+            */
+            let reader  = new FileReader();
+
+            /*
+            Add an event listener to the reader that when the file
+            has been loaded, we flag the show preview as true and set the
+            image to be what was read from the reader.
+            */
+            reader.addEventListener("load", function () {
+                this.showPreview = true;
+                this.imagePreview = reader.result;
+            }.bind(this), false);
+
+            /*
+            Check to see if the file is not empty.
+            */
+            if( this.producto.logo_producto ){
+                /*
+                    Ensure the file is an image file.
+                */
+                if ( /\.(jpe?g|png|gif)$/i.test( this.producto.logo_producto.name ) ) {
+
+                    console.log("here");
+                    /*
+                    Fire the readAsDataURL method which will read the file in and
+                    upon completion fire a 'load' event which we will listen to and
+                    display the image in the preview.
+                    */
+                    reader.readAsDataURL( this.producto.logo_producto );
+                }
+            }
+
+        },
+
            traer(){
    
               self = this
@@ -107,27 +161,32 @@
                    })
                
            },
-   
-           
+            
            insert(clave){
-   
    
                self = this
                axios.post('api/productos',
    
                        {
+
+                    clave : this.producto.clave,
+                    
                        nombre : this.producto.nombre,
                        edicion : this.producto.edicion,
-                       logo_producto : this.producto.logo_producto,
+                       logo_producto : this.producto.logo_producto.name,
                        nomenclatura : this.producto.nomenclatura,
                        })
                        
                 .then(response => {
+
+
+                        this.producto.clave = ""
    
                        this.producto.nombre = ""
                        this.producto.edicion = ""
                        this.producto.logo_producto = "" 
                        this.producto.nomenclatura = ""
+                       this.imagePreview = false
                        
                                         
    
