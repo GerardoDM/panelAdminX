@@ -13,13 +13,26 @@
                   <div class="modal-body">
                      <form>
                         <div class="form-group">
+                           <label>Clave</label>
+                           <input type="text" class="form-control" v-model="proyecto.clave">
+                        </div>
+
+                        <div class="form-group">
                            <label>Nombre</label>
                            <input type="text" class="form-control" v-model="proyecto.nombre">
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                            <label>Fecha</label>
                            <input type="text" class="form-control" v-model="proyecto.fecha">
+                        </div> -->
+
+
+                        <div class="form-group">
+                           <label>Fecha</label>
+                           <datepicker v-model="date" :value="date" :format="customFormatter"></datepicker>
                         </div>
+
+
                         <div class="form-group">
                            <label>Descripción</label>
                            <input type="text" class="form-control" v-model="proyecto.descripcion">
@@ -41,6 +54,7 @@
          <table class="table table-hover table-dark" >
             <thead>
                <tr>
+                  <th style="position:sticky; top:0; background: #000000">Clave</th>
                   <th style="position:sticky; top:0; background: #000000">Nombre</th>
                   <th style="position:sticky; top:0; background: #000000">Fecha</th>
                   <th style="position:sticky; top:0; background: #000000">Descripción</th>
@@ -51,6 +65,7 @@
             </thead>
             <tbody>
                <tr v-for="proyecto in proyectos" v-bind:key="proyecto.clave">
+                  <th>{{proyecto.clave}}</th>
                   <th>{{proyecto.nombre}}</th>
                   <td>{{proyecto.fecha}}</td>
                   <td>{{proyecto.descripcion}}</td>
@@ -69,9 +84,25 @@
    </div>
 </template>
 <script>
+
+
+import Datepicker from 'vuejs-datepicker';
+    import moment from 'moment'
+
+
+      
    export default {
+
+
+      
        mounted(){
            
+       },
+
+       components: {
+
+           Datepicker
+
        },
    
        data(){
@@ -85,6 +116,8 @@
                     descripcion: "",
                     nomenclatura: "",
                 },
+
+                date : ""
            }
    
        },
@@ -94,6 +127,21 @@
        },
    
        methods:{
+
+           customFormatter(date) {
+            
+            date = moment(date).format('yyyy-MM-DD');
+            this.proyecto.fecha = date;
+            console.log(date);
+            
+            
+            return moment(date).format('yyyy-MM-DD');
+            
+            
+
+
+         },
+
            traer(){
    
               self = this
@@ -110,12 +158,16 @@
    
            
            insert(clave){
+
+              
    
    
                self = this
+
                axios.post('api/proyectos',
    
                        {
+                        clave : this.proyecto.clave,
                        nombre : this.proyecto.nombre,
                        fecha : this.proyecto.fecha,
                        descripcion : this.proyecto.descripcion,
@@ -123,7 +175,8 @@
                        })
                        
                 .then(response => {
-   
+
+                        this.proyecto.clave = ""
                        this.proyecto.nombre = ""
                        this.proyecto.fecha = ""
                        this.proyecto.descripcion = "" 
@@ -155,8 +208,6 @@
                self = this
                axios.delete(`/api/proyectos/${clave}`)
                    .then(response => {
-   
-   
    
                       swal.fire({
                title: '¿Estás seguro?',
@@ -204,6 +255,7 @@
              self = this;
              axios.put(`api/proyectos/${clave}`,
               {
+                        clave : this.proyecto.clave,
                        nombre : this.proyecto.nombre,
                        fecha : this.proyecto.fecha,
                        descripcion : this.proyecto.descripcion,
@@ -212,6 +264,9 @@
               
               
               .then(response => {
+
+
+                 this.proyecto.clave = ""
 
                this.proyecto.nombre = ""
                this.proyecto.fecha = ""

@@ -18,6 +18,8 @@ class ProyectoController extends Controller
 
         $proyecto = new Proyecto();
 
+        $proyecto->clave = $request->input('clave');
+
         $proyecto->nombre = $request->input('nombre');
         $proyecto->fecha = $request->input('fecha');
         $proyecto->descripcion = $request->input('descripcion');

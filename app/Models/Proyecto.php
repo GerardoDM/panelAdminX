@@ -9,6 +9,8 @@ class Proyecto extends Model
     protected $table = 'proyecto';
     protected $primaryKey = 'clave';
     protected $rememberTokenName = false;
+    public $incrementing = false;
+
 
     public $timestamps = false;
 }
