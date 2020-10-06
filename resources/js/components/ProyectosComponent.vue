@@ -21,17 +21,11 @@
                            <label>Nombre</label>
                            <input type="text" class="form-control" v-model="proyecto.nombre">
                         </div>
-                        <!-- <div class="form-group">
-                           <label>Fecha</label>
-                           <input type="text" class="form-control" v-model="proyecto.fecha">
-                        </div> -->
-
 
                         <div class="form-group">
                            <label>Fecha</label>
-                           <datepicker v-model="date" :value="date" :format="customFormatter"></datepicker>
+                           <datepicker id="dd" v-model="date" :value="date" :format="customFormatter"></datepicker>
                         </div>
-
 
                         <div class="form-group">
                            <label>Descripción</label>
@@ -42,8 +36,8 @@
                            <input type="text" class="form-control" v-model="proyecto.nomenclatura">
                         </div>
                        
-                        <button type="button" class="btn btn-primary" v-on:click="insert(proyecto)">Agregar</button>
-                         <button type="button" class="btn btn-primary" v-on:click="update(proyecto.clave)">Actualizar</button>
+                        <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click="insert(proyecto)">Agregar</button>
+                         <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(proyecto.clave)">Actualizar</button>
                      </form>
                   </div>
                </div>
@@ -87,14 +81,10 @@
 
 
 import Datepicker from 'vuejs-datepicker';
-    import moment from 'moment'
-
-
+import moment from 'moment'
       
    export default {
 
-
-      
        mounted(){
            
        },
@@ -136,9 +126,6 @@ import Datepicker from 'vuejs-datepicker';
             
             
             return moment(date).format('yyyy-MM-DD');
-            
-            
-
 
          },
 
@@ -158,10 +145,7 @@ import Datepicker from 'vuejs-datepicker';
    
            
            insert(clave){
-
-              
-   
-   
+      
                self = this
 
                axios.post('api/proyectos',
@@ -176,14 +160,15 @@ import Datepicker from 'vuejs-datepicker';
                        
                 .then(response => {
 
-                        this.proyecto.clave = ""
-                       this.proyecto.nombre = ""
-                       this.proyecto.fecha = ""
-                       this.proyecto.descripcion = "" 
-                       this.proyecto.nomenclatura = ""
-                       
-                                        
-   
+                     this.proyecto.clave = ""
+                     this.proyecto.nombre = ""
+                     this.proyecto.fecha = ""
+                     this.proyecto.descripcion = "" 
+                     this.proyecto.nomenclatura = ""
+                     
+                     $("#dd").data("DatePicker").date(null);
+
+                                                               
                        swal.fire({
                          icon: 'success',
                          title: 'Hecho',
@@ -209,7 +194,7 @@ import Datepicker from 'vuejs-datepicker';
                axios.delete(`/api/proyectos/${clave}`)
                    .then(response => {
    
-                      swal.fire({
+            swal.fire({
                title: '¿Estás seguro?',
                text: "No podrás revertir la acción",
                icon: 'warning',
@@ -217,9 +202,9 @@ import Datepicker from 'vuejs-datepicker';
                confirmButtonColor: '#3085d6',
                cancelButtonColor: '#d33',
                confirmButtonText: 'Si, eliminar'
-               }).then((result) => {
+            }).then((result) => {
                if (result.isConfirmed) {
-                   swal.fire(
+                  swal.fire(
                    'Eliminado',
                    'El proyecto ha sido borrado',
                    'success'
@@ -242,6 +227,10 @@ import Datepicker from 'vuejs-datepicker';
 
            edit(proyecto){
 
+
+            document.getElementById("btnActualizar").disabled = false;
+            document.getElementById("btnAgregar").disabled = true;
+
             this.proyecto.clave = proyecto.clave
             this.proyecto.nombre = proyecto.nombre;
             this.proyecto.fecha = proyecto.fecha;
@@ -255,19 +244,17 @@ import Datepicker from 'vuejs-datepicker';
              self = this;
              axios.put(`api/proyectos/${clave}`,
               {
-                        clave : this.proyecto.clave,
-                       nombre : this.proyecto.nombre,
-                       fecha : this.proyecto.fecha,
-                       descripcion : this.proyecto.descripcion,
-                       nomenclatura : this.proyecto.nomenclatura,
-                       })
+                     clave : this.proyecto.clave,
+                     nombre : this.proyecto.nombre,
+                     fecha : this.proyecto.fecha,
+                     descripcion : this.proyecto.descripcion,
+                     nomenclatura : this.proyecto.nomenclatura,
+               })
               
               
               .then(response => {
 
-
-                 this.proyecto.clave = ""
-
+               this.proyecto.clave = ""
                this.proyecto.nombre = ""
                this.proyecto.fecha = ""
                this.proyecto.descripcion = "" 
@@ -302,8 +289,6 @@ import Datepicker from 'vuejs-datepicker';
 .body{
 
    background-color: darkslategrey;
-
-
 
 }
 

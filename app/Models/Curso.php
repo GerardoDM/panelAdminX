@@ -4,16 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Proyecto extends Model
+class Curso extends Model
 {
-    protected $table = 'proyecto';
+    protected $table = 'curso';
     protected $primaryKey = 'clave';
     protected $rememberTokenName = false;
     public $incrementing = false;
     public $timestamps = false;
 
-    public function productos()
+
+    public function usuario()
     {
-        return $this->belongsToMany('App\Models\Producto','producto-proyecto', 'clave', 'clave')->using(Pivot::class);
+        return $this->belongsTo('App\Usuario', 'foreign_key', 'clave');
     }
 }

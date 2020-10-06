@@ -32,6 +32,10 @@ Route::get('proyectos', function () {
     return view('pages.proyectos');
 });
 
+Route::get('pivot', function () {
+    return view('pages.pivot');
+});
+
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');

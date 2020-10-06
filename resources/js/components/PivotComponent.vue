@@ -5,38 +5,32 @@
             <div class="modal-dialog" role="document">
                <div class="modal-content">
                   <div class="modal-header">
-                     <h5 class="modal-title" id="exampleModalLabel">Agregar producto</h5>
+                     <h5 class="modal-title" id="exampleModalLabel">Agregar relación</h5>
                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                      <span aria-hidden="true">&times;</span>
                      </button>
                   </div>
                   <div class="modal-body">
                      <form>
-                         <div class="form-group">
-                           <label>Clave</label>
-                           <input type="text" class="form-control" v-model="producto.clave">
+                        <div class="form-group">
+                           <label>Producto</label>
+                            <select>
+                                <option v-for="producto in productos" v-bind:key="producto.clave">{{producto.nombre}}</option>    
+                            </select>                           
                         </div>
                         <div class="form-group">
-                           <label>Nombre</label>
-                           <input type="text" class="form-control" v-model="producto.nombre">
+                           <label>Proyecto</label>
+                           <select>
+                               <option v-for="proyecto in proyectos" v-bind:key="proyecto.clave">{{proyecto.nombre}}</option>
+                           </select>
                         </div>
                         <div class="form-group">
-                           <label>Edicion</label>
-                           <input type="text" class="form-control" v-model="producto.edicion">
+                           <label># de Licencias</label>
+                           <input type="text" class="form-control" v-model="pivot.nolicencias">
                         </div>
-                        <div class="form-group">
-                           <label>Logo Producto</label>
-                           <input type="file" class="form-control-file" @change="onFileChange" >
-                        </div>
-                        <div class="form-group">
-                           <label>Nomenclatura</label>
-                           <input type="text" class="form-control" v-model="producto.nomenclatura">
-                        </div>
-  
-                            <img v-bind:src="imagePreview" width="100" height="100" v-show="showPreview"/>
-                                           
+                                             
                         <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click="insert(producto)">Agregar</button>
-                         <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(producto.clave)">Actualizar</button>
+                        <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(producto.clave)">Actualizar</button>
                      </form>
                   </div>
                </div>
@@ -48,21 +42,19 @@
             <thead>
                <tr>
                 <th style="position:sticky; top:0; background: #000000">Clave</th>
-                  <th style="position:sticky; top:0; background: #000000">Nombre</th>
-                  <th style="position:sticky; top:0; background: #000000">Edicion</th>
-                  <th style="position:sticky; top:0; background: #000000">Logo</th>
-                  <th style="position:sticky; top:0; background: #000000">Nomenclatura</th>
-                  <th style="position:sticky; top:0; background: #000000">Acción</th>
-                  <th style="position:sticky; top:0; background: #000000">Acción</th>
+                <th style="position:sticky; top:0; background: #000000">Clave Producto</th>
+                <th style="position:sticky; top:0; background: #000000">Clave Proyecto</th>
+                <th style="position:sticky; top:0; background: #000000"># de Licencias</th>
+                <th style="position:sticky; top:0; background: #000000">Acción</th>
+                <th style="position:sticky; top:0; background: #000000">Acción</th>
                </tr>
             </thead>
             <tbody>
-               <tr v-for="producto in productos" v-bind:key="producto.clave">
-                  <th>{{producto.clave}}</th> 
-                  <th>{{producto.nombre}}</th>
-                  <td>{{producto.edicion}}</td>
-                  <td>{{producto.logo_producto}}</td>
-                  <td>{{producto.nomenclatura}}</td>
+               <tr v-for="pivot in pivots" v-bind:key="pivot.clave">
+                  <th>{{pivot.clave}}</th> 
+                  <th>{{pivot.cve_producto}}</th>
+                  <td>{{pivot.cve_proyecto}}</td>
+                  <td>{{pivot.nolicencias}}</td>
                   <td>
                     <button type="button" class="btn btn-secondary" v-on:click="edit(producto)" data-toggle="modal" data-target="#exampleModal">
                       Editar
@@ -84,9 +76,19 @@
    
        data(){
            return {
+               pivots: [],
                productos: [],
+               proyectos: [],
    
-               producto: {
+                pivot: {
+                    clave: "",
+                    cve_producto: "",
+                    cve_proyecto: "",
+                    nolicencias: "",
+                            
+                },
+
+                producto: {
                     clave: "",
                     nombre: "",
                     edicion: "",
@@ -95,60 +97,41 @@
                    
                 },
 
-                imagePreview: null,
-                showPreview: false,
+                proyecto: {
+                    clave: "",
+                    nombre: "",
+                    fecha: "",
+                    descripcion: "",
+                    nomenclatura: "",
+                },
+           
            }
    
        },
    
        created(){
            this.traer()
+           this.traerProductos()
+           this.traerProyectos()
        },
    
        methods:{
 
-           onFileChange(event){
-
-            this.producto.logo_producto = event.target.files[0];
-            console.log(event.target.files[0]);
-
-                    /*
-            Initialize a File Reader object
-            */
-            let reader  = new FileReader();
-
-            /*
-            Add an event listener to the reader that when the file
-            has been loaded, we flag the show preview as true and set the
-            image to be what was read from the reader.
-            */
-            reader.addEventListener("load", function () {
-                this.showPreview = true;
-                this.imagePreview = reader.result;
-            }.bind(this), false);
-
-            /*
-            Check to see if the file is not empty.
-            */
-            if( this.producto.logo_producto ){
-                /*
-                    Ensure the file is an image file.
-                */
-                if ( /\.(jpe?g|png|gif)$/i.test( this.producto.logo_producto.name ) ) {
-
-                    console.log("here");
-                    /*
-                    Fire the readAsDataURL method which will read the file in and
-                    upon completion fire a 'load' event which we will listen to and
-                    display the image in the preview.
-                    */
-                    reader.readAsDataURL( this.producto.logo_producto );
-                }
-            }
-
-        },
-
            traer(){
+   
+              self = this
+               axios.get('/api/pivot')
+                   .then(response => {
+                       this.pivots = response.data;
+                   })
+                   .catch(e => {
+                       
+                       console.log(e);
+                   })
+               
+           },
+
+           traerProductos(){
    
               self = this
                axios.get('/api/productos')
@@ -161,33 +144,43 @@
                    })
                
            },
+
+           traerProyectos(){
+   
+              self = this
+               axios.get('/api/proyectos')
+                   .then(response => {
+                       this.proyectos = response.data;
+                   })
+                   .catch(e => {
+                       
+                       console.log(e);
+                   })
+               
+           },
             
            insert(clave){
    
                self = this
-               axios.post('api/productos',
+               axios.post('api/pivot',
    
                        {
 
-                     clave : this.producto.clave,
-                     nombre : this.producto.nombre,
-                     edicion : this.producto.edicion,
-                     logo_producto : this.producto.logo_producto.name,
-                     nomenclatura : this.producto.nomenclatura,
+                     clave : this.pivot.clave,
+                     cve_producto : this.pivot.cve_producto,
+                     cve_proyecto : this.pivot.cve_proyecto,
+                     nolicencias : this.pivot.nolicencias,
+                     
                        })
                        
                 .then(response => {
 
 
-                     this.producto.clave = ""
-                     this.producto.nombre = ""
-                     this.producto.edicion = ""
-                     this.producto.logo_producto = "" 
-                     this.producto.nomenclatura = ""
-                     this.imagePreview = false
-                       
-                                        
-   
+                     this.pivot.clave = ""
+                     this.pivot.cve_producto = ""
+                     this.pivot.cve_proyecto = ""
+                     this.pivot.nolicencias = "" 
+                    
                        swal.fire({
                          icon: 'success',
                          title: 'Hecho',
@@ -210,10 +203,8 @@
             deleteU(clave){
    
                self = this
-               axios.delete(`/api/productos/${clave}`)
+               axios.delete(`/api/pivot/${clave}`)
                    .then(response => {
-   
-   
    
                       swal.fire({
                title: '¿Estás seguro?',
@@ -251,42 +242,37 @@
               document.getElementById("btnActualizar").disabled = false;
               document.getElementById("btnAgregar").disabled = true;
 
-            this.producto.clave = producto.clave
-            this.producto.nombre = producto.nombre;
-            this.producto.edicion = producto.edicion;
-            this.producto.logo_producto = producto.logo_producto;
-            this.producto.nomenclatura = producto.nomenclatura;
+            this.pivot.clave = pivot.clave
+            this.pivot.cve_producto = pivot.cve_producto;
+            this.pivot.cve_proyecto = pivot.cve_proyecto;
+            this.pivot.nolicencias = pivot.nolicencias;
 
            },
 
 
            update(clave){
              self = this;
-             axios.put(`api/productos/${clave}`,
+             axios.put(`api/pivot/${clave}`,
               {
-                       nombre : this.producto.nombre,
-                       edicion : this.producto.edicion,
-                       logo_producto : this.producto.logo_producto.name,
-                       nomenclatura : this.producto.nomenclatura,
+                       clave : this.pivot.clave,
+                       cve_pivot : this.pivot.cve_producto,
+                       cve_proyecto : this.pivot.cve_proyecto,
+                       nolicencias : this.pivot.nolicencias,
                        })
               
               
               .then(response => {
 
-
-               this.producto.clave = ""
-               this.producto.nombre = ""
-               this.producto.edicion = ""
-               this.producto.logo_producto = "" 
-               this.producto.nomenclatura = ""
-               this.imagePreview = false
+               this.pivot.clave = ""
+               this.pivot.cve_producto = ""
+               this.pivot.cve_proyecto = ""
+               this.pivot.nolicencias = "" 
                 
                       swal.fire({
                          icon: 'success',
                          title: 'Hecho',
                          text: 'El producto se ha actualizado',
                          index: 0,
-                        
                          })
 
                this.traer();

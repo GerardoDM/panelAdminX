@@ -10,7 +10,10 @@ class Producto extends Model
     protected $primaryKey = 'clave';
     protected $rememberTokenName = false;
     public $incrementing = false;
-
-
     public $timestamps = false;
+
+    public function proyectos()
+    {
+        return $this->belongsToMany('App\Models\Proyecto','producto-proyecto', 'clave', 'clave')->using(Pivot::class);
+    }
 }
