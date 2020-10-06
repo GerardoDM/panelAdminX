@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Pivot extends Model
 {
     public $incrementing = true;
+    public $timestamps = false;
+    protected $primaryKey = 'clave';
     protected $table = 'producto-proyecto';
 
     public function productos()

@@ -2232,7 +2232,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    $("#selectProducto").change(function () {
+      this.producto.clave = $("#selectProducto").val();
+    }.bind(this));
+    $("#selectProyecto").change(function () {
+      this.proyecto.clave = $("#selectProyecto").val();
+    }.bind(this));
+  },
   data: function data() {
     return {
       pivots: [],
@@ -2302,8 +2309,8 @@ __webpack_require__.r(__webpack_exports__);
       self = this;
       axios.post('api/pivot', {
         clave: this.pivot.clave,
-        cve_producto: this.pivot.cve_producto,
-        cve_proyecto: this.pivot.cve_proyecto,
+        cve_producto: this.producto.clave,
+        cve_proyecto: this.proyecto.clave,
         nolicencias: this.pivot.nolicencias
       }).then(function (response) {
         _this4.pivot.clave = "";
@@ -2313,7 +2320,7 @@ __webpack_require__.r(__webpack_exports__);
         swal.fire({
           icon: 'success',
           title: 'Hecho',
-          text: 'El producto se ha creado',
+          text: 'La relación se ha creado',
           index: 0
         });
 
@@ -2346,7 +2353,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log(e);
       });
     },
-    edit: function edit(producto) {
+    edit: function edit(pivot) {
       document.getElementById("btnActualizar").disabled = false;
       document.getElementById("btnAgregar").disabled = true;
       this.pivot.clave = pivot.clave;
@@ -2360,8 +2367,8 @@ __webpack_require__.r(__webpack_exports__);
       self = this;
       axios.put("api/pivot/".concat(clave), {
         clave: this.pivot.clave,
-        cve_pivot: this.pivot.cve_producto,
-        cve_proyecto: this.pivot.cve_proyecto,
+        cve_producto: this.producto.clave,
+        cve_proyecto: this.proyecto.clave,
         nolicencias: this.pivot.nolicencias
       }).then(function (response) {
         _this6.pivot.clave = "";
@@ -2782,7 +2789,6 @@ __webpack_require__.r(__webpack_exports__);
         _this2.proyecto.fecha = "";
         _this2.proyecto.descripcion = "";
         _this2.proyecto.nomenclatura = "";
-        $("#dd").data("DatePicker").date(null);
         swal.fire({
           icon: 'success',
           title: 'Hecho',
@@ -64529,10 +64535,16 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "select",
+                        { attrs: { id: "selectProducto" } },
                         _vm._l(_vm.productos, function(producto) {
-                          return _c("option", { key: producto.clave }, [
-                            _vm._v(_vm._s(producto.nombre))
-                          ])
+                          return _c(
+                            "option",
+                            {
+                              key: producto.clave,
+                              domProps: { value: producto.clave }
+                            },
+                            [_vm._v(_vm._s(producto.nombre))]
+                          )
                         }),
                         0
                       )
@@ -64543,10 +64555,16 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "select",
+                        { attrs: { id: "selectProyecto" } },
                         _vm._l(_vm.proyectos, function(proyecto) {
-                          return _c("option", { key: proyecto.clave }, [
-                            _vm._v(_vm._s(proyecto.nombre))
-                          ])
+                          return _c(
+                            "option",
+                            {
+                              key: proyecto.clave,
+                              domProps: { value: proyecto.clave }
+                            },
+                            [_vm._v(_vm._s(proyecto.nombre))]
+                          )
                         }),
                         0
                       )
@@ -64589,7 +64607,7 @@ var render = function() {
                         attrs: { type: "button", id: "btnAgregar" },
                         on: {
                           click: function($event) {
-                            return _vm.insert(_vm.producto)
+                            return _vm.insert(_vm.pivot)
                           }
                         }
                       },
@@ -64607,7 +64625,7 @@ var render = function() {
                         },
                         on: {
                           click: function($event) {
-                            return _vm.update(_vm.producto.clave)
+                            return _vm.update(_vm.pivot.clave)
                           }
                         }
                       },
@@ -64656,7 +64674,7 @@ var render = function() {
                       },
                       on: {
                         click: function($event) {
-                          return _vm.edit(_vm.producto)
+                          return _vm.edit(pivot)
                         }
                       }
                     },
@@ -64672,7 +64690,7 @@ var render = function() {
                       attrs: { type: "button" },
                       on: {
                         click: function($event) {
-                          return _vm.deleteU(_vm.producto.clave)
+                          return _vm.deleteU(pivot.clave)
                         }
                       }
                     },
@@ -65351,7 +65369,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "text" },
+                        attrs: { type: "text", maxlength: 2 },
                         domProps: { value: _vm.proyecto.nomenclatura },
                         on: {
                           input: function($event) {

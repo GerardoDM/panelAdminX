@@ -33,7 +33,7 @@
                         </div>
                         <div class="form-group">
                            <label>Nomenclatura</label>
-                           <input type="text" class="form-control" v-model="proyecto.nomenclatura">
+                           <input type="text" :maxlength="2" class="form-control" v-model="proyecto.nomenclatura">
                         </div>
                        
                         <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click="insert(proyecto)">Agregar</button>
@@ -165,10 +165,7 @@ import moment from 'moment'
                      this.proyecto.fecha = ""
                      this.proyecto.descripcion = "" 
                      this.proyecto.nomenclatura = ""
-                     
-                     $("#dd").data("DatePicker").date(null);
-
-                                                               
+                                            
                        swal.fire({
                          icon: 'success',
                          title: 'Hecho',
@@ -178,8 +175,7 @@ import moment from 'moment'
                        })
    
                        this.traer();
-   
-                      
+    
                    })
                    .catch(e => {
                        

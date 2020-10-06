@@ -14,14 +14,14 @@
                      <form>
                         <div class="form-group">
                            <label>Producto</label>
-                            <select>
-                                <option v-for="producto in productos" v-bind:key="producto.clave">{{producto.nombre}}</option>    
+                            <select  id="selectProducto">
+                                <option :value="producto.clave" v-for="producto in productos" v-bind:key="producto.clave">{{producto.nombre}}</option>    
                             </select>                           
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" >
                            <label>Proyecto</label>
-                           <select>
-                               <option v-for="proyecto in proyectos" v-bind:key="proyecto.clave">{{proyecto.nombre}}</option>
+                           <select id="selectProyecto">
+                               <option :value="proyecto.clave" v-for="proyecto in proyectos" v-bind:key="proyecto.clave">{{proyecto.nombre}}</option>
                            </select>
                         </div>
                         <div class="form-group">
@@ -29,8 +29,8 @@
                            <input type="text" class="form-control" v-model="pivot.nolicencias">
                         </div>
                                              
-                        <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click="insert(producto)">Agregar</button>
-                        <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(producto.clave)">Actualizar</button>
+                        <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click="insert(pivot)">Agregar</button>
+                        <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(pivot.clave)">Actualizar</button>
                      </form>
                   </div>
                </div>
@@ -56,11 +56,11 @@
                   <td>{{pivot.cve_proyecto}}</td>
                   <td>{{pivot.nolicencias}}</td>
                   <td>
-                    <button type="button" class="btn btn-secondary" v-on:click="edit(producto)" data-toggle="modal" data-target="#exampleModal">
+                    <button type="button" class="btn btn-secondary" v-on:click="edit(pivot)" data-toggle="modal" data-target="#exampleModal">
                       Editar
                       </button>
                   </td>
-                  <td><button type="button" class="btn btn-danger" v-on:click="deleteU(producto.clave)">Eliminar</button></td>
+                  <td><button type="button" class="btn btn-danger" v-on:click="deleteU(pivot.clave)">Eliminar</button></td>
                </tr>
             </tbody>
          </table>
@@ -71,7 +71,17 @@
 <script>
    export default {
        mounted(){
-           
+
+            $("#selectProducto").change(function(){
+                this.producto.clave = $("#selectProducto").val();
+                }.bind(this)); 
+
+
+                $("#selectProyecto").change(function(){
+                this.proyecto.clave = $("#selectProyecto").val();
+                }.bind(this)); 
+        
+            
        },
    
        data(){
@@ -167,8 +177,8 @@
                        {
 
                      clave : this.pivot.clave,
-                     cve_producto : this.pivot.cve_producto,
-                     cve_proyecto : this.pivot.cve_proyecto,
+                     cve_producto : this.producto.clave,
+                     cve_proyecto : this.proyecto.clave,
                      nolicencias : this.pivot.nolicencias,
                      
                        })
@@ -184,7 +194,7 @@
                        swal.fire({
                          icon: 'success',
                          title: 'Hecho',
-                         text: 'El producto se ha creado',
+                         text: 'La relación se ha creado',
                          index: 0,
                         
                        })
@@ -224,7 +234,6 @@
    
                     this.traer();
    
-   
                }
                })
    
@@ -237,7 +246,7 @@
    
            },
 
-           edit(producto){
+           edit(pivot){
 
               document.getElementById("btnActualizar").disabled = false;
               document.getElementById("btnAgregar").disabled = true;
@@ -254,11 +263,11 @@
              self = this;
              axios.put(`api/pivot/${clave}`,
               {
-                       clave : this.pivot.clave,
-                       cve_pivot : this.pivot.cve_producto,
-                       cve_proyecto : this.pivot.cve_proyecto,
-                       nolicencias : this.pivot.nolicencias,
-                       })
+                clave : this.pivot.clave,
+                cve_producto : this.producto.clave,
+                cve_proyecto : this.proyecto.clave,
+                nolicencias : this.pivot.nolicencias,
+                })
               
               
               .then(response => {
