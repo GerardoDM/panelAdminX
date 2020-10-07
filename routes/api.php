@@ -37,7 +37,12 @@ Route::post('/pivot', 'PivotController@create');
 Route::delete('/pivot/{clave}', 'PivotController@delete');
 Route::put('/pivot/{clave}', 'PivotController@update');
 
-Route::get('/curso', 'CursoController@index');
+Route::get('/cursos', 'CursoController@index');
 Route::post('/curso', 'CursoController@create');
 Route::delete('/curso/{clave}', 'CursoController@delete');
 Route::put('/curso/{clave}', 'CursoController@update');
+
+Route::get('/bloques', 'BloqueController@index');
+Route::post('/bloque', 'BloqueController@create');
+Route::delete('/bloque/{clave}', 'BloqueController@delete');
+Route::put('/bloque/{clave}', 'BloqueController@update');

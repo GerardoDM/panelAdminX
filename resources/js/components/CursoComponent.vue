@@ -40,17 +40,19 @@
 
                         <div class="form-group">
                            <label>cve_usuario</label>
-                           <input type="text" class="form-control" v-model="curso.cve_usuario">
+                            <select id="selectUsuario">
+                               <option :value="usuario.clave" v-for="usuario in usuarios" v-bind:key="usuario.clave">{{usuario.nombre}}</option>
+                           </select>
                         </div>
 
                         <div class="form-group">
                            <label>Ruta descarga</label>
-                           <input type="text" class="form-control" v-model="curso.ruta_descarga">
+                           <input type="url" class="form-control" v-model="curso.ruta_descarga">
                         </div>
 
                         <div class="form-group">
                            <label>Ruta ver</label>
-                           <input type="text" class="form-control" v-model="curso.ruta_ver">
+                           <input type="url" class="form-control" v-model="curso.ruta_ver">
                         </div>
 
                         <div class="form-group">
@@ -60,7 +62,7 @@
 
                         <div class="form-group">
                            <label>Ruta Operación</label>
-                           <input type="text" class="form-control" v-model="curso.ruta_operacion">
+                           <input type="url" class="form-control" v-model="curso.ruta_operacion">
                         </div>
 
                           <div class="form-group">
@@ -90,10 +92,10 @@
                   <th style="position:sticky; top:0; background: #000000">Ruta descarga</th>
                   <th style="position:sticky; top:0; background: #000000">Ruta ver</th>
                   <th style="position:sticky; top:0; background: #000000">Status</th>
-                  <th style="position:sticky; top:0; background: #000000">Ruta operaciòn</th>
+                  <th style="position:sticky; top:0; background: #000000">Ruta operación</th>
                   <th style="position:sticky; top:0; background: #000000">Clave status</th>
-                  <th style="position:sticky; top:0; background: #000000">Acciòn</th>
-                  <th style="position:sticky; top:0; background: #000000">Acciòn</th>
+                  <th style="position:sticky; top:0; background: #000000">Acción</th>
+                  <th style="position:sticky; top:0; background: #000000">Acción</th>
                </tr>
             </thead>
             <tbody>
@@ -129,12 +131,17 @@
    export default {
 
        mounted(){
+
+            $("#selectUsuario").change(function(){
+                this.usuario.clave = $("#selectUsuario").val();
+                }.bind(this)); 
            
        },
    
        data(){
            return {
                cursos: [],
+               usuarios: [],
    
                curso: {
                   clave  : "",
@@ -151,12 +158,25 @@
                   cve_status : "",
                 },
 
+                usuario: {
+                    clave: "",
+                    nombre: "",
+                    apepat: "",
+                    apemat: "",
+                    mail: "",
+                    nickname: "",
+                    pass: "",
+                    status:"",
+                    cve_tipousuario:""
+                  },
+
            }
    
        },
    
        created(){
            this.traer()
+           this.traerUsuarios()
        },
    
        methods:{
@@ -164,9 +184,23 @@
            traer(){
    
               self = this
-               axios.get('/api/curso')
+               axios.get('/api/cursos')
                    .then(response => {
                        this.cursos = response.data;
+                   })
+                   .catch(e => {
+                       
+                       console.log(e);
+                   })
+               
+           },
+
+            traerUsuarios(){
+   
+              self = this
+               axios.get('/api/usuarios')
+                   .then(response => {
+                       this.usuarios = response.data;
                    })
                    .catch(e => {
                        

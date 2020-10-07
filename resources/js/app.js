@@ -30,6 +30,8 @@ Vue.component('productos-component', require( './components/ProductosComponent.v
 Vue.component('proyectos-component', require( './components/ProyectosComponent.vue').default);
 Vue.component('pivot-component', require( './components/PivotComponent.vue').default);
 Vue.component('curso-component', require( './components/CursoComponent.vue').default);
+Vue.component('bloque-component', require( './components/BloqueComponent.vue').default);
+
 
 
 /**

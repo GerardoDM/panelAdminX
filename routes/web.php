@@ -40,6 +40,10 @@ Route::get('cursos', function () {
     return view('pages.cursos');
 });
 
+Route::get('bloques', function () {
+    return view('pages.bloques');
+});
+
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
