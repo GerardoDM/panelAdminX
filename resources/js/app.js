@@ -29,6 +29,7 @@ Vue.component('form-component', require( './components/FormComponent.vue').defau
 Vue.component('productos-component', require( './components/ProductosComponent.vue').default);
 Vue.component('proyectos-component', require( './components/ProyectosComponent.vue').default);
 Vue.component('pivot-component', require( './components/PivotComponent.vue').default);
+Vue.component('curso-component', require( './components/CursoComponent.vue').default);
 
 
 /**

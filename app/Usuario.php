@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Curso;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 //use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
@@ -17,6 +18,10 @@ class Usuario extends Model implements AuthenticatableContract
 
     public $timestamps = false;
     //protected $pass = 'pass';
+
+    public function cursos(){
+        return $this->hasMany('App\Models\Curso');
+    }
 
     public function setAttribute($key, $value)
   {

@@ -36,6 +36,10 @@ Route::get('pivot', function () {
     return view('pages.pivot');
 });
 
+Route::get('cursos', function () {
+    return view('pages.cursos');
+});
+
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
