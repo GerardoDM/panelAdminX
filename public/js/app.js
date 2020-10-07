@@ -1992,6 +1992,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     $("#selectCurso").change(function () {
@@ -2007,12 +2009,14 @@ __webpack_require__.r(__webpack_exports__);
         nombre: "",
         cve_curso: "",
         cve_status: "",
-        version: ""
+        version: "",
+        ruta_portal: ""
       },
       curso: {
         clave: "",
         nombre: ""
-      }
+      },
+      selected: ""
     };
   },
   created: function created() {
@@ -2047,15 +2051,18 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('api/bloque', {
         clave: this.bloque.clave,
         nombre: this.bloque.nombre,
-        cve_curso: this.bloque.cve_curso,
+        cve_curso: this.curso.clave,
         cve_status: this.bloque.cve_status,
-        version: this.bloque.version
+        version: this.bloque.version,
+        ruta_portal: this.bloque.ruta_portal
       }).then(function (response) {
         _this3.bloque.clave = "";
         _this3.bloque.nombre = "";
-        _this3.bloque.cve_curso = "";
+        _this3.curso.clave = "";
         _this3.bloque.cve_status = "";
         _this3.bloque.version = "";
+        _this3.bloque.ruta_portal = "";
+        _this3.selected = "";
         swal.fire({
           icon: 'success',
           title: 'Hecho',
@@ -2097,9 +2104,10 @@ __webpack_require__.r(__webpack_exports__);
       document.getElementById("btnAgregar").disabled = true;
       this.bloque.clave = bloque.clave;
       this.bloque.nombre = bloque.nombre;
-      this.bloque.cve_curso = bloque.nom_sep;
-      this.bloque.cve_status = bloque.btotales;
-      this.bloque.version = bloque.blib;
+      this.bloque.cve_curso = bloque.cve_curso;
+      this.bloque.cve_status = bloque.cve_status;
+      this.bloque.version = bloque.version;
+      this.bloque.ruta_portal = bloque.ruta_portal;
     },
     update: function update(clave) {
       var _this5 = this;
@@ -2108,15 +2116,18 @@ __webpack_require__.r(__webpack_exports__);
       axios.put("api/bloque/".concat(clave), {
         clave: this.bloque.clave,
         nombre: this.bloque.nombre,
-        cve_curso: this.bloque.cve_curso,
+        cve_curso: this.curso.clave,
         cve_status: this.bloque.cve_status,
-        version: this.bloque.version
+        version: this.bloque.version,
+        ruta_portal: this.bloque.ruta_portal
       }).then(function (response) {
         _this5.bloque.clave = "";
         _this5.bloque.nombre = "";
         _this5.bloque.cve_curso = "";
         _this5.bloque.cve_status = "";
         _this5.bloque.version = "";
+        _this5.bloque.ruta_portal = "";
+        _this5.selected = "";
         swal.fire({
           icon: 'success',
           title: 'Hecho',
@@ -2305,7 +2316,8 @@ __webpack_require__.r(__webpack_exports__);
         pass: "",
         status: "",
         cve_tipousuario: ""
-      }
+      },
+      selected: ""
     };
   },
   created: function created() {
@@ -2363,6 +2375,7 @@ __webpack_require__.r(__webpack_exports__);
         _this3.curso.status = "";
         _this3.curso.ruta_operacion = "";
         _this3.curso.cve_status = "";
+        _this3.selected = "";
         swal.fire({
           icon: 'success',
           title: 'Hecho',
@@ -2445,6 +2458,7 @@ __webpack_require__.r(__webpack_exports__);
         _this5.curso.status = "";
         _this5.curso.ruta_operacion = "";
         _this5.curso.cve_status = "";
+        _this5.selected = "";
         swal.fire({
           icon: 'success',
           title: 'Hecho',
@@ -2829,7 +2843,9 @@ __webpack_require__.r(__webpack_exports__);
         fecha: "",
         descripcion: "",
         nomenclatura: ""
-      }
+      },
+      selected: "",
+      selectedTwo: ""
     };
   },
   created: function created() {
@@ -2882,6 +2898,8 @@ __webpack_require__.r(__webpack_exports__);
         _this4.pivot.cve_producto = "";
         _this4.pivot.cve_proyecto = "";
         _this4.pivot.nolicencias = "";
+        _this4.selected = "";
+        _this4.selectedTwo = "";
         swal.fire({
           icon: 'success',
           title: 'Hecho',
@@ -2940,6 +2958,8 @@ __webpack_require__.r(__webpack_exports__);
         _this6.pivot.cve_producto = "";
         _this6.pivot.cve_proyecto = "";
         _this6.pivot.nolicencias = "";
+        _this6.selected = "";
+        _this6.selectedTwo = "";
         swal.fire({
           icon: 'success',
           title: 'Hecho',
@@ -64779,7 +64799,32 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "select",
-                        { attrs: { id: "selectCurso" } },
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.selected,
+                              expression: "selected"
+                            }
+                          ],
+                          attrs: { id: "selectCurso" },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.selected = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            }
+                          }
+                        },
                         _vm._l(_vm.cursos, function(curso) {
                           return _c(
                             "option",
@@ -64946,6 +64991,8 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(bloque.version))]),
                 _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(bloque.ruta_portal))]),
+                _vm._v(" "),
                 _c("td", [
                   _c(
                     "button",
@@ -65073,6 +65120,14 @@ var staticRenderFns = [
             staticStyle: { position: "sticky", top: "0", background: "#000000" }
           },
           [_vm._v("Versión")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticStyle: { position: "sticky", top: "0", background: "#000000" }
+          },
+          [_vm._v("Ruta Portal")]
         ),
         _vm._v(" "),
         _c(
@@ -65274,7 +65329,32 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "select",
-                        { attrs: { id: "selectUsuario" } },
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.selected,
+                              expression: "selected"
+                            }
+                          ],
+                          attrs: { id: "selectUsuario" },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.selected = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            }
+                          }
+                        },
                         _vm._l(_vm.usuarios, function(usuario) {
                           return _c(
                             "option",
@@ -66217,7 +66297,32 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "select",
-                        { attrs: { id: "selectProducto" } },
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.selectedTwo,
+                              expression: "selectedTwo"
+                            }
+                          ],
+                          attrs: { id: "selectProducto" },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.selectedTwo = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            }
+                          }
+                        },
                         _vm._l(_vm.productos, function(producto) {
                           return _c(
                             "option",
@@ -66237,7 +66342,32 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "select",
-                        { attrs: { id: "selectProyecto" } },
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.selected,
+                              expression: "selected"
+                            }
+                          ],
+                          attrs: { id: "selectProyecto" },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.selected = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            }
+                          }
+                        },
                         _vm._l(_vm.proyectos, function(proyecto) {
                           return _c(
                             "option",

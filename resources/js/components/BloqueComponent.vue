@@ -20,7 +20,7 @@
 
                         <div class="form-group">
                            <label>Clave Curso</label>
-                           <select id="selectCurso">
+                           <select id="selectCurso" v-model="selected">
                                <option :value="curso.clave" v-for="curso in cursos" v-bind:key="curso.clave">Nombre : {{curso.nombre}}</option>
                            </select>
                         </div>
@@ -58,6 +58,7 @@
                   <th style="position:sticky; top:0; background: #000000">Clave Curso</th>
                   <th style="position:sticky; top:0; background: #000000">Clave Status</th>
                   <th style="position:sticky; top:0; background: #000000">Versión</th>
+                  <th style="position:sticky; top:0; background: #000000">Ruta Portal</th>
                   <th style="position:sticky; top:0; background: #000000">Acciòn</th>
                   <th style="position:sticky; top:0; background: #000000">Acciòn</th>
                </tr>
@@ -69,6 +70,7 @@
                   <td>{{bloque.cve_curso}}</td>
                   <td>{{bloque.cve_status}}</td>
                   <td>{{bloque.version}}</td>
+                  <td>{{bloque.ruta_portal}}</td>
                   <td>
                     <button type="button" class="btn btn-secondary" v-on:click="edit(bloque)" data-toggle="modal" data-target="#exampleModal">
                       Editar
@@ -96,6 +98,8 @@
        },
    
        data(){
+
+          
            return {
                bloques: [],
                cursos:[],
@@ -106,13 +110,16 @@
                   cve_curso : "",
                   cve_status : "",
                   version : "",
+                  ruta_portal: ""
                   
                 },
 
                 curso:{
                     clave: "",
                     nombre: ""
-                }
+                },
+
+                selected : ""
 
            }
    
@@ -164,9 +171,10 @@
 
                   clave  : this.bloque.clave,
                   nombre : this.bloque.nombre,
-                  cve_curso : this.bloque.cve_curso,
+                  cve_curso : this.curso.clave,
                   cve_status : this.bloque.cve_status,
                   version : this.bloque.version,
+                  ruta_portal : this.bloque.ruta_portal
                        
                        })
                        
@@ -174,9 +182,12 @@
 
                 this.bloque.clave  = ""
                 this.bloque.nombre = ""
-                this.bloque.cve_curso = ""
+                this.curso.clave = ""
                 this.bloque.cve_status = ""
-                this.bloque.version = ""                     
+                this.bloque.version = ""
+                this.bloque.ruta_portal = ""
+
+                this.selected = ""
                                             
                        swal.fire({
                          icon: 'success',
@@ -241,9 +252,10 @@
 
             this.bloque.clave = bloque.clave
             this.bloque.nombre = bloque.nombre
-            this.bloque.cve_curso = bloque.nom_sep
-            this.bloque.cve_status = bloque.btotales
-            this.bloque.version = bloque.blib
+            this.bloque.cve_curso = bloque.cve_curso
+            this.bloque.cve_status = bloque.cve_status
+            this.bloque.version = bloque.version
+            this.bloque.ruta_portal = bloque.ruta_portal
     
            },
 
@@ -254,9 +266,10 @@
               {
                   clave  : this.bloque.clave,
                   nombre : this.bloque.nombre,
-                  cve_curso : this.bloque.cve_curso,
+                  cve_curso : this.curso.clave,
                   cve_status : this.bloque.cve_status,
-                  version : this.bloque.version,                    
+                  version : this.bloque.version,
+                  ruta_portal : this.bloque.ruta_portal                    
                })
               
               
@@ -267,6 +280,9 @@
                 this.bloque.cve_curso = ""
                 this.bloque.cve_status = ""
                 this.bloque.version = ""
+                this.bloque.ruta_portal = ""
+                
+                this.selected = ""
                                 
                       swal.fire({
                          icon: 'success',

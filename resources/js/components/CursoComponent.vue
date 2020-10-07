@@ -40,7 +40,7 @@
 
                         <div class="form-group">
                            <label>cve_usuario</label>
-                            <select id="selectUsuario">
+                            <select id="selectUsuario" v-model="selected">
                                <option :value="usuario.clave" v-for="usuario in usuarios" v-bind:key="usuario.clave">Nombre : {{usuario.nombre}}</option>
                            </select>
                         </div>
@@ -171,6 +171,8 @@
                     cve_tipousuario:""
                   },
 
+                  selected: ""
+
            }
    
        },
@@ -248,6 +250,8 @@
                 this.curso.status = ""
                 this.curso.ruta_operacion = ""
                 this.curso.cve_status = ""
+
+                this.selected = ""
 
                      
                                             
@@ -364,6 +368,8 @@
                 this.curso.status = ""
                 this.curso.ruta_operacion = ""
                 this.curso.cve_status = ""
+
+                this.selected = ""
                 
                       swal.fire({
                          icon: 'success',

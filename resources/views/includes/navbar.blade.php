@@ -22,6 +22,9 @@
         <li class="nav-item">
           <a class="nav-link" href="bloques">Bloques</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="pivot">Productos-Proyectos</a>
+        </li>
       </ul>
     </div>
   </nav>

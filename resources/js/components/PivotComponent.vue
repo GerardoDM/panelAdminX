@@ -14,13 +14,13 @@
                      <form>
                         <div class="form-group">
                            <label>Producto</label>
-                            <select  id="selectProducto">
+                            <select  id="selectProducto" v-model="selectedTwo">
                                 <option :value="producto.clave" v-for="producto in productos" v-bind:key="producto.clave">{{producto.nombre}}</option>    
                             </select>                           
                         </div>
                         <div class="form-group" >
                            <label>Proyecto</label>
-                           <select id="selectProyecto">
+                           <select id="selectProyecto" v-model="selected">
                                <option :value="proyecto.clave" v-for="proyecto in proyectos" v-bind:key="proyecto.clave">{{proyecto.nombre}}</option>
                            </select>
                         </div>
@@ -115,6 +115,9 @@
                     descripcion: "",
                     nomenclatura: "",
                 },
+
+                selected : "",
+                selectedTwo : ""
            
            }
    
@@ -191,6 +194,9 @@
                      this.pivot.cve_producto = ""
                      this.pivot.cve_proyecto = ""
                      this.pivot.nolicencias = "" 
+
+                    this.selected = ""
+                    this.selectedTwo = ""
                     
                        swal.fire({
                          icon: 'success',
@@ -277,6 +283,9 @@
                this.pivot.cve_producto = ""
                this.pivot.cve_proyecto = ""
                this.pivot.nolicencias = "" 
+
+               this.selected = ""
+               this.selectedTwo = ""
                 
                       swal.fire({
                          icon: 'success',
