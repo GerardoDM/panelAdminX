@@ -11,32 +11,37 @@
                      </button>
                   </div>
                   <div class="modal-body">
-                     <form>
+                     <form id="form">
                         <div class="form-group">
                            <label>Clave</label>
-                           <input type="text" class="form-control" v-model="proyecto.clave">
+                           <input type="text" class="form-control" v-model="proyecto.clave" required>
+                           <div>{{ errors.nombre }}</div>
                         </div>
 
                         <div class="form-group">
                            <label>Nombre</label>
-                           <input type="text" class="form-control" v-model="proyecto.nombre">
+                           <input type="text" class="form-control" v-model="proyecto.nombre" required>
+                           <div>{{ errors.nombre }}</div>
                         </div>
 
                         <div class="form-group">
                            <label>Fecha</label>
                            <datepicker id="dd" v-model="date" :value="date" :format="customFormatter"></datepicker>
+                           <div>{{ errors.nombre }}</div>
                         </div>
 
                         <div class="form-group">
                            <label>Descripción</label>
-                           <input type="text" class="form-control" v-model="proyecto.descripcion">
+                           <input type="text" class="form-control" v-model="proyecto.descripcion" required>
+                           <div>{{ errors.nombre }}</div>
                         </div>
                         <div class="form-group">
                            <label>Nomenclatura</label>
-                           <input type="text" :maxlength="2" class="form-control" v-model="proyecto.nomenclatura">
+                           <input type="text" :maxlength="2" class="form-control" v-model="proyecto.nomenclatura" required>
+                           <div>{{ errors.nombre }}</div>
                         </div>
                        
-                        <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click="insert(proyecto)">Agregar</button>
+                        <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click="insert(proyecto); validation()">Agregar</button>
                          <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(proyecto.clave)">Actualizar</button>
                      </form>
                   </div>
@@ -108,7 +113,10 @@ import moment from 'moment'
                     nomenclatura: "",
                 },
 
-                date : ""
+               date : "",
+               errors: {},
+               message: null,
+               valid: true,
            }
    
        },
@@ -142,6 +150,73 @@ import moment from 'moment'
                        console.log(e);
                    })
                
+           },
+
+           validation() {
+              
+               const validateNombre = nombre => {
+               if (!nombre.length) {
+                  
+                  return { valid: false, error: "This field is required" };
+               }
+               return { valid: true, error: null };
+               };
+
+               const validateFecha = fecha => {
+               if (!fecha.length) {
+                  
+                  return { valid: false, error: 'This field is required.' };
+               }
+
+               return { valid: true, error: null };
+               }
+
+               const validateDescripcion = descripcion => {
+               if (!descripcion.length) {
+                  
+                  return { valid: false, error: "This field is required" };
+                  
+               }
+
+               return { valid: true, error: null };
+               };
+
+               const validateNomenclatura = nomenclatura => {
+               if (!nomenclatura.length) {
+                  
+                  return { valid: false, error: "This field is required" };
+               }
+               
+               return { valid: true, error: null };
+               };
+
+               this.errors = {}
+
+               const validNombre = validateNombre(this.proyecto.nombre);
+               this.errors.nombre = validNombre.error;
+               if (this.valid) {
+               this.valid = validNombre.valid
+               }
+
+               const validFecha = validateFecha(this.proyecto.fecha);
+               this.errors.fecha = validFecha.error;
+               if (this.valid) {
+               this.valid = validFecha.valid
+               }
+
+               const validDescripcion = validateDescripcion(this.proyecto.descripcion);
+               this.errors.descripcion = validDescripcion.error;
+               if (this.valid) {
+               this.valid = validDescripcion.valid
+               }
+
+               const validNomenclatura = validateNomenclatura(this.proyecto.nomenclatura)
+               this.errors.nomenclatura = validNomenclatura.error
+               if (this.valid) {
+               this.valid = validNomenclatura.valid
+               }
+               
+
            },
    
            

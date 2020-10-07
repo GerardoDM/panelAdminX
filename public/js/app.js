@@ -1993,7 +1993,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     $("#selectCurso").change(function () {
@@ -2154,7 +2153,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
 //
 //
 //
@@ -2927,7 +2925,7 @@ __webpack_require__.r(__webpack_exports__);
           confirmButtonText: 'Si, eliminar'
         }).then(function (result) {
           if (result.isConfirmed) {
-            swal.fire('Eliminado', 'El producto ha sido borrado', 'success');
+            swal.fire('Eliminado', 'La relación ha sido borrada', 'success');
 
             _this5.traer();
           }
@@ -3323,6 +3321,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3340,7 +3343,10 @@ __webpack_require__.r(__webpack_exports__);
         descripcion: "",
         nomenclatura: ""
       },
-      date: ""
+      date: "",
+      errors: {},
+      message: null,
+      valid: true
     };
   },
   created: function created() {
@@ -3362,6 +3368,92 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (e) {
         console.log(e);
       });
+    },
+    validation: function validation() {
+      var validateNombre = function validateNombre(nombre) {
+        if (!nombre.length) {
+          return {
+            valid: false,
+            error: "This field is required"
+          };
+        }
+
+        return {
+          valid: true,
+          error: null
+        };
+      };
+
+      var validateFecha = function validateFecha(fecha) {
+        if (!fecha.length) {
+          return {
+            valid: false,
+            error: 'This field is required.'
+          };
+        }
+
+        return {
+          valid: true,
+          error: null
+        };
+      };
+
+      var validateDescripcion = function validateDescripcion(descripcion) {
+        if (!descripcion.length) {
+          return {
+            valid: false,
+            error: "This field is required"
+          };
+        }
+
+        return {
+          valid: true,
+          error: null
+        };
+      };
+
+      var validateNomenclatura = function validateNomenclatura(nomenclatura) {
+        if (!nomenclatura.length) {
+          return {
+            valid: false,
+            error: "This field is required"
+          };
+        }
+
+        return {
+          valid: true,
+          error: null
+        };
+      };
+
+      this.errors = {};
+      var validNombre = validateNombre(this.proyecto.nombre);
+      this.errors.nombre = validNombre.error;
+
+      if (this.valid) {
+        this.valid = validNombre.valid;
+      }
+
+      var validFecha = validateFecha(this.proyecto.fecha);
+      this.errors.fecha = validFecha.error;
+
+      if (this.valid) {
+        this.valid = validFecha.valid;
+      }
+
+      var validDescripcion = validateDescripcion(this.proyecto.descripcion);
+      this.errors.descripcion = validDescripcion.error;
+
+      if (this.valid) {
+        this.valid = validDescripcion.valid;
+      }
+
+      var validNomenclatura = validateNomenclatura(this.proyecto.nomenclatura);
+      this.errors.nomenclatura = validNomenclatura.error;
+
+      if (this.valid) {
+        this.valid = validNomenclatura.valid;
+      }
     },
     insert: function insert(clave) {
       var _this2 = this;
@@ -64767,7 +64859,7 @@ var render = function() {
                 _vm._m(0),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
-                  _c("form", [
+                  _c("form", { attrs: { id: "form" } }, [
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", [_vm._v("Nombre")]),
                       _vm._v(" "),
@@ -65193,7 +65285,7 @@ var render = function() {
                 _vm._m(0),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
-                  _c("form", [
+                  _c("form", { attrs: { id: "form" } }, [
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", [_vm._v("Nombre")]),
                       _vm._v(" "),
@@ -65886,7 +65978,7 @@ var render = function() {
                 _vm._m(0),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
-                  _c("form", [
+                  _c("form", { attrs: { id: "form" } }, [
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", [_vm._v("Nombre")]),
                       _vm._v(" "),
@@ -66291,7 +66383,7 @@ var render = function() {
                 _vm._m(0),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
-                  _c("form", [
+                  _c("form", { attrs: { id: "form" } }, [
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", [_vm._v("Producto")]),
                       _vm._v(" "),
@@ -66660,7 +66752,7 @@ var render = function() {
                 _vm._m(0),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
-                  _c("form", [
+                  _c("form", { attrs: { id: "form" } }, [
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", [_vm._v("Clave")]),
                       _vm._v(" "),
@@ -67061,7 +67153,7 @@ var render = function() {
                 _vm._m(0),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
-                  _c("form", [
+                  _c("form", { attrs: { id: "form" } }, [
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", [_vm._v("Clave")]),
                       _vm._v(" "),
@@ -67075,7 +67167,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "text" },
+                        attrs: { type: "text", required: "" },
                         domProps: { value: _vm.proyecto.clave },
                         on: {
                           input: function($event) {
@@ -67085,7 +67177,9 @@ var render = function() {
                             _vm.$set(_vm.proyecto, "clave", $event.target.value)
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _c("div", [_vm._v(_vm._s(_vm.errors.nombre))])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -67101,7 +67195,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "text" },
+                        attrs: { type: "text", required: "" },
                         domProps: { value: _vm.proyecto.nombre },
                         on: {
                           input: function($event) {
@@ -67115,7 +67209,9 @@ var render = function() {
                             )
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _c("div", [_vm._v(_vm._s(_vm.errors.nombre))])
                     ]),
                     _vm._v(" "),
                     _c(
@@ -67137,7 +67233,9 @@ var render = function() {
                             },
                             expression: "date"
                           }
-                        })
+                        }),
+                        _vm._v(" "),
+                        _c("div", [_vm._v(_vm._s(_vm.errors.nombre))])
                       ],
                       1
                     ),
@@ -67155,7 +67253,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "text" },
+                        attrs: { type: "text", required: "" },
                         domProps: { value: _vm.proyecto.descripcion },
                         on: {
                           input: function($event) {
@@ -67169,7 +67267,9 @@ var render = function() {
                             )
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _c("div", [_vm._v(_vm._s(_vm.errors.nombre))])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -67185,7 +67285,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "text", maxlength: 2 },
+                        attrs: { type: "text", maxlength: 2, required: "" },
                         domProps: { value: _vm.proyecto.nomenclatura },
                         on: {
                           input: function($event) {
@@ -67199,7 +67299,9 @@ var render = function() {
                             )
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _c("div", [_vm._v(_vm._s(_vm.errors.nombre))])
                     ]),
                     _vm._v(" "),
                     _c(
@@ -67209,7 +67311,8 @@ var render = function() {
                         attrs: { type: "button", id: "btnAgregar" },
                         on: {
                           click: function($event) {
-                            return _vm.insert(_vm.proyecto)
+                            _vm.insert(_vm.proyecto)
+                            _vm.validation()
                           }
                         }
                       },

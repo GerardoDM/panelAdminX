@@ -11,16 +11,16 @@
           <a class="nav-link" href="#">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="productos">Productos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="proyectos">Proyectos</a>
+          <a class="nav-link" href="bloques">Bloques</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="cursos">Cursos</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="bloques">Bloques</a>
+          <a class="nav-link" href="proyectos">Proyectos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="productos">Productos</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="pivot">Productos-Proyectos</a>

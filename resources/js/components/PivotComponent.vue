@@ -11,7 +11,7 @@
                      </button>
                   </div>
                   <div class="modal-body">
-                     <form>
+                     <form id="form">
                         <div class="form-group">
                            <label>Producto</label>
                             <select  id="selectProducto" v-model="selectedTwo">
@@ -235,7 +235,7 @@
                if (result.isConfirmed) {
                    swal.fire(
                    'Eliminado',
-                   'El producto ha sido borrado',
+                   'La relación ha sido borrada',
                    'success'
                    )
    
@@ -262,6 +262,7 @@
             this.pivot.cve_producto = pivot.cve_producto;
             this.pivot.cve_proyecto = pivot.cve_proyecto;
             this.pivot.nolicencias = pivot.nolicencias;
+
 
            },
 

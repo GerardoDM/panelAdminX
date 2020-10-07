@@ -11,8 +11,7 @@
                      </button>
                   </div>
                   <div class="modal-body">
-                     <form>
-
+                     <form id="form">
                         <div class="form-group">
                            <label>Nombre</label>
                            <input type="text" class="form-control" v-model="bloque.nombre">

@@ -11,7 +11,7 @@
                      </button>
                   </div>
                   <div class="modal-body">
-                     <form>
+                     <form id="form">
                          <div class="form-group">
                            <label>Clave</label>
                            <input type="text" class="form-control" v-model="producto.clave" required>
