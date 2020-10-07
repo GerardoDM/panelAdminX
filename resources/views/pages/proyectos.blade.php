@@ -10,9 +10,6 @@
     
     @include('includes.navbar')
     
-
-    <h1>Proyectos</h1>
-
     <main id = "app">
         <Proyectos-component></Proyectos-component>
     </main>

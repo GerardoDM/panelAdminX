@@ -9,9 +9,6 @@
 <body>
     
     @include('includes.navbar')
-    
-
-    <h1>Cursos</h1>
 
     <main id = "app">
         <curso-component></curso-component>

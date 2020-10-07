@@ -25,12 +25,12 @@
 
                         <div class="form-group">
                            <label>btotales</label>
-                           <input type="text" class="form-control" v-model="curso.btotales">
+                           <input type="numeric" class="form-control" v-model="curso.btotales">
                         </div>
 
                         <div class="form-group">
                            <label>blib</label>
-                           <input type="text" class="form-control" v-model="curso.blib">
+                           <input type="numeric" class="form-control" v-model="curso.blib">
                         </div>
 
                         <div class="form-group">
@@ -41,7 +41,7 @@
                         <div class="form-group">
                            <label>cve_usuario</label>
                             <select id="selectUsuario">
-                               <option :value="usuario.clave" v-for="usuario in usuarios" v-bind:key="usuario.clave">{{usuario.nombre}}</option>
+                               <option :value="usuario.clave" v-for="usuario in usuarios" v-bind:key="usuario.clave">Nombre : {{usuario.nombre}}</option>
                            </select>
                         </div>
 
@@ -67,7 +67,7 @@
 
                           <div class="form-group">
                            <label>Clave Status</label>
-                           <input type="text" class="form-control" v-model="curso.cve_status">
+                           <input type="numeric" class="form-control" v-model="curso.cve_status">
                         </div>
                        
                         <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click="insert(curso)">Agregar</button>
@@ -78,7 +78,8 @@
             </div>
          </div>
       </div>
-      <div class="container" style="height:400px; width:max; overflow-y: scroll">
+      <div class="container; mt-4" style="height:400px; width:max; overflow-y: scroll">
+          <h2 class="mb-4">Cursos</h2>
          <table class="table table-hover table-dark">
             <thead>
                <tr>
@@ -122,7 +123,7 @@
             </tbody>
          </table>
       </div>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Agregar</button>
+      <button type="button" class="btn btn-primary btn-block mt-4" data-toggle="modal" data-target="#exampleModal">Agregar</button>
    </div>
 </template>
 <script>
@@ -224,7 +225,7 @@
                   btotales : this.curso.btotales,
                   blib : this.curso.blib,
                   autor : this.curso.autor,
-                  cve_usuario : this.curso.cve_usuario,
+                  cve_usuario : this.usuario.clave,
                   ruta_descarga : this.curso.ruta_descarga,
                   ruta_ver : this.curso.ruta_ver,
                   status : this.curso.status,
@@ -339,7 +340,7 @@
                   btotales : this.curso.btotales,
                   blib : this.curso.blib,
                   autor : this.curso.autor,
-                  cve_usuario : this.curso.cve_usuario,
+                  cve_usuario : this.usuario.clave,
                   ruta_descarga : this.curso.ruta_descarga,
                   ruta_ver : this.curso.ruta_ver,
                   status : this.curso.status,

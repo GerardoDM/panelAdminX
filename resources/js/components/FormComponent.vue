@@ -44,7 +44,8 @@
             </div>
          </div>
       </div>
-      <div class="container" style="height:400px; overflow-y: scroll">
+      <div class="container; mt-4" style="height:400px; overflow-y: scroll">
+         <h2 class="mb-4">Usuarios</h2>
          <table class="table table-hover table-dark" >
             <thead>
                <tr>
@@ -72,7 +73,7 @@
             </tbody>
          </table>
       </div>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Agregar</button>
+      <button type="button" class="btn btn-primary btn-block mt-4" data-toggle="modal" data-target="#exampleModal">Agregar</button>
    </div>
 </template>
 <script>

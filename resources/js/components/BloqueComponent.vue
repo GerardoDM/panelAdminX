@@ -20,12 +20,14 @@
 
                         <div class="form-group">
                            <label>Clave Curso</label>
-                           <input type="text" class="form-control" v-model="bloque.cve_curso">
+                           <select id="selectCurso">
+                               <option :value="curso.clave" v-for="curso in cursos" v-bind:key="curso.clave">Nombre : {{curso.nombre}}</option>
+                           </select>
                         </div>
 
                         <div class="form-group">
                            <label>Clave Status</label>
-                           <input type="text" class="form-control" v-model="bloque.cve_status">
+                           <input type="numeric" class="form-control" v-model="bloque.cve_status">
                         </div>
 
                         <div class="form-group">
@@ -46,7 +48,8 @@
             </div>
          </div>
       </div>
-      <div class="container" style="height:400px; width:max; overflow-y: scroll">
+      <div class="container; mt-4" style="height:400px; width:max; overflow-y: scroll">
+          <h2 class="mb-4">Bloques</h2>
          <table class="table table-hover table-dark">
             <thead>
                <tr>
@@ -76,7 +79,7 @@
             </tbody>
          </table>
       </div>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Agregar</button>
+      <button type="button" class="btn btn-primary btn-block mt-4" data-toggle="modal" data-target="#exampleModal">Agregar</button>
    </div>
 </template>
 <script>
@@ -86,8 +89,8 @@
 
        mounted(){
 
-            $("#selectUsuario").change(function(){
-                this.usuario.clave = $("#selectUsuario").val();
+            $("#selectCurso").change(function(){
+                this.curso.clave = $("#selectCurso").val();
                 }.bind(this)); 
            
        },
@@ -95,7 +98,7 @@
        data(){
            return {
                bloques: [],
-               usuarios: [],
+               cursos:[],
    
                bloque: {
                   clave  : "",
@@ -106,17 +109,10 @@
                   
                 },
 
-                usuario: {
+                curso:{
                     clave: "",
-                    nombre: "",
-                    apepat: "",
-                    apemat: "",
-                    mail: "",
-                    nickname: "",
-                    pass: "",
-                    status:"",
-                    cve_tipousuario:""
-                  },
+                    nombre: ""
+                }
 
            }
    
@@ -124,7 +120,7 @@
    
        created(){
            this.traer()
-           this.traerUsuarios()
+           this.traerCursos()
        },
    
        methods:{
@@ -143,12 +139,12 @@
                
            },
 
-            traerUsuarios(){
+           traerCursos(){
    
               self = this
-               axios.get('/api/usuarios')
+               axios.get('/api/cursos')
                    .then(response => {
-                       this.usuarios = response.data;
+                       this.cursos = response.data;
                    })
                    .catch(e => {
                        

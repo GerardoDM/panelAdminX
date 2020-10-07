@@ -14,11 +14,11 @@
                      <form>
                          <div class="form-group">
                            <label>Clave</label>
-                           <input type="text" class="form-control" v-model="producto.clave">
+                           <input type="text" class="form-control" v-model="producto.clave" required>
                         </div>
                         <div class="form-group">
                            <label>Nombre</label>
-                           <input type="text" class="form-control" v-model="producto.nombre">
+                           <input type="text" class="form-control" v-model="producto.nombre" required>
                         </div>
                         <div class="form-group">
                            <label>Edicion</label>
@@ -28,12 +28,15 @@
                            <label>Logo Producto</label>
                            <input type="file" class="form-control-file" @change="onFileChange" >
                         </div>
+
+                        <img v-bind:src="imagePreview" width="200" height="200" v-show="showPreview"/>
+
                         <div class="form-group">
                            <label>Nomenclatura</label>
-                           <input type="text" class="form-control" v-model="producto.nomenclatura">
+                           <input type="text" :maxlength="3"  class="form-control" v-model="producto.nomenclatura" required>
                         </div>
   
-                            <img v-bind:src="imagePreview" width="100" height="100" v-show="showPreview"/>
+                            
                                            
                         <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click="insert(producto)">Agregar</button>
                          <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(producto.clave)">Actualizar</button>
@@ -43,7 +46,8 @@
             </div>
          </div>
       </div>
-      <div class="container" style="height:400px; overflow-y: scroll">
+      <div class="container; mt-4" style="height:400px; overflow-y: scroll">
+         <h2 class="mb-4">Productos</h2>
          <table class="table table-hover table-dark" >
             <thead>
                <tr>
@@ -73,7 +77,7 @@
             </tbody>
          </table>
       </div>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Agregar</button>
+      <button type="button" class="btn btn-primary btn-block mt-4" data-toggle="modal" data-target="#exampleModal">Agregar</button>
    </div>
 </template>
 <script>

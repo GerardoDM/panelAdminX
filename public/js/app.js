@@ -1989,16 +1989,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    $("#selectUsuario").change(function () {
-      this.usuario.clave = $("#selectUsuario").val();
+    $("#selectCurso").change(function () {
+      this.curso.clave = $("#selectCurso").val();
     }.bind(this));
   },
   data: function data() {
     return {
       bloques: [],
-      usuarios: [],
+      cursos: [],
       bloque: {
         clave: "",
         nombre: "",
@@ -2006,22 +2009,15 @@ __webpack_require__.r(__webpack_exports__);
         cve_status: "",
         version: ""
       },
-      usuario: {
+      curso: {
         clave: "",
-        nombre: "",
-        apepat: "",
-        apemat: "",
-        mail: "",
-        nickname: "",
-        pass: "",
-        status: "",
-        cve_tipousuario: ""
+        nombre: ""
       }
     };
   },
   created: function created() {
     this.traer();
-    this.traerUsuarios();
+    this.traerCursos();
   },
   methods: {
     traer: function traer() {
@@ -2034,12 +2030,12 @@ __webpack_require__.r(__webpack_exports__);
         console.log(e);
       });
     },
-    traerUsuarios: function traerUsuarios() {
+    traerCursos: function traerCursos() {
       var _this2 = this;
 
       self = this;
-      axios.get('/api/usuarios').then(function (response) {
-        _this2.usuarios = response.data;
+      axios.get('/api/cursos').then(function (response) {
+        _this2.cursos = response.data;
       })["catch"](function (e) {
         console.log(e);
       });
@@ -2274,6 +2270,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     $("#selectUsuario").change(function () {
@@ -2347,7 +2344,7 @@ __webpack_require__.r(__webpack_exports__);
         btotales: this.curso.btotales,
         blib: this.curso.blib,
         autor: this.curso.autor,
-        cve_usuario: this.curso.cve_usuario,
+        cve_usuario: this.usuario.clave,
         ruta_descarga: this.curso.ruta_descarga,
         ruta_ver: this.curso.ruta_ver,
         status: this.curso.status,
@@ -2429,7 +2426,7 @@ __webpack_require__.r(__webpack_exports__);
         btotales: this.curso.btotales,
         blib: this.curso.blib,
         autor: this.curso.autor,
-        cve_usuario: this.curso.cve_usuario,
+        cve_usuario: this.usuario.clave,
         ruta_descarga: this.curso.ruta_descarga,
         ruta_ver: this.curso.ruta_ver,
         status: this.curso.status,
@@ -2507,6 +2504,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -2727,6 +2725,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -3045,6 +3044,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {},
   data: function data() {
@@ -3220,6 +3223,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
+//
 //
 //
 //
@@ -64773,31 +64777,21 @@ var render = function() {
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", [_vm._v("Clave Curso")]),
                       _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.bloque.cve_curso,
-                            expression: "bloque.cve_curso"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text" },
-                        domProps: { value: _vm.bloque.cve_curso },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.bloque,
-                              "cve_curso",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      })
+                      _c(
+                        "select",
+                        { attrs: { id: "selectCurso" } },
+                        _vm._l(_vm.cursos, function(curso) {
+                          return _c(
+                            "option",
+                            {
+                              key: curso.clave,
+                              domProps: { value: curso.clave }
+                            },
+                            [_vm._v("Nombre : " + _vm._s(curso.nombre))]
+                          )
+                        }),
+                        0
+                      )
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -64813,7 +64807,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "text" },
+                        attrs: { type: "numeric" },
                         domProps: { value: _vm.bloque.cve_status },
                         on: {
                           input: function($event) {
@@ -64929,10 +64923,12 @@ var render = function() {
     _c(
       "div",
       {
-        staticClass: "container",
+        staticClass: "container; mt-4",
         staticStyle: { height: "400px", width: "max", "overflow-y": "scroll" }
       },
       [
+        _c("h2", { staticClass: "mb-4" }, [_vm._v("Bloques")]),
+        _vm._v(" "),
         _c("table", { staticClass: "table table-hover table-dark" }, [
           _vm._m(1),
           _vm._v(" "),
@@ -64996,7 +64992,7 @@ var render = function() {
     _c(
       "button",
       {
-        staticClass: "btn btn-primary",
+        staticClass: "btn btn-primary btn-block mt-4",
         attrs: {
           type: "button",
           "data-toggle": "modal",
@@ -65208,7 +65204,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "text" },
+                        attrs: { type: "numeric" },
                         domProps: { value: _vm.curso.btotales },
                         on: {
                           input: function($event) {
@@ -65234,7 +65230,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "text" },
+                        attrs: { type: "numeric" },
                         domProps: { value: _vm.curso.blib },
                         on: {
                           input: function($event) {
@@ -65286,7 +65282,7 @@ var render = function() {
                               key: usuario.clave,
                               domProps: { value: usuario.clave }
                             },
-                            [_vm._v(_vm._s(usuario.nombre))]
+                            [_vm._v("Nombre : " + _vm._s(usuario.nombre))]
                           )
                         }),
                         0
@@ -65418,7 +65414,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "text" },
+                        attrs: { type: "numeric" },
                         domProps: { value: _vm.curso.cve_status },
                         on: {
                           input: function($event) {
@@ -65478,10 +65474,12 @@ var render = function() {
     _c(
       "div",
       {
-        staticClass: "container",
+        staticClass: "container; mt-4",
         staticStyle: { height: "400px", width: "max", "overflow-y": "scroll" }
       },
       [
+        _c("h2", { staticClass: "mb-4" }, [_vm._v("Cursos")]),
+        _vm._v(" "),
         _c("table", { staticClass: "table table-hover table-dark" }, [
           _vm._m(1),
           _vm._v(" "),
@@ -65559,7 +65557,7 @@ var render = function() {
     _c(
       "button",
       {
-        staticClass: "btn btn-primary",
+        staticClass: "btn btn-primary btn-block mt-4",
         attrs: {
           type: "button",
           "data-toggle": "modal",
@@ -66008,10 +66006,12 @@ var render = function() {
     _c(
       "div",
       {
-        staticClass: "container",
+        staticClass: "container; mt-4",
         staticStyle: { height: "400px", "overflow-y": "scroll" }
       },
       [
+        _c("h2", { staticClass: "mb-4" }, [_vm._v("Usuarios")]),
+        _vm._v(" "),
         _c("table", { staticClass: "table table-hover table-dark" }, [
           _vm._m(1),
           _vm._v(" "),
@@ -66073,7 +66073,7 @@ var render = function() {
     _c(
       "button",
       {
-        staticClass: "btn btn-primary",
+        staticClass: "btn btn-primary btn-block mt-4",
         attrs: {
           type: "button",
           "data-toggle": "modal",
@@ -66265,7 +66265,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "text" },
+                        attrs: { type: "numeric" },
                         domProps: { value: _vm.pivot.nolicencias },
                         on: {
                           input: function($event) {
@@ -66325,10 +66325,12 @@ var render = function() {
     _c(
       "div",
       {
-        staticClass: "container",
+        staticClass: "container; mt-4",
         staticStyle: { height: "400px", "overflow-y": "scroll" }
       },
       [
+        _c("h2", { staticClass: "mb-4" }, [_vm._v("Productos-Proyectos")]),
+        _vm._v(" "),
         _c("table", { staticClass: "table table-hover table-dark" }, [
           _vm._m(1),
           _vm._v(" "),
@@ -66390,7 +66392,7 @@ var render = function() {
     _c(
       "button",
       {
-        staticClass: "btn btn-primary",
+        staticClass: "btn btn-primary btn-block mt-4",
         attrs: {
           type: "button",
           "data-toggle": "modal",
@@ -66542,7 +66544,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "text" },
+                        attrs: { type: "text", required: "" },
                         domProps: { value: _vm.producto.clave },
                         on: {
                           input: function($event) {
@@ -66568,7 +66570,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "text" },
+                        attrs: { type: "text", required: "" },
                         domProps: { value: _vm.producto.nombre },
                         on: {
                           input: function($event) {
@@ -66625,6 +66627,22 @@ var render = function() {
                       })
                     ]),
                     _vm._v(" "),
+                    _c("img", {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.showPreview,
+                          expression: "showPreview"
+                        }
+                      ],
+                      attrs: {
+                        src: _vm.imagePreview,
+                        width: "200",
+                        height: "200"
+                      }
+                    }),
+                    _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", [_vm._v("Nomenclatura")]),
                       _vm._v(" "),
@@ -66638,7 +66656,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "text" },
+                        attrs: { type: "text", maxlength: 3, required: "" },
                         domProps: { value: _vm.producto.nomenclatura },
                         on: {
                           input: function($event) {
@@ -66654,22 +66672,6 @@ var render = function() {
                         }
                       })
                     ]),
-                    _vm._v(" "),
-                    _c("img", {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.showPreview,
-                          expression: "showPreview"
-                        }
-                      ],
-                      attrs: {
-                        src: _vm.imagePreview,
-                        width: "100",
-                        height: "100"
-                      }
-                    }),
                     _vm._v(" "),
                     _c(
                       "button",
@@ -66714,10 +66716,12 @@ var render = function() {
     _c(
       "div",
       {
-        staticClass: "container",
+        staticClass: "container; mt-4",
         staticStyle: { height: "400px", "overflow-y": "scroll" }
       },
       [
+        _c("h2", { staticClass: "mb-4" }, [_vm._v("Productos")]),
+        _vm._v(" "),
         _c("table", { staticClass: "table table-hover table-dark" }, [
           _vm._m(1),
           _vm._v(" "),
@@ -66781,7 +66785,7 @@ var render = function() {
     _c(
       "button",
       {
-        staticClass: "btn btn-primary",
+        staticClass: "btn btn-primary btn-block mt-4",
         attrs: {
           type: "button",
           "data-toggle": "modal",
@@ -67111,10 +67115,12 @@ var render = function() {
     _c(
       "div",
       {
-        staticClass: "container",
+        staticClass: "container; mt-4",
         staticStyle: { height: "400px", "overflow-y": "scroll" }
       },
       [
+        _c("h2", { staticClass: "mb-4" }, [_vm._v("Proyectos")]),
+        _vm._v(" "),
         _c("table", { staticClass: "table table-hover table-dark" }, [
           _vm._m(1),
           _vm._v(" "),
@@ -67178,7 +67184,7 @@ var render = function() {
     _c(
       "button",
       {
-        staticClass: "btn btn-primary",
+        staticClass: "btn btn-primary btn-block mt-4",
         attrs: {
           type: "button",
           "data-toggle": "modal",

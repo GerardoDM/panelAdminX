@@ -26,7 +26,7 @@
                         </div>
                         <div class="form-group">
                            <label># de Licencias</label>
-                           <input type="text" class="form-control" v-model="pivot.nolicencias">
+                           <input type="numeric" class="form-control" v-model="pivot.nolicencias">
                         </div>
                                              
                         <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click="insert(pivot)">Agregar</button>
@@ -37,7 +37,8 @@
             </div>
          </div>
       </div>
-      <div class="container" style="height:400px; overflow-y: scroll">
+      <div class="container; mt-4" style="height:400px; overflow-y: scroll">
+          <h2 class="mb-4">Productos-Proyectos</h2>
          <table class="table table-hover table-dark" >
             <thead>
                <tr>
@@ -65,7 +66,7 @@
             </tbody>
          </table>
       </div>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Agregar</button>
+      <button type="button" class="btn btn-primary btn-block mt-4" data-toggle="modal" data-target="#exampleModal">Agregar</button>
    </div>
 </template>
 <script>

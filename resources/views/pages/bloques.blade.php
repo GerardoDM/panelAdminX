@@ -10,9 +10,6 @@
     
     @include('includes.navbar')
     
-
-    <h1>Bloques</h1>
-    
     <main id = "app">
         <bloque-component></bloque-component>
     </main>
