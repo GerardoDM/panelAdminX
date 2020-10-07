@@ -7,7 +7,12 @@
     <title>Productos</title>
 </head>
 <body>
+    
+    @include('includes.navbar')
+    
+
     <h1>Productos</h1>
+
     <main id = "app">
         <productos-component></productos-component>
     </main>

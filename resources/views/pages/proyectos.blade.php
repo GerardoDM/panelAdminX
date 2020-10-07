@@ -6,8 +6,13 @@
     <link rel="stylesheet" href="{{mix('css/app.css')}}">
     <title>Proyectos</title>
 </head>
-<body>
+<body> 
+    
+    @include('includes.navbar')
+    
+
     <h1>Proyectos</h1>
+
     <main id = "app">
         <Proyectos-component></Proyectos-component>
     </main>

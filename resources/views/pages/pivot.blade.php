@@ -7,7 +7,12 @@
     <title>Pivot</title>
 </head>
 <body>
+    
+    @include('includes.navbar')
+    
+
     <h1>Producto-Proyecto</h1>
+    
     <main id = "app">
         <pivot-component></pivot-component>
     </main>
