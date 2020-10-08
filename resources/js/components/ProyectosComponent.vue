@@ -15,7 +15,7 @@
                         <div class="form-group">
                            <label>Clave</label>
                            <input type="text" class="form-control" v-model="proyecto.clave" required>
-                           <div>{{ errors.nombre }}</div>
+                           <div>{{ errors.clave }}</div>
                         </div>
 
                         <div class="form-group">
@@ -27,21 +27,21 @@
                         <div class="form-group">
                            <label>Fecha</label>
                            <datepicker id="dd" v-model="date" :value="date" :format="customFormatter"></datepicker>
-                           <div>{{ errors.nombre }}</div>
+                           <div>{{ errors.fecha }}</div>
                         </div>
 
                         <div class="form-group">
                            <label>Descripción</label>
                            <input type="text" class="form-control" v-model="proyecto.descripcion" required>
-                           <div>{{ errors.nombre }}</div>
+                           <div>{{ errors.descripcion }}</div>
                         </div>
                         <div class="form-group">
                            <label>Nomenclatura</label>
                            <input type="text" :maxlength="2" class="form-control" v-model="proyecto.nomenclatura" required>
-                           <div>{{ errors.nombre }}</div>
+                           <div>{{ errors.nomenclatura }}</div>
                         </div>
                        
-                        <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click="insert(proyecto); validation()">Agregar</button>
+                        <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click="validInsert(proyecto)">Agregar</button>
                          <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(proyecto.clave)">Actualizar</button>
                      </form>
                   </div>
@@ -152,12 +152,23 @@ import moment from 'moment'
                
            },
 
+
+           validInsert(clave){
+              if (this.validation()){
+                 this.insert(this.proyecto.clave);
+              } 
+
+              else {
+                 console.log('Form not valid')
+              }
+           },
+
            validation() {
               
                const validateNombre = nombre => {
                if (!nombre.length) {
                   
-                  return { valid: false, error: "This field is required" };
+                  return { valid: false, error: "Este campo es requerido." };
                }
                return { valid: true, error: null };
                };
@@ -165,7 +176,7 @@ import moment from 'moment'
                const validateFecha = fecha => {
                if (!fecha.length) {
                   
-                  return { valid: false, error: 'This field is required.' };
+                  return { valid: false, error: 'Este campo es requerido.' };
                }
 
                return { valid: true, error: null };
@@ -174,7 +185,7 @@ import moment from 'moment'
                const validateDescripcion = descripcion => {
                if (!descripcion.length) {
                   
-                  return { valid: false, error: "This field is required" };
+                  return { valid: false, error: "Este campo es requerido." };
                   
                }
 
@@ -184,7 +195,7 @@ import moment from 'moment'
                const validateNomenclatura = nomenclatura => {
                if (!nomenclatura.length) {
                   
-                  return { valid: false, error: "This field is required" };
+                  return { valid: false, error: "Este campo es requerido." };
                }
                
                return { valid: true, error: null };
@@ -215,6 +226,8 @@ import moment from 'moment'
                if (this.valid) {
                this.valid = validNomenclatura.valid
                }
+
+               return 1;
                
 
            },

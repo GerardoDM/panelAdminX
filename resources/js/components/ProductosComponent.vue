@@ -15,14 +15,17 @@
                          <div class="form-group">
                            <label>Clave</label>
                            <input type="text" class="form-control" v-model="producto.clave" required>
+                           <div>{{ errors.clave }}</div>
                         </div>
                         <div class="form-group">
                            <label>Nombre</label>
                            <input type="text" class="form-control" v-model="producto.nombre" required>
+                           <div>{{ errors.nombre }}</div>
                         </div>
                         <div class="form-group">
                            <label>Edicion</label>
                            <input type="text" class="form-control" v-model="producto.edicion">
+                           <div>{{ errors.edicion }}</div>
                         </div>
                         <div class="form-group">
                            <label>Logo Producto</label>
@@ -34,6 +37,7 @@
                         <div class="form-group">
                            <label>Nomenclatura</label>
                            <input type="text" :maxlength="3"  class="form-control" v-model="producto.nomenclatura" required>
+                           <div>{{ errors.nomenclatura }}</div>
                         </div>
   
                             
@@ -99,8 +103,11 @@
                    
                 },
 
-                imagePreview: null,
-                showPreview: false,
+               imagePreview: null,
+               showPreview: false,
+               errors: {},
+               message: null,
+               valid: true,
            }
    
        },
@@ -149,6 +156,76 @@
                     reader.readAsDataURL( this.producto.logo_producto );
                 }
             }
+
+        },
+
+        validation(){
+
+               const validateClave = clave => {
+               if (!clave.length) {
+                  
+                  return { valid: false, error: "Este campo es requerido." };
+               }
+               return { valid: true, error: null };
+               };
+
+               const validateNombre = nombre => {
+               if (!nombre.length) {
+                  
+                  return { valid: false, error: 'Este campo es requerido.' };
+               }
+
+               return { valid: true, error: null };
+               }
+
+               const validateEdicion = edicion => {
+               if (!edicion.length) {
+                  
+                  return { valid: false, error: "Este campo es requerido." };
+                  
+               }
+
+               return { valid: true, error: null };
+               };
+
+               const validateNomenclatura = nomenclatura => {
+               if (!nomenclatura.length) {
+                  
+                  return { valid: false, error: "Este campo es requerido." };
+                  
+               }
+
+               return { valid: true, error: null };
+               };
+
+               this.errors = {}
+
+               const validClave = validateClave(this.producto.clave);
+               this.errors.clave = validClave.error;
+               if (this.valid) {
+               this.valid = validNombre.valid
+               }
+
+               const validNombre = validateNombre(this.producto.nombre);
+               this.errors.nombre = validNombre.error;
+               if (this.valid) {
+               this.valid = validFecha.valid
+               }
+
+               const validEdicion = validateEdicion(this.producto.edicion);
+               this.errors.edicion = validEdicion.error;
+               if (this.valid) {
+               this.valid = validDescripcion.valid
+               }
+
+               const validNomenclatura = validateNomenclatura(this.producto.nomenclatura)
+               this.errors.nomenclatura = validNomenclatura.error
+               if (this.valid) {
+               this.valid = validNomenclatura.valid
+               }
+
+               return 1;
+
 
         },
 

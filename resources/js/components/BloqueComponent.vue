@@ -15,6 +15,7 @@
                         <div class="form-group">
                            <label>Nombre</label>
                            <input type="text" class="form-control" v-model="bloque.nombre">
+                             <div>{{ errors.nombre }}</div>
                         </div>
 
                         <div class="form-group">
@@ -22,21 +23,25 @@
                            <select id="selectCurso" v-model="selected">
                                <option :value="curso.clave" v-for="curso in cursos" v-bind:key="curso.clave">Nombre : {{curso.nombre}}</option>
                            </select>
+                             <div>{{ errors.cve_curso }}</div>
                         </div>
 
                         <div class="form-group">
                            <label>Clave Status</label>
                            <input type="numeric" class="form-control" v-model="bloque.cve_status">
+                             <div>{{ errors.cve_status }}</div>
                         </div>
 
                         <div class="form-group">
                            <label>Versión</label>
                            <input type="numeric" class="form-control" v-model="bloque.version">
+                             <div>{{ errors.version }}</div>
                         </div>
 
                         <div class="form-group">
                            <label>Ruta Portal</label>
                            <input type="url" class="form-control" v-model="bloque.ruta_portal">
+                             <div>{{ errors.ruta_portal }}</div>
                         </div>
                        
                         <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click="insert(bloque)">Agregar</button>
@@ -111,18 +116,20 @@
                   version : "",
                   ruta_portal: ""
                   
-                },
+               },
 
-                curso:{
-                    clave: "",
-                    nombre: ""
-                },
+               curso:{
+                  clave: "",
+                  nombre: ""
+               },
 
-                selected : ""
-
-           }
+               selected : "",
+               errors: {},
+               message: null,
+               valid: true,
+            }
    
-       },
+         },
    
        created(){
            this.traer()
@@ -130,6 +137,92 @@
        },
    
        methods:{
+
+
+          validation(){
+
+            
+               const validateNombre = nombre => {
+               if (!nombre.length) {
+                  
+                  return { valid: false, error: 'Este campo es requerido.' };
+               }
+
+               return { valid: true, error: null };
+               }
+
+               const validateClaveCurso = cve_curso => {
+               if (!cve_curso.length) {
+                  
+                  return { valid: false, error: "Este campo es requerido." };
+                  
+               }
+
+               return { valid: true, error: null };
+               };
+
+               const validateClaveStatus = cve_status => {
+               if (!cve_status.length) {
+                  
+                  return { valid: false, error: "Este campo es requerido." };
+               }
+               
+               return { valid: true, error: null };
+               };
+
+               const validateVersion = version => {
+               if (!version.length) {
+                  
+                  return { valid: false, error: "Este campo es requerido." };
+               }
+               
+               return { valid: true, error: null };
+               };
+
+               const validateRutaPortal = ruta_portal => {
+               if (!nomenclatura.length) {
+                  
+                  return { valid: false, error: "Este campo es requerido." };
+               }
+               
+               return { valid: true, error: null };
+               };
+
+               this.errors = {}
+
+               const validNombre = validateNombre(this.bloque.nombre);
+               this.errors.nombre = validNombre.error;
+               if (this.valid) {
+               this.valid = validNombre.valid
+               }
+
+               const validClaveCurso = validateClaveCurso(this.bloque.cve_curso);
+               this.errors.cve_curso = validClaveCurso.error;
+               if (this.valid) {
+               this.valid = validClaveCurso.valid
+               }
+
+               const validClaveStatus = validateClaveStatus(this.bloque.cve_status);
+               this.errors.cve_status = validClaveStatus.error;
+               if (this.valid) {
+               this.valid = validClaveStatus.valid
+               }
+
+               const validVersion = validateVersion(this.bloque.version)
+               this.errors.version = validVersion.error
+               if (this.valid) {
+               this.valid = validVersion.valid
+               }
+
+               const validRutaPortal = validateRutaPortal(this.bloque.ruta_portal)
+               this.errors.ruta_portal = validRutaPortal.error
+               if (this.valid) {
+               this.valid = validRutaPortal.valid
+               }
+
+               return 1;
+
+          },
 
            traer(){
    

@@ -16,17 +16,20 @@
                            <label>Producto</label>
                             <select  id="selectProducto" v-model="selectedTwo">
                                 <option :value="producto.clave" v-for="producto in productos" v-bind:key="producto.clave">{{producto.nombre}}</option>    
-                            </select>                           
+                            </select> 
+                            <div>{{ errors.cve_producto }}</div>                          
                         </div>
                         <div class="form-group" >
                            <label>Proyecto</label>
                            <select id="selectProyecto" v-model="selected">
                                <option :value="proyecto.clave" v-for="proyecto in proyectos" v-bind:key="proyecto.clave">{{proyecto.nombre}}</option>
                            </select>
+                           <div>{{ errors.cve_proyecto }}</div>
                         </div>
                         <div class="form-group">
                            <label># de Licencias</label>
                            <input type="numeric" class="form-control" v-model="pivot.nolicencias">
+                           <div>{{ errors.nolicencias }}</div>
                         </div>
                                              
                         <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click="insert(pivot)">Agregar</button>
@@ -117,7 +120,10 @@
                 },
 
                 selected : "",
-                selectedTwo : ""
+                selectedTwo : "",
+                errors : {},
+                valid : true,
+                message : null
            
            }
    
@@ -130,6 +136,60 @@
        },
    
        methods:{
+
+           validation(){
+
+                const validateClaveProducto = cve_producto => {
+               if (!cve_producto.length) {
+                  
+                  return { valid: false, error: "Este campo es requerido." };
+               }
+               return { valid: true, error: null };
+               };
+
+               const validateClaveProyecto = cve_proyecto => {
+               if (!cve_proyecto.length) {
+                  
+                  return { valid: false, error: 'Este campo es requerido.' };
+               }
+
+               return { valid: true, error: null };
+               }
+
+               const validateNumLicencias = nolicencias => {
+               if (!nolicencias.length) {
+                  
+                  return { valid: false, error: "Este campo es requerido." };
+                  
+               }
+
+               return { valid: true, error: null };
+               };
+
+
+                this.errors = {}
+
+               const validClaveProducto = validateClaveProducto(this.pivot.cve_producto);
+               this.errors.cve_producto = validClaveProducto.error;
+               if (this.valid) {
+               this.valid = validClaveProducto.valid
+               }
+
+               const validClaveProyecto = validateClaveProyecto(this.pivot.cve_proyecto);
+               this.errors.cve_proyecto = validClaveProyecto.error;
+               if (this.valid) {
+               this.valid = validClaveProyecto.valid
+               }
+
+               const validNumLicencias = validateNumLicencias(this.pivot.nolicencias);
+               this.errors.nolicencias = validNumLicencias.error;
+               if (this.valid) {
+               this.valid = validNumLicencias.valid
+               }
+
+               return 1;
+
+           },
 
            traer(){
    

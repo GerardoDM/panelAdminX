@@ -1993,6 +1993,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     $("#selectCurso").change(function () {
@@ -2015,7 +2020,10 @@ __webpack_require__.r(__webpack_exports__);
         clave: "",
         nombre: ""
       },
-      selected: ""
+      selected: "",
+      errors: {},
+      message: null,
+      valid: true
     };
   },
   created: function created() {
@@ -2023,6 +2031,115 @@ __webpack_require__.r(__webpack_exports__);
     this.traerCursos();
   },
   methods: {
+    validation: function validation() {
+      var validateNombre = function validateNombre(nombre) {
+        if (!nombre.length) {
+          return {
+            valid: false,
+            error: 'Este campo es requerido.'
+          };
+        }
+
+        return {
+          valid: true,
+          error: null
+        };
+      };
+
+      var validateClaveCurso = function validateClaveCurso(cve_curso) {
+        if (!cve_curso.length) {
+          return {
+            valid: false,
+            error: "Este campo es requerido."
+          };
+        }
+
+        return {
+          valid: true,
+          error: null
+        };
+      };
+
+      var validateClaveStatus = function validateClaveStatus(cve_status) {
+        if (!cve_status.length) {
+          return {
+            valid: false,
+            error: "Este campo es requerido."
+          };
+        }
+
+        return {
+          valid: true,
+          error: null
+        };
+      };
+
+      var validateVersion = function validateVersion(version) {
+        if (!version.length) {
+          return {
+            valid: false,
+            error: "Este campo es requerido."
+          };
+        }
+
+        return {
+          valid: true,
+          error: null
+        };
+      };
+
+      var validateRutaPortal = function validateRutaPortal(ruta_portal) {
+        if (!nomenclatura.length) {
+          return {
+            valid: false,
+            error: "Este campo es requerido."
+          };
+        }
+
+        return {
+          valid: true,
+          error: null
+        };
+      };
+
+      this.errors = {};
+      var validNombre = validateNombre(this.bloque.nombre);
+      this.errors.nombre = validNombre.error;
+
+      if (this.valid) {
+        this.valid = validNombre.valid;
+      }
+
+      var validClaveCurso = validateClaveCurso(this.bloque.cve_curso);
+      this.errors.cve_curso = validClaveCurso.error;
+
+      if (this.valid) {
+        this.valid = validClaveCurso.valid;
+      }
+
+      var validClaveStatus = validateClaveStatus(this.bloque.cve_status);
+      this.errors.cve_status = validClaveStatus.error;
+
+      if (this.valid) {
+        this.valid = validClaveStatus.valid;
+      }
+
+      var validVersion = validateVersion(this.bloque.version);
+      this.errors.version = validVersion.error;
+
+      if (this.valid) {
+        this.valid = validVersion.valid;
+      }
+
+      var validRutaPortal = validateRutaPortal(this.bloque.ruta_portal);
+      this.errors.ruta_portal = validRutaPortal.error;
+
+      if (this.valid) {
+        this.valid = validRutaPortal.valid;
+      }
+
+      return 1;
+    },
     traer: function traer() {
       var _this = this;
 
@@ -2280,6 +2397,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     $("#selectUsuario").change(function () {
@@ -2315,7 +2443,10 @@ __webpack_require__.r(__webpack_exports__);
         status: "",
         cve_tipousuario: ""
       },
-      selected: ""
+      selected: "",
+      errors: {},
+      valid: true,
+      message: null
     };
   },
   created: function created() {
@@ -2323,6 +2454,241 @@ __webpack_require__.r(__webpack_exports__);
     this.traerUsuarios();
   },
   methods: {
+    validation: function validation() {
+      var validateNombre = function validateNombre(nombre) {
+        if (!nombre.length) {
+          return {
+            valid: false,
+            error: 'Este campo es requerido.'
+          };
+        }
+
+        return {
+          valid: true,
+          error: null
+        };
+      };
+
+      var validateNomSep = function validateNomSep(nom_sep) {
+        if (!nom_sep.length) {
+          return {
+            valid: false,
+            error: "Este campo es requerido."
+          };
+        }
+
+        return {
+          valid: true,
+          error: null
+        };
+      };
+
+      var validateBTotales = function validateBTotales(btotales) {
+        if (!btotales.length) {
+          return {
+            valid: false,
+            error: "Este campo es requerido."
+          };
+        }
+
+        return {
+          valid: true,
+          error: null
+        };
+      };
+
+      var validateBLib = function validateBLib(blib) {
+        if (!blib.length) {
+          return {
+            valid: false,
+            error: "Este campo es requerido."
+          };
+        }
+
+        return {
+          valid: true,
+          error: null
+        };
+      };
+
+      var validateAutor = function validateAutor(autor) {
+        if (!autor.length) {
+          return {
+            valid: false,
+            error: "Este campo es requerido."
+          };
+        }
+
+        return {
+          valid: true,
+          error: null
+        };
+      };
+
+      var validateClaveUsuario = function validateClaveUsuario(cve_usuario) {
+        if (!cve_usuario.length) {
+          return {
+            valid: false,
+            error: "Este campo es requerido."
+          };
+        }
+
+        return {
+          valid: true,
+          error: null
+        };
+      };
+
+      var validateRutaDescarga = function validateRutaDescarga(ruta_descarga) {
+        if (!ruta_descarga.length) {
+          return {
+            valid: false,
+            error: "Este campo es requerido."
+          };
+        }
+
+        return {
+          valid: true,
+          error: null
+        };
+      };
+
+      var validateRutaVersion = function validateRutaVersion(ruta_ver) {
+        if (!ruta_ver.length) {
+          return {
+            valid: false,
+            error: "Este campo es requerido."
+          };
+        }
+
+        return {
+          valid: true,
+          error: null
+        };
+      };
+
+      var validateStatus = function validateStatus(status) {
+        if (!status.length) {
+          return {
+            valid: false,
+            error: "Este campo es requerido."
+          };
+        }
+
+        return {
+          valid: true,
+          error: null
+        };
+      };
+
+      var validateRutaOperacion = function validateRutaOperacion(ruta_operacion) {
+        if (!ruta_operacion.length) {
+          return {
+            valid: false,
+            error: "Este campo es requerido."
+          };
+        }
+
+        return {
+          valid: true,
+          error: null
+        };
+      };
+
+      var validateClaveStatus = function validateClaveStatus(cve_status) {
+        if (!cve_status.length) {
+          return {
+            valid: false,
+            error: "Este campo es requerido."
+          };
+        }
+
+        return {
+          valid: true,
+          error: null
+        };
+      };
+
+      this.errors = {};
+      var validNombre = validateNombre(this.curso.nombre);
+      this.errors.nombre = validNombre.error;
+
+      if (this.valid) {
+        this.valid = validNombre.valid;
+      }
+
+      var validNomSep = validateNomSep(this.curso.nom_sep);
+      this.errors.nom_sep = validNomSep.error;
+
+      if (this.valid) {
+        this.valid = validNomSep.valid;
+      }
+
+      var validBTotales = validateBTotales(this.curso.btotales);
+      this.errors.btotales = validBTotales.error;
+
+      if (this.valid) {
+        this.valid = validBTotales.valid;
+      }
+
+      var validBLib = validateBLib(this.curso.blib);
+      this.errors.blib = validBLib.error;
+
+      if (this.valid) {
+        this.valid = validBLib.valid;
+      }
+
+      var validAutor = validateAutor(this.curso.autor);
+      this.errors.autor = validAutor.error;
+
+      if (this.valid) {
+        this.valid = validAutor.valid;
+      }
+
+      var validClaveUsuario = validateClaveUsuario(this.curso.cve_usuario);
+      this.errors.cve_usuario = validClaveUsuario.error;
+
+      if (this.valid) {
+        this.valid = validClaveUsuario.valid;
+      }
+
+      var validRutaDescarga = validateRutaDescarga(this.curso.ruta_descarga);
+      this.errors.ruta_descarga = validRutaDescarga.error;
+
+      if (this.valid) {
+        this.valid = validRutaDescarga.valid;
+      }
+
+      var validRutaVersion = validateRutaVersion(this.curso.ruta_ver);
+      this.errors.ruta_ver = validRutaVersion.error;
+
+      if (this.valid) {
+        this.valid = validDescripcion.valid;
+      }
+
+      var validStatus = validateStatus(this.curso.status);
+      this.errors.status = validStatus.error;
+
+      if (this.valid) {
+        this.valid = validStatus.valid;
+      }
+
+      var validRutaOperacion = validateRutaOperacion(this.curso.ruta_operacion);
+      this.errors.ruta_operacion = validRutaOperacion.error;
+
+      if (this.valid) {
+        this.valid = validRutaOperacion.valid;
+      }
+
+      var validClaveStatus = validateClaveStatus(this.curso.cve_status);
+      this.errors.cve_status = validClaveStatus.error;
+
+      if (this.valid) {
+        this.valid = validClaveStatus.valid;
+      }
+
+      return 1;
+    },
     traer: function traer() {
       var _this = this;
 
@@ -2808,6 +3174,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     $("#selectProducto").change(function () {
@@ -2843,7 +3212,10 @@ __webpack_require__.r(__webpack_exports__);
         nomenclatura: ""
       },
       selected: "",
-      selectedTwo: ""
+      selectedTwo: "",
+      errors: {},
+      valid: true,
+      message: null
     };
   },
   created: function created() {
@@ -2852,6 +3224,73 @@ __webpack_require__.r(__webpack_exports__);
     this.traerProyectos();
   },
   methods: {
+    validation: function validation() {
+      var validateClaveProducto = function validateClaveProducto(cve_producto) {
+        if (!cve_producto.length) {
+          return {
+            valid: false,
+            error: "Este campo es requerido."
+          };
+        }
+
+        return {
+          valid: true,
+          error: null
+        };
+      };
+
+      var validateClaveProyecto = function validateClaveProyecto(cve_proyecto) {
+        if (!cve_proyecto.length) {
+          return {
+            valid: false,
+            error: 'Este campo es requerido.'
+          };
+        }
+
+        return {
+          valid: true,
+          error: null
+        };
+      };
+
+      var validateNumLicencias = function validateNumLicencias(nolicencias) {
+        if (!nolicencias.length) {
+          return {
+            valid: false,
+            error: "Este campo es requerido."
+          };
+        }
+
+        return {
+          valid: true,
+          error: null
+        };
+      };
+
+      this.errors = {};
+      var validClaveProducto = validateClaveProducto(this.pivot.cve_producto);
+      this.errors.cve_producto = validClaveProducto.error;
+
+      if (this.valid) {
+        this.valid = validClaveProducto.valid;
+      }
+
+      var validClaveProyecto = validateClaveProyecto(this.pivot.cve_proyecto);
+      this.errors.cve_proyecto = validClaveProyecto.error;
+
+      if (this.valid) {
+        this.valid = validClaveProyecto.valid;
+      }
+
+      var validNumLicencias = validateNumLicencias(this.pivot.nolicencias);
+      this.errors.nolicencias = validNumLicencias.error;
+
+      if (this.valid) {
+        this.valid = validNumLicencias.valid;
+      }
+
+      return 1;
+    },
     traer: function traer() {
       var _this = this;
 
@@ -3066,6 +3505,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {},
   data: function data() {
@@ -3079,7 +3522,10 @@ __webpack_require__.r(__webpack_exports__);
         nomenclatura: ""
       },
       imagePreview: null,
-      showPreview: false
+      showPreview: false,
+      errors: {},
+      message: null,
+      valid: true
     };
   },
   created: function created() {
@@ -3123,6 +3569,94 @@ __webpack_require__.r(__webpack_exports__);
           reader.readAsDataURL(this.producto.logo_producto);
         }
       }
+    },
+    validation: function validation() {
+      var validateClave = function validateClave(clave) {
+        if (!clave.length) {
+          return {
+            valid: false,
+            error: "Este campo es requerido."
+          };
+        }
+
+        return {
+          valid: true,
+          error: null
+        };
+      };
+
+      var validateNombre = function validateNombre(nombre) {
+        if (!nombre.length) {
+          return {
+            valid: false,
+            error: 'Este campo es requerido.'
+          };
+        }
+
+        return {
+          valid: true,
+          error: null
+        };
+      };
+
+      var validateEdicion = function validateEdicion(edicion) {
+        if (!edicion.length) {
+          return {
+            valid: false,
+            error: "Este campo es requerido."
+          };
+        }
+
+        return {
+          valid: true,
+          error: null
+        };
+      };
+
+      var validateNomenclatura = function validateNomenclatura(nomenclatura) {
+        if (!nomenclatura.length) {
+          return {
+            valid: false,
+            error: "Este campo es requerido."
+          };
+        }
+
+        return {
+          valid: true,
+          error: null
+        };
+      };
+
+      this.errors = {};
+      var validClave = validateClave(this.producto.clave);
+      this.errors.clave = validClave.error;
+
+      if (this.valid) {
+        this.valid = validNombre.valid;
+      }
+
+      var validNombre = validateNombre(this.producto.nombre);
+      this.errors.nombre = validNombre.error;
+
+      if (this.valid) {
+        this.valid = validFecha.valid;
+      }
+
+      var validEdicion = validateEdicion(this.producto.edicion);
+      this.errors.edicion = validEdicion.error;
+
+      if (this.valid) {
+        this.valid = validDescripcion.valid;
+      }
+
+      var validNomenclatura = validateNomenclatura(this.producto.nomenclatura);
+      this.errors.nomenclatura = validNomenclatura.error;
+
+      if (this.valid) {
+        this.valid = validNomenclatura.valid;
+      }
+
+      return 1;
     },
     traer: function traer() {
       var _this = this;
@@ -3369,12 +3903,19 @@ __webpack_require__.r(__webpack_exports__);
         console.log(e);
       });
     },
+    validInsert: function validInsert(clave) {
+      if (this.validation()) {
+        this.insert(this.proyecto.clave);
+      } else {
+        console.log('Form not valid');
+      }
+    },
     validation: function validation() {
       var validateNombre = function validateNombre(nombre) {
         if (!nombre.length) {
           return {
             valid: false,
-            error: "This field is required"
+            error: "Este campo es requerido."
           };
         }
 
@@ -3388,7 +3929,7 @@ __webpack_require__.r(__webpack_exports__);
         if (!fecha.length) {
           return {
             valid: false,
-            error: 'This field is required.'
+            error: 'Este campo es requerido.'
           };
         }
 
@@ -3402,7 +3943,7 @@ __webpack_require__.r(__webpack_exports__);
         if (!descripcion.length) {
           return {
             valid: false,
-            error: "This field is required"
+            error: "Este campo es requerido."
           };
         }
 
@@ -3416,7 +3957,7 @@ __webpack_require__.r(__webpack_exports__);
         if (!nomenclatura.length) {
           return {
             valid: false,
-            error: "This field is required"
+            error: "Este campo es requerido."
           };
         }
 
@@ -3454,6 +3995,8 @@ __webpack_require__.r(__webpack_exports__);
       if (this.valid) {
         this.valid = validNomenclatura.valid;
       }
+
+      return 1;
     },
     insert: function insert(clave) {
       var _this2 = this;
@@ -64883,7 +65426,9 @@ var render = function() {
                             _vm.$set(_vm.bloque, "nombre", $event.target.value)
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _c("div", [_vm._v(_vm._s(_vm.errors.nombre))])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -64928,7 +65473,9 @@ var render = function() {
                           )
                         }),
                         0
-                      )
+                      ),
+                      _vm._v(" "),
+                      _c("div", [_vm._v(_vm._s(_vm.errors.cve_curso))])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -64958,7 +65505,9 @@ var render = function() {
                             )
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _c("div", [_vm._v(_vm._s(_vm.errors.cve_status))])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -64984,7 +65533,9 @@ var render = function() {
                             _vm.$set(_vm.bloque, "version", $event.target.value)
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _c("div", [_vm._v(_vm._s(_vm.errors.version))])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -65014,7 +65565,9 @@ var render = function() {
                             )
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _c("div", [_vm._v(_vm._s(_vm.errors.ruta_portal))])
                     ]),
                     _vm._v(" "),
                     _c(
@@ -65309,7 +65862,9 @@ var render = function() {
                             _vm.$set(_vm.curso, "nombre", $event.target.value)
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _c("div", [_vm._v(_vm._s(_vm.errors.nombre))])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -65335,7 +65890,9 @@ var render = function() {
                             _vm.$set(_vm.curso, "nom_sep", $event.target.value)
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _c("div", [_vm._v(_vm._s(_vm.errors.nom_sep))])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -65361,7 +65918,9 @@ var render = function() {
                             _vm.$set(_vm.curso, "btotales", $event.target.value)
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _c("div", [_vm._v(_vm._s(_vm.errors.btotales))])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -65387,7 +65946,9 @@ var render = function() {
                             _vm.$set(_vm.curso, "blib", $event.target.value)
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _c("div", [_vm._v(_vm._s(_vm.errors.blib))])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -65413,7 +65974,9 @@ var render = function() {
                             _vm.$set(_vm.curso, "autor", $event.target.value)
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _c("div", [_vm._v(_vm._s(_vm.errors.autor))])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -65458,7 +66021,9 @@ var render = function() {
                           )
                         }),
                         0
-                      )
+                      ),
+                      _vm._v(" "),
+                      _c("div", [_vm._v(_vm._s(_vm.errors.cve_usuario))])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -65488,7 +66053,9 @@ var render = function() {
                             )
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _c("div", [_vm._v(_vm._s(_vm.errors.ruta_descarga))])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -65514,7 +66081,9 @@ var render = function() {
                             _vm.$set(_vm.curso, "ruta_ver", $event.target.value)
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _c("div", [_vm._v(_vm._s(_vm.errors.ruta_ver))])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -65540,7 +66109,9 @@ var render = function() {
                             _vm.$set(_vm.curso, "status", $event.target.value)
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _c("div", [_vm._v(_vm._s(_vm.errors.status))])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -65570,7 +66141,9 @@ var render = function() {
                             )
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _c("div", [_vm._v(_vm._s(_vm.errors.ruta_operacion))])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -65600,7 +66173,9 @@ var render = function() {
                             )
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _c("div", [_vm._v(_vm._s(_vm.errors.cve_status))])
                     ]),
                     _vm._v(" "),
                     _c(
@@ -66426,7 +67001,9 @@ var render = function() {
                           )
                         }),
                         0
-                      )
+                      ),
+                      _vm._v(" "),
+                      _c("div", [_vm._v(_vm._s(_vm.errors.cve_producto))])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -66471,7 +67048,9 @@ var render = function() {
                           )
                         }),
                         0
-                      )
+                      ),
+                      _vm._v(" "),
+                      _c("div", [_vm._v(_vm._s(_vm.errors.cve_proyecto))])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -66501,7 +67080,9 @@ var render = function() {
                             )
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _c("div", [_vm._v(_vm._s(_vm.errors.nolicencias))])
                     ]),
                     _vm._v(" "),
                     _c(
@@ -66776,7 +67357,9 @@ var render = function() {
                             _vm.$set(_vm.producto, "clave", $event.target.value)
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _c("div", [_vm._v(_vm._s(_vm.errors.clave))])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -66806,7 +67389,9 @@ var render = function() {
                             )
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _c("div", [_vm._v(_vm._s(_vm.errors.nombre))])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -66836,7 +67421,9 @@ var render = function() {
                             )
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _c("div", [_vm._v(_vm._s(_vm.errors.edicion))])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -66892,7 +67479,9 @@ var render = function() {
                             )
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _c("div", [_vm._v(_vm._s(_vm.errors.nomenclatura))])
                     ]),
                     _vm._v(" "),
                     _c(
@@ -67179,7 +67768,7 @@ var render = function() {
                         }
                       }),
                       _vm._v(" "),
-                      _c("div", [_vm._v(_vm._s(_vm.errors.nombre))])
+                      _c("div", [_vm._v(_vm._s(_vm.errors.clave))])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -67235,7 +67824,7 @@ var render = function() {
                           }
                         }),
                         _vm._v(" "),
-                        _c("div", [_vm._v(_vm._s(_vm.errors.nombre))])
+                        _c("div", [_vm._v(_vm._s(_vm.errors.fecha))])
                       ],
                       1
                     ),
@@ -67269,7 +67858,7 @@ var render = function() {
                         }
                       }),
                       _vm._v(" "),
-                      _c("div", [_vm._v(_vm._s(_vm.errors.nombre))])
+                      _c("div", [_vm._v(_vm._s(_vm.errors.descripcion))])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -67301,7 +67890,7 @@ var render = function() {
                         }
                       }),
                       _vm._v(" "),
-                      _c("div", [_vm._v(_vm._s(_vm.errors.nombre))])
+                      _c("div", [_vm._v(_vm._s(_vm.errors.nomenclatura))])
                     ]),
                     _vm._v(" "),
                     _c(
@@ -67311,8 +67900,7 @@ var render = function() {
                         attrs: { type: "button", id: "btnAgregar" },
                         on: {
                           click: function($event) {
-                            _vm.insert(_vm.proyecto)
-                            _vm.validation()
+                            return _vm.validInsert(_vm.proyecto)
                           }
                         }
                       },
