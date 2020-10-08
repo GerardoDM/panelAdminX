@@ -18,19 +18,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/usuarios', 'UsuarioController@index');
-Route::post('/usuarios', 'UsuarioController@create');
-Route::delete('/usuarios/{clave}', 'UsuarioController@delete');
-Route::put('/usuarios/{clave}', 'UsuarioController@update');
+Route::post('/usuario', 'UsuarioController@create');
+Route::delete('/usuario/{clave}', 'UsuarioController@delete');
+Route::put('/usuario/{clave}', 'UsuarioController@update');
 
 Route::get('/productos', 'ProductoController@index');
-Route::post('/productos', 'ProductoController@create');
-Route::delete('/productos/{clave}', 'ProductoController@delete');
-Route::put('/productos/{clave}', 'ProductoController@update');
+Route::post('/producto', 'ProductoController@create');
+Route::delete('/producto/{clave}', 'ProductoController@delete');
+Route::put('/producto/{clave}', 'ProductoController@update');
 
 Route::get('/proyectos', 'ProyectoController@index');
-Route::post('/proyectos', 'ProyectoController@create');
-Route::delete('/proyectos/{clave}', 'ProyectoController@delete');
-Route::put('/proyectos/{clave}', 'ProyectoController@update');
+Route::post('/proyecto', 'ProyectoController@create');
+Route::delete('/proyecto/{clave}', 'ProyectoController@delete');
+Route::put('/proyecto/{clave}', 'ProyectoController@update');
 
 Route::get('/pivot', 'PivotController@index');
 Route::post('/pivot', 'PivotController@create');

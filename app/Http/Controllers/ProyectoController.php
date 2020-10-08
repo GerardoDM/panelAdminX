@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Proyecto;
+
+use \Validator;
+
 use Illuminate\Http\Request;
 
 class ProyectoController extends Controller
@@ -16,6 +19,22 @@ class ProyectoController extends Controller
 
     public function create(Request $request){
 
+       
+
+
+        $proyecto = Validator::make($request->all(), [
+            'clave' => 'required',
+            'nombre' => 'required',
+            'fecha' => 'required',
+            'descripcion' => 'required',
+            'nomenclatura' => 'required',
+         ]);
+
+
+         if($proyecto->fails()){
+            return response()->json($proyecto->messages(), 200);
+         }
+        
         $proyecto = new Proyecto();
 
         $proyecto->clave = $request->input('clave');
@@ -24,8 +43,15 @@ class ProyectoController extends Controller
         $proyecto->fecha = $request->input('fecha');
         $proyecto->descripcion = $request->input('descripcion');
         $proyecto->nomenclatura = $request->input('nomenclatura');
-    
+
         $proyecto->save();
+
+        return response()->json(['Proyecto' => $proyecto], 201);
+        
+        
+        
+
+    
         
     }
 

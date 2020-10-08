@@ -15,35 +15,30 @@
                         <div class="form-group">
                            <label>Nombre</label>
                            <input type="text" class="form-control" v-model="bloque.nombre">
-                             <div>{{ errors.nombre }}</div>
+                           <div>{{ errors.nombre }}</div>
                         </div>
-
                         <div class="form-group">
                            <label>Clave Curso</label>
                            <select id="selectCurso" v-model="selected">
-                               <option :value="curso.clave" v-for="curso in cursos" v-bind:key="curso.clave">Nombre : {{curso.nombre}}</option>
+                              <option :value="curso.clave" v-for="curso in cursos" v-bind:key="curso.clave">Nombre : {{curso.nombre}}</option>
                            </select>
-                             <div>{{ errors.cve_curso }}</div>
+                           <div>{{ errors.cve_curso }}</div>
                         </div>
-
                         <div class="form-group">
                            <label>Clave Status</label>
                            <input type="numeric" class="form-control" v-model="bloque.cve_status">
-                             <div>{{ errors.cve_status }}</div>
+                           <div>{{ errors.cve_status }}</div>
                         </div>
-
                         <div class="form-group">
                            <label>Versión</label>
                            <input type="numeric" class="form-control" v-model="bloque.version">
-                             <div>{{ errors.version }}</div>
+                           <div>{{ errors.version }}</div>
                         </div>
-
                         <div class="form-group">
                            <label>Ruta Portal</label>
                            <input type="url" class="form-control" v-model="bloque.ruta_portal">
-                             <div>{{ errors.ruta_portal }}</div>
+                           <div>{{ errors.ruta_portal }}</div>
                         </div>
-                       
                         <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click="insert(bloque)">Agregar</button>
                         <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(bloque.clave)">Actualizar</button>
                      </form>
@@ -53,7 +48,7 @@
          </div>
       </div>
       <div class="container; mt-4" style="height:400px; width:max; overflow-y: scroll">
-          <h2 class="mb-4">Bloques</h2>
+         <h2 class="mb-4">Bloques</h2>
          <table class="table table-hover table-dark">
             <thead>
                <tr>
@@ -76,9 +71,9 @@
                   <td>{{bloque.version}}</td>
                   <td>{{bloque.ruta_portal}}</td>
                   <td>
-                    <button type="button" class="btn btn-secondary" v-on:click="edit(bloque)" data-toggle="modal" data-target="#exampleModal">
-                      Editar
-                      </button>
+                     <button type="button" class="btn btn-secondary" v-on:click="edit(bloque)" data-toggle="modal" data-target="#exampleModal">
+                     Editar
+                     </button>
                   </td>
                   <td><button type="button" class="btn btn-danger" v-on:click="deleteU(bloque.clave)">Eliminar</button></td>
                </tr>
@@ -89,12 +84,10 @@
    </div>
 </template>
 <script>
-
-      
    export default {
-
+   
        mounted(){
-
+   
             $("#selectCurso").change(function(){
                 this.curso.clave = $("#selectCurso").val();
                 }.bind(this)); 
@@ -102,7 +95,7 @@
        },
    
        data(){
-
+   
           
            return {
                bloques: [],
@@ -117,12 +110,12 @@
                   ruta_portal: ""
                   
                },
-
+   
                curso:{
                   clave: "",
                   nombre: ""
                },
-
+   
                selected : "",
                errors: {},
                message: null,
@@ -137,30 +130,30 @@
        },
    
        methods:{
-
-
+   
+   
           validation(){
-
+   
             
                const validateNombre = nombre => {
                if (!nombre.length) {
                   
                   return { valid: false, error: 'Este campo es requerido.' };
                }
-
+   
                return { valid: true, error: null };
                }
-
+   
                const validateClaveCurso = cve_curso => {
                if (!cve_curso.length) {
                   
                   return { valid: false, error: "Este campo es requerido." };
                   
                }
-
+   
                return { valid: true, error: null };
                };
-
+   
                const validateClaveStatus = cve_status => {
                if (!cve_status.length) {
                   
@@ -169,7 +162,7 @@
                
                return { valid: true, error: null };
                };
-
+   
                const validateVersion = version => {
                if (!version.length) {
                   
@@ -178,7 +171,7 @@
                
                return { valid: true, error: null };
                };
-
+   
                const validateRutaPortal = ruta_portal => {
                if (!nomenclatura.length) {
                   
@@ -187,43 +180,43 @@
                
                return { valid: true, error: null };
                };
-
+   
                this.errors = {}
-
+   
                const validNombre = validateNombre(this.bloque.nombre);
                this.errors.nombre = validNombre.error;
                if (this.valid) {
                this.valid = validNombre.valid
                }
-
+   
                const validClaveCurso = validateClaveCurso(this.bloque.cve_curso);
                this.errors.cve_curso = validClaveCurso.error;
                if (this.valid) {
                this.valid = validClaveCurso.valid
                }
-
+   
                const validClaveStatus = validateClaveStatus(this.bloque.cve_status);
                this.errors.cve_status = validClaveStatus.error;
                if (this.valid) {
                this.valid = validClaveStatus.valid
                }
-
+   
                const validVersion = validateVersion(this.bloque.version)
                this.errors.version = validVersion.error
                if (this.valid) {
                this.valid = validVersion.valid
                }
-
+   
                const validRutaPortal = validateRutaPortal(this.bloque.ruta_portal)
                this.errors.ruta_portal = validRutaPortal.error
                if (this.valid) {
                this.valid = validRutaPortal.valid
                }
-
+   
                return 1;
-
+   
           },
-
+   
            traer(){
    
               self = this
@@ -237,7 +230,7 @@
                    })
                
            },
-
+   
            traerCursos(){
    
               self = this
@@ -256,11 +249,11 @@
            insert(clave){
       
                self = this
-
+   
                axios.post('api/bloque',
    
                        {
-
+   
                   clave  : this.bloque.clave,
                   nombre : this.bloque.nombre,
                   cve_curso : this.curso.clave,
@@ -271,14 +264,14 @@
                        })
                        
                 .then(response => {
-
+   
                 this.bloque.clave  = ""
                 this.bloque.nombre = ""
                 this.curso.clave = ""
                 this.bloque.cve_status = ""
                 this.bloque.version = ""
                 this.bloque.ruta_portal = ""
-
+   
                 this.selected = ""
                                             
                        swal.fire({
@@ -335,13 +328,13 @@
                    })
    
            },
-
+   
            edit(bloque){
-
-
+   
+   
             document.getElementById("btnActualizar").disabled = false;
             document.getElementById("btnAgregar").disabled = true;
-
+   
             this.bloque.clave = bloque.clave
             this.bloque.nombre = bloque.nombre
             this.bloque.cve_curso = bloque.cve_curso
@@ -350,8 +343,8 @@
             this.bloque.ruta_portal = bloque.ruta_portal
     
            },
-
-
+   
+   
            update(clave){
              self = this;
              axios.put(`api/bloque/${clave}`,
@@ -366,7 +359,7 @@
               
               
               .then(response => {
-
+   
                 this.bloque.clave  = ""
                 this.bloque.nombre = ""
                 this.bloque.cve_curso = ""
@@ -383,11 +376,11 @@
                          index: 0,
                         
                          })
-
+   
                this.traer();
                        
                    })
-
+   
                    
                    .catch(e => {
                        
@@ -401,16 +394,7 @@
    }
 </script>
 <style>
-
-.body{
-
+   .body{
    background-color: darkslategrey;
-
-}
-
+   }
 </style>
-
-
-
-
-

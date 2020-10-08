@@ -14,15 +14,15 @@
                      <form id="form">
                         <div class="form-group">
                            <label>Producto</label>
-                            <select  id="selectProducto" v-model="selectedTwo">
-                                <option :value="producto.clave" v-for="producto in productos" v-bind:key="producto.clave">{{producto.nombre}}</option>    
-                            </select> 
-                            <div>{{ errors.cve_producto }}</div>                          
+                           <select  id="selectProducto" v-model="selectedTwo">
+                              <option :value="producto.clave" v-for="producto in productos" v-bind:key="producto.clave">{{producto.nombre}}</option>
+                           </select>
+                           <div>{{ errors.cve_producto }}</div>
                         </div>
                         <div class="form-group" >
                            <label>Proyecto</label>
                            <select id="selectProyecto" v-model="selected">
-                               <option :value="proyecto.clave" v-for="proyecto in proyectos" v-bind:key="proyecto.clave">{{proyecto.nombre}}</option>
+                              <option :value="proyecto.clave" v-for="proyecto in proyectos" v-bind:key="proyecto.clave">{{proyecto.nombre}}</option>
                            </select>
                            <div>{{ errors.cve_proyecto }}</div>
                         </div>
@@ -31,7 +31,6 @@
                            <input type="numeric" class="form-control" v-model="pivot.nolicencias">
                            <div>{{ errors.nolicencias }}</div>
                         </div>
-                                             
                         <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click="insert(pivot)">Agregar</button>
                         <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(pivot.clave)">Actualizar</button>
                      </form>
@@ -41,28 +40,28 @@
          </div>
       </div>
       <div class="container; mt-4" style="height:400px; overflow-y: scroll">
-          <h2 class="mb-4">Productos-Proyectos</h2>
+         <h2 class="mb-4">Productos-Proyectos</h2>
          <table class="table table-hover table-dark" >
             <thead>
                <tr>
-                <th style="position:sticky; top:0; background: #000000">Clave</th>
-                <th style="position:sticky; top:0; background: #000000">Clave Producto</th>
-                <th style="position:sticky; top:0; background: #000000">Clave Proyecto</th>
-                <th style="position:sticky; top:0; background: #000000"># de Licencias</th>
-                <th style="position:sticky; top:0; background: #000000">Acción</th>
-                <th style="position:sticky; top:0; background: #000000">Acción</th>
+                  <th style="position:sticky; top:0; background: #000000">Clave</th>
+                  <th style="position:sticky; top:0; background: #000000">Clave Producto</th>
+                  <th style="position:sticky; top:0; background: #000000">Clave Proyecto</th>
+                  <th style="position:sticky; top:0; background: #000000"># de Licencias</th>
+                  <th style="position:sticky; top:0; background: #000000">Acción</th>
+                  <th style="position:sticky; top:0; background: #000000">Acción</th>
                </tr>
             </thead>
             <tbody>
                <tr v-for="pivot in pivots" v-bind:key="pivot.clave">
-                  <th>{{pivot.clave}}</th> 
+                  <th>{{pivot.clave}}</th>
                   <th>{{pivot.cve_producto}}</th>
                   <td>{{pivot.cve_proyecto}}</td>
                   <td>{{pivot.nolicencias}}</td>
                   <td>
-                    <button type="button" class="btn btn-secondary" v-on:click="edit(pivot)" data-toggle="modal" data-target="#exampleModal">
-                      Editar
-                      </button>
+                     <button type="button" class="btn btn-secondary" v-on:click="edit(pivot)" data-toggle="modal" data-target="#exampleModal">
+                     Editar
+                     </button>
                   </td>
                   <td><button type="button" class="btn btn-danger" v-on:click="deleteU(pivot.clave)">Eliminar</button></td>
                </tr>
@@ -75,12 +74,12 @@
 <script>
    export default {
        mounted(){
-
+   
             $("#selectProducto").change(function(){
                 this.producto.clave = $("#selectProducto").val();
                 }.bind(this)); 
-
-
+   
+   
                 $("#selectProyecto").change(function(){
                 this.proyecto.clave = $("#selectProyecto").val();
                 }.bind(this)); 
@@ -101,7 +100,7 @@
                     nolicencias: "",
                             
                 },
-
+   
                 producto: {
                     clave: "",
                     nombre: "",
@@ -110,7 +109,7 @@
                     nomenclatura: "",
                    
                 },
-
+   
                 proyecto: {
                     clave: "",
                     nombre: "",
@@ -118,7 +117,7 @@
                     descripcion: "",
                     nomenclatura: "",
                 },
-
+   
                 selected : "",
                 selectedTwo : "",
                 errors : {},
@@ -136,9 +135,9 @@
        },
    
        methods:{
-
+   
            validation(){
-
+   
                 const validateClaveProducto = cve_producto => {
                if (!cve_producto.length) {
                   
@@ -146,51 +145,51 @@
                }
                return { valid: true, error: null };
                };
-
+   
                const validateClaveProyecto = cve_proyecto => {
                if (!cve_proyecto.length) {
                   
                   return { valid: false, error: 'Este campo es requerido.' };
                }
-
+   
                return { valid: true, error: null };
                }
-
+   
                const validateNumLicencias = nolicencias => {
                if (!nolicencias.length) {
                   
                   return { valid: false, error: "Este campo es requerido." };
                   
                }
-
+   
                return { valid: true, error: null };
                };
-
-
+   
+   
                 this.errors = {}
-
+   
                const validClaveProducto = validateClaveProducto(this.pivot.cve_producto);
                this.errors.cve_producto = validClaveProducto.error;
                if (this.valid) {
                this.valid = validClaveProducto.valid
                }
-
+   
                const validClaveProyecto = validateClaveProyecto(this.pivot.cve_proyecto);
                this.errors.cve_proyecto = validClaveProyecto.error;
                if (this.valid) {
                this.valid = validClaveProyecto.valid
                }
-
+   
                const validNumLicencias = validateNumLicencias(this.pivot.nolicencias);
                this.errors.nolicencias = validNumLicencias.error;
                if (this.valid) {
                this.valid = validNumLicencias.valid
                }
-
+   
                return 1;
-
+   
            },
-
+   
            traer(){
    
               self = this
@@ -204,7 +203,7 @@
                    })
                
            },
-
+   
            traerProductos(){
    
               self = this
@@ -218,7 +217,7 @@
                    })
                
            },
-
+   
            traerProyectos(){
    
               self = this
@@ -239,7 +238,7 @@
                axios.post('api/pivot',
    
                        {
-
+   
                      clave : this.pivot.clave,
                      cve_producto : this.producto.clave,
                      cve_proyecto : this.proyecto.clave,
@@ -248,13 +247,13 @@
                        })
                        
                 .then(response => {
-
-
+   
+   
                      this.pivot.clave = ""
                      this.pivot.cve_producto = ""
                      this.pivot.cve_proyecto = ""
                      this.pivot.nolicencias = "" 
-
+   
                     this.selected = ""
                     this.selectedTwo = ""
                     
@@ -312,21 +311,21 @@
                    })
    
            },
-
+   
            edit(pivot){
-
+   
               document.getElementById("btnActualizar").disabled = false;
               document.getElementById("btnAgregar").disabled = true;
-
+   
             this.pivot.clave = pivot.clave
             this.pivot.cve_producto = pivot.cve_producto;
             this.pivot.cve_proyecto = pivot.cve_proyecto;
             this.pivot.nolicencias = pivot.nolicencias;
-
-
+   
+   
            },
-
-
+   
+   
            update(clave){
              self = this;
              axios.put(`api/pivot/${clave}`,
@@ -339,26 +338,26 @@
               
               
               .then(response => {
-
+   
                this.pivot.clave = ""
                this.pivot.cve_producto = ""
                this.pivot.cve_proyecto = ""
                this.pivot.nolicencias = "" 
-
+   
                this.selected = ""
                this.selectedTwo = ""
                 
                       swal.fire({
                          icon: 'success',
                          title: 'Hecho',
-                         text: 'El producto se ha actualizado',
+                         text: 'La relación se ha actualizado',
                          index: 0,
                          })
-
+   
                this.traer();
                        
                    })
-
+   
                    
                    .catch(e => {
                        
@@ -372,18 +371,7 @@
    }
 </script>
 <style>
-
-.body{
-
+   .body{
    background-color: darkslategrey;
-
-
-
-}
-
+   }
 </style>
-
-
-
-
-

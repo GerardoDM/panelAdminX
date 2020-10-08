@@ -12,7 +12,7 @@
                   </div>
                   <div class="modal-body">
                      <form id="form">
-                         <div class="form-group">
+                        <div class="form-group">
                            <label>Clave</label>
                            <input type="text" class="form-control" v-model="producto.clave" required>
                            <div>{{ errors.clave }}</div>
@@ -31,19 +31,14 @@
                            <label>Logo Producto</label>
                            <input type="file" class="form-control-file" @change="onFileChange" >
                         </div>
-
                         <img v-bind:src="imagePreview" width="200" height="200" v-show="showPreview"/>
-
                         <div class="form-group">
                            <label>Nomenclatura</label>
                            <input type="text" :maxlength="3"  class="form-control" v-model="producto.nomenclatura" required>
                            <div>{{ errors.nomenclatura }}</div>
                         </div>
-  
-                            
-                                           
                         <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click="insert(producto)">Agregar</button>
-                         <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(producto.clave)">Actualizar</button>
+                        <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(producto.clave)">Actualizar</button>
                      </form>
                   </div>
                </div>
@@ -55,7 +50,7 @@
          <table class="table table-hover table-dark" >
             <thead>
                <tr>
-                <th style="position:sticky; top:0; background: #000000">Clave</th>
+                  <th style="position:sticky; top:0; background: #000000">Clave</th>
                   <th style="position:sticky; top:0; background: #000000">Nombre</th>
                   <th style="position:sticky; top:0; background: #000000">Edicion</th>
                   <th style="position:sticky; top:0; background: #000000">Logo</th>
@@ -66,15 +61,15 @@
             </thead>
             <tbody>
                <tr v-for="producto in productos" v-bind:key="producto.clave">
-                  <th>{{producto.clave}}</th> 
+                  <th>{{producto.clave}}</th>
                   <th>{{producto.nombre}}</th>
                   <td>{{producto.edicion}}</td>
                   <td>{{producto.logo_producto}}</td>
                   <td>{{producto.nomenclatura}}</td>
                   <td>
-                    <button type="button" class="btn btn-secondary" v-on:click="edit(producto)" data-toggle="modal" data-target="#exampleModal">
-                      Editar
-                      </button>
+                     <button type="button" class="btn btn-secondary" v-on:click="edit(producto)" data-toggle="modal" data-target="#exampleModal">
+                     Editar
+                     </button>
                   </td>
                   <td><button type="button" class="btn btn-danger" v-on:click="deleteU(producto.clave)">Eliminar</button></td>
                </tr>
@@ -102,7 +97,7 @@
                     nomenclatura: "",
                    
                 },
-
+   
                imagePreview: null,
                showPreview: false,
                errors: {},
@@ -117,17 +112,17 @@
        },
    
        methods:{
-
+   
            onFileChange(event){
-
+   
             this.producto.logo_producto = event.target.files[0];
             console.log(event.target.files[0]);
-
+   
                     /*
             Initialize a File Reader object
             */
             let reader  = new FileReader();
-
+   
             /*
             Add an event listener to the reader that when the file
             has been loaded, we flag the show preview as true and set the
@@ -137,7 +132,7 @@
                 this.showPreview = true;
                 this.imagePreview = reader.result;
             }.bind(this), false);
-
+   
             /*
             Check to see if the file is not empty.
             */
@@ -146,7 +141,7 @@
                     Ensure the file is an image file.
                 */
                 if ( /\.(jpe?g|png|gif)$/i.test( this.producto.logo_producto.name ) ) {
-
+   
                     console.log("here");
                     /*
                     Fire the readAsDataURL method which will read the file in and
@@ -156,11 +151,11 @@
                     reader.readAsDataURL( this.producto.logo_producto );
                 }
             }
-
+   
         },
-
+   
         validation(){
-
+   
                const validateClave = clave => {
                if (!clave.length) {
                   
@@ -168,67 +163,67 @@
                }
                return { valid: true, error: null };
                };
-
+   
                const validateNombre = nombre => {
                if (!nombre.length) {
                   
                   return { valid: false, error: 'Este campo es requerido.' };
                }
-
+   
                return { valid: true, error: null };
                }
-
+   
                const validateEdicion = edicion => {
                if (!edicion.length) {
                   
                   return { valid: false, error: "Este campo es requerido." };
                   
                }
-
+   
                return { valid: true, error: null };
                };
-
+   
                const validateNomenclatura = nomenclatura => {
                if (!nomenclatura.length) {
                   
                   return { valid: false, error: "Este campo es requerido." };
                   
                }
-
+   
                return { valid: true, error: null };
                };
-
+   
                this.errors = {}
-
+   
                const validClave = validateClave(this.producto.clave);
                this.errors.clave = validClave.error;
                if (this.valid) {
                this.valid = validNombre.valid
                }
-
+   
                const validNombre = validateNombre(this.producto.nombre);
                this.errors.nombre = validNombre.error;
                if (this.valid) {
                this.valid = validFecha.valid
                }
-
+   
                const validEdicion = validateEdicion(this.producto.edicion);
                this.errors.edicion = validEdicion.error;
                if (this.valid) {
                this.valid = validDescripcion.valid
                }
-
+   
                const validNomenclatura = validateNomenclatura(this.producto.nomenclatura)
                this.errors.nomenclatura = validNomenclatura.error
                if (this.valid) {
                this.valid = validNomenclatura.valid
                }
-
+   
                return 1;
-
-
+   
+   
         },
-
+   
            traer(){
    
               self = this
@@ -249,7 +244,7 @@
                axios.post('api/productos',
    
                        {
-
+   
                      clave : this.producto.clave,
                      nombre : this.producto.nombre,
                      edicion : this.producto.edicion,
@@ -258,8 +253,8 @@
                        })
                        
                 .then(response => {
-
-
+   
+   
                      this.producto.clave = ""
                      this.producto.nombre = ""
                      this.producto.edicion = ""
@@ -326,21 +321,21 @@
                    })
    
            },
-
+   
            edit(producto){
-
+   
               document.getElementById("btnActualizar").disabled = false;
               document.getElementById("btnAgregar").disabled = true;
-
+   
             this.producto.clave = producto.clave
             this.producto.nombre = producto.nombre;
             this.producto.edicion = producto.edicion;
             this.producto.logo_producto = producto.logo_producto;
             this.producto.nomenclatura = producto.nomenclatura;
-
+   
            },
-
-
+   
+   
            update(clave){
              self = this;
              axios.put(`api/productos/${clave}`,
@@ -353,8 +348,8 @@
               
               
               .then(response => {
-
-
+   
+   
                this.producto.clave = ""
                this.producto.nombre = ""
                this.producto.edicion = ""
@@ -369,11 +364,11 @@
                          index: 0,
                         
                          })
-
+   
                this.traer();
                        
                    })
-
+   
                    
                    .catch(e => {
                        
@@ -387,18 +382,7 @@
    }
 </script>
 <style>
-
-.body{
-
+   .body{
    background-color: darkslategrey;
-
-
-
-}
-
+   }
 </style>
-
-
-
-
-

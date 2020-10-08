@@ -17,19 +17,16 @@
                            <input type="text" class="form-control" v-model="proyecto.clave" required>
                            <div>{{ errors.clave }}</div>
                         </div>
-
                         <div class="form-group">
                            <label>Nombre</label>
                            <input type="text" class="form-control" v-model="proyecto.nombre" required>
                            <div>{{ errors.nombre }}</div>
                         </div>
-
                         <div class="form-group">
                            <label>Fecha</label>
                            <datepicker id="dd" v-model="date" :value="date" :format="customFormatter"></datepicker>
                            <div>{{ errors.fecha }}</div>
                         </div>
-
                         <div class="form-group">
                            <label>Descripción</label>
                            <input type="text" class="form-control" v-model="proyecto.descripcion" required>
@@ -40,9 +37,8 @@
                            <input type="text" :maxlength="2" class="form-control" v-model="proyecto.nomenclatura" required>
                            <div>{{ errors.nomenclatura }}</div>
                         </div>
-                       
-                        <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click="validInsert(proyecto)">Agregar</button>
-                         <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(proyecto.clave)">Actualizar</button>
+                        <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click="validation(); insert(proyecto)">Agregar</button>
+                        <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(proyecto.clave)">Actualizar</button>
                      </form>
                   </div>
                </div>
@@ -71,9 +67,9 @@
                   <td>{{proyecto.descripcion}}</td>
                   <td>{{proyecto.nomenclatura}}</td>
                   <td>
-                    <button type="button" class="btn btn-secondary" v-on:click="edit(proyecto)" data-toggle="modal" data-target="#exampleModal">
-                      Editar
-                      </button>
+                     <button type="button" class="btn btn-secondary" v-on:click="edit(proyecto)" data-toggle="modal" data-target="#exampleModal">
+                     Editar
+                     </button>
                   </td>
                   <td><button type="button" class="btn btn-danger" v-on:click="deleteU(proyecto.clave)">Eliminar</button></td>
                </tr>
@@ -84,302 +80,298 @@
    </div>
 </template>
 <script>
-
-
-import Datepicker from 'vuejs-datepicker';
-import moment from 'moment'
-      
-   export default {
-
-       mounted(){
-           
-       },
-
-       components: {
-
-           Datepicker
-
-       },
+   import Datepicker from 'vuejs-datepicker';
+   import moment from 'moment'
+         
+      export default {
    
-       data(){
-           return {
-               proyectos: [],
-   
-               proyecto: {
-                    clave: "",
-                    nombre: "",
-                    fecha: "",
-                    descripcion: "",
-                    nomenclatura: "",
-                },
-
-               date : "",
-               errors: {},
-               message: null,
-               valid: true,
-           }
-   
-       },
-   
-       created(){
-           this.traer()
-       },
-   
-       methods:{
-
-           customFormatter(date) {
-            
-            date = moment(date).format('yyyy-MM-DD');
-            this.proyecto.fecha = date;
-            console.log(date);
-            
-            
-            return moment(date).format('yyyy-MM-DD');
-
-         },
-
-           traer(){
-   
-              self = this
-               axios.get('/api/proyectos')
-                   .then(response => {
-                       this.proyectos = response.data;
-                   })
-                   .catch(e => {
-                       
-                       console.log(e);
-                   })
-               
-           },
-
-
-           validInsert(clave){
-              if (this.validation()){
-                 this.insert(this.proyecto.clave);
-              } 
-
-              else {
-                 console.log('Form not valid')
-              }
-           },
-
-           validation() {
+          mounted(){
               
-               const validateNombre = nombre => {
-               if (!nombre.length) {
-                  
-                  return { valid: false, error: "Este campo es requerido." };
-               }
-               return { valid: true, error: null };
-               };
-
-               const validateFecha = fecha => {
-               if (!fecha.length) {
-                  
-                  return { valid: false, error: 'Este campo es requerido.' };
-               }
-
-               return { valid: true, error: null };
-               }
-
-               const validateDescripcion = descripcion => {
-               if (!descripcion.length) {
-                  
-                  return { valid: false, error: "Este campo es requerido." };
-                  
-               }
-
-               return { valid: true, error: null };
-               };
-
-               const validateNomenclatura = nomenclatura => {
-               if (!nomenclatura.length) {
-                  
-                  return { valid: false, error: "Este campo es requerido." };
-               }
-               
-               return { valid: true, error: null };
-               };
-
-               this.errors = {}
-
-               const validNombre = validateNombre(this.proyecto.nombre);
-               this.errors.nombre = validNombre.error;
-               if (this.valid) {
-               this.valid = validNombre.valid
-               }
-
-               const validFecha = validateFecha(this.proyecto.fecha);
-               this.errors.fecha = validFecha.error;
-               if (this.valid) {
-               this.valid = validFecha.valid
-               }
-
-               const validDescripcion = validateDescripcion(this.proyecto.descripcion);
-               this.errors.descripcion = validDescripcion.error;
-               if (this.valid) {
-               this.valid = validDescripcion.valid
-               }
-
-               const validNomenclatura = validateNomenclatura(this.proyecto.nomenclatura)
-               this.errors.nomenclatura = validNomenclatura.error
-               if (this.valid) {
-               this.valid = validNomenclatura.valid
-               }
-
-               return 1;
-               
-
-           },
+          },
    
-           
-           insert(clave){
+          components: {
+   
+              Datepicker
+   
+          },
       
-               self = this
+          data(){
+              return {
+                  proyectos: [],
+      
+                  proyecto: {
+                       clave: "",
+                       nombre: "",
+                       fecha: "",
+                       descripcion: "",
+                       nomenclatura: "",
+                   },
+   
+                  date : "",
+                  errors: {},
+                  message: null,
+                  valid: true,
+              }
+      
+          },
+      
+          created(){
+              this.traer()
+          },
+      
+          methods:{
+   
+              customFormatter(date) {
+               
+               date = moment(date).format('yyyy-MM-DD');
+               this.proyecto.fecha = date;
+               console.log(date);
+               
+               
+               return moment(date).format('yyyy-MM-DD');
+   
+            },
+   
+              traer(){
+      
+                 self = this
+                  axios.get('/api/proyectos')
+                      .then(response => {
+                          this.proyectos = response.data;
+                      })
+                      .catch(e => {
+                          
+                          console.log(e);
+                      })
+                  
+              },
+   
+   
+              validInsert(clave){
 
-               axios.post('api/proyectos',
+                 if (this.validation()){
+                    this.insert(this.proyecto.clave);
+                 } 
    
-                       {
-                        clave : this.proyecto.clave,
-                       nombre : this.proyecto.nombre,
-                       fecha : this.proyecto.fecha,
-                       descripcion : this.proyecto.descripcion,
-                       nomenclatura : this.proyecto.nomenclatura,
-                       })
-                       
-                .then(response => {
+                 else {
+                    console.log('Form not valid')
+                 }
+              },
+   
+              validation() {
+                 
+                 const validateNombre = nombre => {
+                  if (!nombre.length) {
 
-                     this.proyecto.clave = ""
-                     this.proyecto.nombre = ""
-                     this.proyecto.fecha = ""
-                     this.proyecto.descripcion = "" 
-                     this.proyecto.nomenclatura = ""
-                                            
-                       swal.fire({
-                         icon: 'success',
-                         title: 'Hecho',
-                         text: 'El proyecto se ha creado',
-                         index: 0,
-                        
-                       })
+                     
+                     
+                     return { valid: false, error: "Este campo es requerido." };
+                  }
+                  return { valid: true, error: null };
+                  };
    
-                       this.traer();
-    
-                   })
-                   .catch(e => {
-                       
-                       console.log(e);
-                   })
+                  const validateFecha = fecha => {
+                  if (!fecha.length) {
+
+                     
+                     
+                     return { valid: false, error: 'Este campo es requerido.' };
+                  }
    
-           },
+                  return { valid: true, error: null };
+                  }
    
-            deleteU(clave){
+                  const validateDescripcion = descripcion => {
+                  if (!descripcion.length) {
+
+                     
+                     
+                     return { valid: false, error: "Este campo es requerido." };
+                     
+                  }
    
-               self = this
-               axios.delete(`/api/proyectos/${clave}`)
+                  return { valid: true, error: null };
+                  };
+   
+                  const validateNomenclatura = nomenclatura => {
+                  if (!nomenclatura.length) {
+
+                     
+               
+                     return { valid: false, error: "Este campo es requerido." };
+                  }
+                  
+                  return { valid: true, error: null };
+                  };
+   
+                  this.errors = {}
+   
+                  const validNombre = validateNombre(this.proyecto.nombre);
+                  this.errors.nombre = validNombre.error;
+                  if (this.valid) {
+                  this.valid = validNombre.valid
+                  
+
+                  }
+   
+                  const validFecha = validateFecha(this.proyecto.fecha);
+                  this.errors.fecha = validFecha.error;
+                  if (this.valid) {
+                  this.valid = validFecha.valid
+                  
+
+                  }
+   
+                  const validDescripcion = validateDescripcion(this.proyecto.descripcion);
+                  this.errors.descripcion = validDescripcion.error;
+                  if (this.valid) {
+                  this.valid = validDescripcion.valid
+                  
+                  }
+   
+                  const validNomenclatura = validateNomenclatura(this.proyecto.nomenclatura)
+                  this.errors.nomenclatura = validNomenclatura.error
+                  if (this.valid) {
+                  this.valid = validNomenclatura.valid
+                  
+                  }
+                      
+              },
+      
+              
+              insert(clave){
+         
+                  self = this
+   
+                  axios.post('api/proyectos',
+      
+                          {
+                           clave : this.proyecto.clave,
+                          nombre : this.proyecto.nombre,
+                          fecha : this.proyecto.fecha,
+                          descripcion : this.proyecto.descripcion,
+                          nomenclatura : this.proyecto.nomenclatura,
+                          })
+                          
                    .then(response => {
    
-            swal.fire({
-               title: '¿Estás seguro?',
-               text: "No podrás revertir la acción",
-               icon: 'warning',
-               showCancelButton: true,
-               confirmButtonColor: '#3085d6',
-               cancelButtonColor: '#d33',
-               confirmButtonText: 'Si, eliminar'
-            }).then((result) => {
-               if (result.isConfirmed) {
-                  swal.fire(
-                   'Eliminado',
-                   'El proyecto ha sido borrado',
-                   'success'
-                   )
+                        this.proyecto.clave = ""
+                        this.proyecto.nombre = ""
+                        this.proyecto.fecha = ""
+                        this.proyecto.descripcion = "" 
+                        this.proyecto.nomenclatura = ""
+                                               
+                          swal.fire({
+                            icon: 'success',
+                            title: 'Hecho',
+                            text: 'El proyecto se ha creado',
+                            index: 0,
+                           
+                          })
+      
+                          this.traer();
+       
+                      })
+                      .catch(e => {
+                          
+                          console.log(e);
+                      })
+      
+              },
+      
+               deleteU(clave){
+      
+                  self = this
+                  axios.delete(`/api/proyectos/${clave}`)
+                      .then(response => {
+      
+               swal.fire({
+                  title: '¿Estás seguro?',
+                  text: "No podrás revertir la acción",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Si, eliminar'
+               }).then((result) => {
+                  if (result.isConfirmed) {
+                     swal.fire(
+                      'Eliminado',
+                      'El proyecto ha sido borrado',
+                      'success'
+                      )
+      
+                       this.traer();
+      
+                  }
+                  })
+                         
+                      })
+                      .catch(e => {
+                          
+                          console.log(e);
+                      })
+      
+              },
    
-                    this.traer();
+              edit(proyecto){
    
+               document.getElementById("btnActualizar").disabled = false;
+               document.getElementById("btnAgregar").disabled = true;
    
-               }
-               })
+               this.proyecto.clave = proyecto.clave
+               this.proyecto.nombre = proyecto.nombre;
+               this.proyecto.fecha = proyecto.fecha;
+               this.proyecto.descripcion = proyecto.descripcion;
+               this.proyecto.nomenclatura = proyecto.nomenclatura;
+   
+              },
+   
+              update(clave){
+                self = this;
+                axios.put(`api/proyectos/${clave}`,
+                 {
+                        clave : this.proyecto.clave,
+                        nombre : this.proyecto.nombre,
+                        fecha : this.proyecto.fecha,
+                        descripcion : this.proyecto.descripcion,
+                        nomenclatura : this.proyecto.nomenclatura,
+                  })
+                               
+                 .then(response => {
+   
+                  this.proyecto.clave = ""
+                  this.proyecto.nombre = ""
+                  this.proyecto.fecha = ""
+                  this.proyecto.descripcion = "" 
+                  this.proyecto.nomenclatura = ""
+                   
+                         swal.fire({
+                            icon: 'success',
+                            title: 'Hecho',
+                            text: 'El proyecto se ha actualizado',
+                            index: 0,
+                           
+                            })
+   
+                  this.traer();
+                          
+                      })
    
                       
-                   })
-                   .catch(e => {
-                       
-                       console.log(e);
-                   })
-   
-           },
-
-           edit(proyecto){
-
-
-            document.getElementById("btnActualizar").disabled = false;
-            document.getElementById("btnAgregar").disabled = true;
-
-            this.proyecto.clave = proyecto.clave
-            this.proyecto.nombre = proyecto.nombre;
-            this.proyecto.fecha = proyecto.fecha;
-            this.proyecto.descripcion = proyecto.descripcion;
-            this.proyecto.nomenclatura = proyecto.nomenclatura;
-
-           },
-
-
-           update(clave){
-             self = this;
-             axios.put(`api/proyectos/${clave}`,
-              {
-                     clave : this.proyecto.clave,
-                     nombre : this.proyecto.nombre,
-                     fecha : this.proyecto.fecha,
-                     descripcion : this.proyecto.descripcion,
-                     nomenclatura : this.proyecto.nomenclatura,
-               })
-              
-              
-              .then(response => {
-
-               this.proyecto.clave = ""
-               this.proyecto.nombre = ""
-               this.proyecto.fecha = ""
-               this.proyecto.descripcion = "" 
-               this.proyecto.nomenclatura = ""
-                
-                      swal.fire({
-                         icon: 'success',
-                         title: 'Hecho',
-                         text: 'El proyecto se ha actualizado',
-                         index: 0,
-                        
-                         })
-
-               this.traer();
-                       
-                   })
-
-                   
-                   .catch(e => {
-                       
-                       console.log(e);
-                   })
-               
-           }
-   
-       }
-   
-   }
+                      .catch(e => {
+                          
+                          console.log(e);
+                      })
+                  
+              }
+      
+          }
+      
+      }
 </script>
 <style>
-
-.body{
-
+   .body{
    background-color: darkslategrey;
-
-}
-
+   }
 </style>
-
-
-
-
-

@@ -1993,11 +1993,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     $("#selectCurso").change(function () {
@@ -2270,17 +2265,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -3176,7 +3160,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     $("#selectProducto").change(function () {
@@ -3400,7 +3383,7 @@ __webpack_require__.r(__webpack_exports__);
         swal.fire({
           icon: 'success',
           title: 'Hecho',
-          text: 'El producto se ha actualizado',
+          text: 'La relación se ha actualizado',
           index: 0
         });
 
@@ -3423,11 +3406,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
 //
 //
 //
@@ -3856,10 +3834,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3995,8 +3969,6 @@ __webpack_require__.r(__webpack_exports__);
       if (this.valid) {
         this.valid = validNomenclatura.valid;
       }
-
-      return 1;
     },
     insert: function insert(clave) {
       var _this2 = this;
@@ -8610,7 +8582,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.body{\r\n\r\n   background-color: darkslategrey;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.body{\nbackground-color: darkslategrey;\n}\n", ""]);
 
 // exports
 
@@ -8629,7 +8601,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.body{\r\n\r\n   background-color: darkslategrey;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.body{\nbackground-color: darkslategrey;\n}\n", ""]);
 
 // exports
 
@@ -8667,7 +8639,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.body{\r\n\r\n   background-color: darkslategrey;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.body{\nbackground-color: darkslategrey;\n}\n", ""]);
 
 // exports
 
@@ -8686,7 +8658,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.body{\r\n\r\n   background-color: darkslategrey;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.body{\nbackground-color: darkslategrey;\n}\n", ""]);
 
 // exports
 
@@ -8705,7 +8677,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.body{\r\n\r\n   background-color: darkslategrey;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.body{\nbackground-color: darkslategrey;\n}\n", ""]);
 
 // exports
 
@@ -65654,7 +65626,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("\n                   Editar\n                   ")]
+                    [_vm._v("\n                  Editar\n                  ")]
                   )
                 ]),
                 _vm._v(" "),
@@ -66274,7 +66246,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("\n                   Editar\n                   ")]
+                    [_vm._v("\n                  Editar\n                  ")]
                   )
                 ]),
                 _vm._v(" "),
@@ -67165,7 +67137,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("\n                   Editar\n                   ")]
+                    [_vm._v("\n                  Editar\n                  ")]
                   )
                 ]),
                 _vm._v(" "),
@@ -67566,7 +67538,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("\n                   Editar\n                   ")]
+                    [_vm._v("\n                  Editar\n                  ")]
                   )
                 ]),
                 _vm._v(" "),
@@ -67900,7 +67872,8 @@ var render = function() {
                         attrs: { type: "button", id: "btnAgregar" },
                         on: {
                           click: function($event) {
-                            return _vm.validInsert(_vm.proyecto)
+                            _vm.validation()
+                            _vm.insert(_vm.proyecto)
                           }
                         }
                       },
@@ -67975,7 +67948,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("\n                   Editar\n                   ")]
+                    [_vm._v("\n                  Editar\n                  ")]
                   )
                 ]),
                 _vm._v(" "),
