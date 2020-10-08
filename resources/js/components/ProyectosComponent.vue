@@ -37,7 +37,7 @@
                            <input type="text" :maxlength="2" class="form-control" v-model="proyecto.nomenclatura" required>
                            <div>{{ errors.nomenclatura }}</div>
                         </div>
-                        <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click="validation(); insert(proyecto)">Agregar</button>
+                        <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click.prevent="insert(proyecto)">Agregar</button>
                         <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(proyecto.clave)">Actualizar</button>
                      </form>
                   </div>
@@ -196,8 +196,7 @@
                   const validateNomenclatura = nomenclatura => {
                   if (!nomenclatura.length) {
 
-                     
-               
+                                    
                      return { valid: false, error: "Este campo es requerido." };
                   }
                   

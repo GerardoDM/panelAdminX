@@ -31,7 +31,7 @@
                            <input type="numeric" class="form-control" v-model="pivot.nolicencias">
                            <div>{{ errors.nolicencias }}</div>
                         </div>
-                        <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click="insert(pivot)">Agregar</button>
+                        <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click.prevent="insert(pivot)">Agregar</button>
                         <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(pivot.clave)">Actualizar</button>
                      </form>
                   </div>

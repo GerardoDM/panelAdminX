@@ -67064,6 +67064,7 @@ var render = function() {
                         attrs: { type: "button", id: "btnAgregar" },
                         on: {
                           click: function($event) {
+                            $event.preventDefault()
                             return _vm.insert(_vm.pivot)
                           }
                         }
@@ -67872,8 +67873,8 @@ var render = function() {
                         attrs: { type: "button", id: "btnAgregar" },
                         on: {
                           click: function($event) {
-                            _vm.validation()
-                            _vm.insert(_vm.proyecto)
+                            $event.preventDefault()
+                            return _vm.insert(_vm.proyecto)
                           }
                         }
                       },
