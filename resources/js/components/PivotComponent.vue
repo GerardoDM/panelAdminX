@@ -193,7 +193,7 @@
            traer(){
    
               self = this
-               axios.get('/api/pivot')
+               axios.get('/api/pivots')
                    .then(response => {
                        this.pivots = response.data;
                    })

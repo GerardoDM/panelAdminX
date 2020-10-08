@@ -16,6 +16,18 @@ class ProductoController extends Controller
 
     public function create(Request $request){
 
+        $producto = Validator::make($request->all(), [
+            'clave' => 'required',
+            'nombre' => 'required',
+            'edicion' => 'required',
+            'nomenclatura' => 'required',
+         ]);
+
+
+         if($producto->fails()){
+            return response()->json($producto->messages(), 400);
+         }
+
         $producto = new Producto();
 
         $producto->clave = $request->input('clave');
@@ -25,6 +37,8 @@ class ProductoController extends Controller
         $producto->nomenclatura = $request->input('nomenclatura');
     
         $producto->save();
+
+        return response()->json(['Producto' => $producto], 201);
         
     }
 
@@ -37,6 +51,18 @@ class ProductoController extends Controller
 
     public function update(Request $request, $clave){
 
+        $producto = Validator::make($request->all(), [
+            'clave' => 'required',
+            'nombre' => 'required',
+            'edicion' => 'required',
+            'nomenclatura' => 'required',
+         ]);
+
+
+         if($producto->fails()){
+            return response()->json($producto->messages(), 400);
+         }
+
         $producto = Producto::find($clave);
         $producto->nombre = $request->input('nombre');
         $producto->edicion = $request->input('edicion');
@@ -44,7 +70,7 @@ class ProductoController extends Controller
         $producto->nomenclatura = $request->input('nomenclatura');
     
         $producto->save();
-        return $producto;
+        return response()->json(['Producto' => $producto], 201);
 
     }
 }

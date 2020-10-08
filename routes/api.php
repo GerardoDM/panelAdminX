@@ -32,7 +32,7 @@ Route::post('/proyecto', 'ProyectoController@create');
 Route::delete('/proyecto/{clave}', 'ProyectoController@delete');
 Route::put('/proyecto/{clave}', 'ProyectoController@update');
 
-Route::get('/pivot', 'PivotController@index');
+Route::get('/pivots', 'PivotController@index');
 Route::post('/pivot', 'PivotController@create');
 Route::delete('/pivot/{clave}', 'PivotController@delete');
 Route::put('/pivot/{clave}', 'PivotController@update');

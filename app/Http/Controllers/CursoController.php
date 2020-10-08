@@ -17,6 +17,25 @@ class CursoController extends Controller
 
     public function create(Request $request){
 
+        $curso = Validator::make($request->all(), [
+            'nombre' => 'required',
+            'nom_sep' => 'required',
+            'btotales' => 'required',
+            'blib' => 'required',
+            'autor' => 'required',
+            'cve_usuario' => 'required',
+            'ruta_descarga' => 'required',
+            'ruta_ver' => 'required',
+            'status' => 'required',
+            'ruta_operacion' => 'required',
+            'cve_status' => 'required',
+            
+         ]);
+
+         if($curso->fails()){
+            return response()->json($curso->messages(), 400);
+         }
+
         $curso = new Curso();
 
         $curso->nombre = $request->input('nombre');
@@ -32,6 +51,8 @@ class CursoController extends Controller
         $curso->cve_status = $request->input('cve_status');
         
         $curso->save();
+
+        return response()->json(['Curso' => $curso], 201);
         
     }
 
@@ -43,6 +64,25 @@ class CursoController extends Controller
     }
 
     public function update(Request $request, $clave){
+
+        $curso = Validator::make($request->all(), [
+            'nombre' => 'required',
+            'nom_sep' => 'required',
+            'btotales' => 'required',
+            'blib' => 'required',
+            'autor' => 'required',
+            'cve_usuario' => 'required',
+            'ruta_descarga' => 'required',
+            'ruta_ver' => 'required',
+            'status' => 'required',
+            'ruta_operacion' => 'required',
+            'cve_status' => 'required',
+            
+         ]);
+
+         if($curso->fails()){
+            return response()->json($curso->messages(), 400);
+         }
 
         $curso = Curso::find($clave);
 
@@ -59,7 +99,7 @@ class CursoController extends Controller
         $curso->cve_status = $request->input('cve_status');
             
         $curso->save();
-        return $curso;
+        return response()->json(['Curso' => $curso], 201);
 
     }
 }

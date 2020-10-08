@@ -243,7 +243,7 @@
          
                   self = this
    
-                  axios.post('api/proyectos',
+                  axios.post('api/proyecto',
       
                           {
                            clave : this.proyecto.clave,
@@ -282,7 +282,7 @@
                deleteU(clave){
       
                   self = this
-                  axios.delete(`/api/proyectos/${clave}`)
+                  axios.delete(`/api/proyecto/${clave}`)
                       .then(response => {
       
                swal.fire({
@@ -329,7 +329,7 @@
    
               update(clave){
                 self = this;
-                axios.put(`api/proyectos/${clave}`,
+                axios.put(`api/proyecto/${clave}`,
                  {
                         clave : this.proyecto.clave,
                         nombre : this.proyecto.nombre,

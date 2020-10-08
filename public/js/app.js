@@ -3278,7 +3278,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       self = this;
-      axios.get('/api/pivot').then(function (response) {
+      axios.get('/api/pivots').then(function (response) {
         _this.pivots = response.data;
       })["catch"](function (e) {
         console.log(e);
@@ -3650,7 +3650,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       self = this;
-      axios.post('api/productos', {
+      axios.post('api/producto', {
         clave: this.producto.clave,
         nombre: this.producto.nombre,
         edicion: this.producto.edicion,
@@ -3679,7 +3679,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       self = this;
-      axios["delete"]("/api/productos/".concat(clave)).then(function (response) {
+      axios["delete"]("/api/producto/".concat(clave)).then(function (response) {
         swal.fire({
           title: '¿Estás seguro?',
           text: "No podrás revertir la acción",
@@ -3712,7 +3712,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       self = this;
-      axios.put("api/productos/".concat(clave), {
+      axios.put("api/producto/".concat(clave), {
         nombre: this.producto.nombre,
         edicion: this.producto.edicion,
         logo_producto: this.producto.logo_producto.name,
@@ -3974,7 +3974,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       self = this;
-      axios.post('api/proyectos', {
+      axios.post('api/proyecto', {
         clave: this.proyecto.clave,
         nombre: this.proyecto.nombre,
         fecha: this.proyecto.fecha,
@@ -4002,7 +4002,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       self = this;
-      axios["delete"]("/api/proyectos/".concat(clave)).then(function (response) {
+      axios["delete"]("/api/proyecto/".concat(clave)).then(function (response) {
         swal.fire({
           title: '¿Estás seguro?',
           text: "No podrás revertir la acción",
@@ -4035,7 +4035,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       self = this;
-      axios.put("api/proyectos/".concat(clave), {
+      axios.put("api/proyecto/".concat(clave), {
         clave: this.proyecto.clave,
         nombre: this.proyecto.nombre,
         fecha: this.proyecto.fecha,

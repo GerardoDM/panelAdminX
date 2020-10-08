@@ -32,7 +32,7 @@ class ProyectoController extends Controller
 
 
          if($proyecto->fails()){
-            return response()->json($proyecto->messages(), 200);
+            return response()->json($proyecto->messages(), 400);
          }
         
         $proyecto = new Proyecto();
@@ -49,10 +49,6 @@ class ProyectoController extends Controller
         return response()->json(['Proyecto' => $proyecto], 201);
         
         
-        
-
-    
-        
     }
 
     public function delete($clave){
@@ -64,6 +60,19 @@ class ProyectoController extends Controller
 
     public function update(Request $request, $clave){
 
+        $proyecto = Validator::make($request->all(), [
+            'clave' => 'required',
+            'nombre' => 'required',
+            'fecha' => 'required',
+            'descripcion' => 'required',
+            'nomenclatura' => 'required',
+         ]);
+
+
+         if($proyecto->fails()){
+            return response()->json($proyecto->messages(), 400);
+         }
+
         $proyecto = Proyecto::find($clave);
         $proyecto->nombre = $request->input('nombre');
         $proyecto->fecha = $request->input('fecha');
@@ -71,7 +80,7 @@ class ProyectoController extends Controller
         $proyecto->nomenclatura = $request->input('nomenclatura');
 
         $proyecto->save();
-        return $proyecto;
+        return response()->json(['Proyecto' => $proyecto], 201);
 
     }
 }

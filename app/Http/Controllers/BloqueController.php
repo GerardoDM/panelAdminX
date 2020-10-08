@@ -17,6 +17,19 @@ class BloqueController extends Controller
 
     public function create(Request $request){
 
+        $bloque = Validator::make($request->all(), [
+            'nombre' => 'required',
+            'cve_curso' => 'required',
+            'cve_status' => 'required',
+            'version' => 'required',
+            'ruta_portal' => 'required',
+            
+         ]);
+
+         if($bloque->fails()){
+            return response()->json($bloque->messages(), 400);
+         }
+
         $bloque = new Bloque();
 
         $bloque->nombre = $request->input('nombre');
@@ -27,6 +40,9 @@ class BloqueController extends Controller
       
         
         $bloque->save();
+
+        return response()->json(['Bloque' => $bloque], 201);
+
         
     }
 
@@ -39,6 +55,19 @@ class BloqueController extends Controller
 
     public function update(Request $request, $clave){
 
+        $bloque = Validator::make($request->all(), [
+            'nombre' => 'required',
+            'cve_curso' => 'required',
+            'cve_status' => 'required',
+            'version' => 'required',
+            'ruta_portal' => 'required',
+            
+         ]);
+
+         if($bloque->fails()){
+            return response()->json($bloque->messages(), 400);
+         }
+
         $bloque = Bloque::find($clave);
 
         $bloque->nombre = $request->input('nombre');
@@ -49,7 +78,7 @@ class BloqueController extends Controller
       
             
         $bloque->save();
-        return $bloque;
+        return response()->json(['Bloque' => $bloque], 201);
 
     }
 }

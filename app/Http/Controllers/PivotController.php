@@ -18,6 +18,18 @@ class PivotController extends Controller
 
     public function create(Request $request){
 
+
+        $pivot = Validator::make($request->all(), [
+            'cve_producto' => 'required',
+            'cve_proyecto' => 'required',
+            'nolicencias' => 'required',
+         ]);
+
+
+         if($pivot->fails()){
+            return response()->json($pivot->messages(), 400);
+         }
+
         $pivot = new Pivot();
 
         $pivot->cve_producto = $request->input('cve_producto');
@@ -25,6 +37,9 @@ class PivotController extends Controller
         $pivot->nolicencias = $request->input('nolicencias');
     
         $pivot->save();
+
+        return response()->json(['Relación' => $pivot], 201);
+
         
     }
 
@@ -37,6 +52,17 @@ class PivotController extends Controller
 
     public function update(Request $request, $clave){
 
+        $pivot = Validator::make($request->all(), [
+            'cve_producto' => 'required',
+            'cve_proyecto' => 'required',
+            'nolicencias' => 'required',
+         ]);
+
+
+         if($pivot->fails()){
+            return response()->json($pivot->messages(), 400);
+         }
+
         $pivot = Pivot::find($clave);
         
         $pivot->cve_producto = $request->input('cve_producto');
@@ -44,7 +70,7 @@ class PivotController extends Controller
         $pivot->nolicencias = $request->input('nolicencias');
     
         $pivot->save();
-        return $pivot;
+        return response()->json(['Relación' => $pivot], 201);
 
     }
 }

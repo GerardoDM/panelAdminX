@@ -241,7 +241,7 @@
            insert(clave){
    
                self = this
-               axios.post('api/productos',
+               axios.post('api/producto',
    
                        {
    
@@ -286,7 +286,7 @@
             deleteU(clave){
    
                self = this
-               axios.delete(`/api/productos/${clave}`)
+               axios.delete(`/api/producto/${clave}`)
                    .then(response => {
    
    
@@ -338,7 +338,7 @@
    
            update(clave){
              self = this;
-             axios.put(`api/productos/${clave}`,
+             axios.put(`api/producto/${clave}`,
               {
                        nombre : this.producto.nombre,
                        edicion : this.producto.edicion,
