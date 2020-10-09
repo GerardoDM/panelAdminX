@@ -3858,6 +3858,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
  //v-on:click="insert(proyecto)"
+//v-on:click="update(proyecto.clave)"
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {},
@@ -3878,11 +3879,13 @@ __webpack_require__.r(__webpack_exports__);
       date: "",
       errors: {},
       message: null,
-      valid: true
+      valid: true,
+      val: 'standard'
     };
   },
   created: function created() {
     this.traer();
+    console.log(this.val);
   },
   methods: {
     customFormatter: function customFormatter(date) {
@@ -3998,29 +4001,61 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       self = this;
-      axios.post('api/proyecto', {
-        clave: this.proyecto.clave,
-        nombre: this.proyecto.nombre,
-        fecha: this.proyecto.fecha,
-        descripcion: this.proyecto.descripcion,
-        nomenclatura: this.proyecto.nomenclatura
-      }).then(function (response) {
-        _this2.proyecto.clave = "";
-        _this2.proyecto.nombre = "";
-        _this2.proyecto.fecha = "";
-        _this2.proyecto.descripcion = "";
-        _this2.proyecto.nomenclatura = "";
-        swal.fire({
-          icon: 'success',
-          title: 'Hecho',
-          text: 'El proyecto se ha creado',
-          index: 0
-        });
 
-        _this2.traer();
-      })["catch"](function (e) {
-        console.log(e);
-      });
+      if (this.val == 'standard') {
+        console.log('Entró en el primer if');
+        axios.post('api/proyecto', {
+          clave: this.proyecto.clave,
+          nombre: this.proyecto.nombre,
+          fecha: this.proyecto.fecha,
+          descripcion: this.proyecto.descripcion,
+          nomenclatura: this.proyecto.nomenclatura
+        }).then(function (response) {
+          _this2.proyecto.clave = "";
+          _this2.proyecto.nombre = "";
+          _this2.proyecto.fecha = "";
+          _this2.proyecto.descripcion = "";
+          _this2.proyecto.nomenclatura = "";
+          swal.fire({
+            icon: 'success',
+            title: 'Hecho',
+            text: 'El proyecto se ha creado',
+            index: 0
+          });
+
+          _this2.traer();
+        })["catch"](function (e) {
+          console.log(e);
+        });
+      } else if (this.val == 'auto') {
+        console.log('Entró en el else if');
+        axios.put("api/proyecto/".concat(this.proyecto.clave), {
+          clave: this.proyecto.clave,
+          nombre: this.proyecto.nombre,
+          fecha: this.proyecto.fecha,
+          descripcion: this.proyecto.descripcion,
+          nomenclatura: this.proyecto.nomenclatura
+        }).then(function (response) {
+          _this2.proyecto.clave = "";
+          _this2.proyecto.nombre = "";
+          _this2.proyecto.fecha = "";
+          _this2.proyecto.descripcion = "";
+          _this2.proyecto.nomenclatura = "";
+          swal.fire({
+            icon: 'success',
+            title: 'Hecho',
+            text: 'El proyecto se ha actualizado',
+            index: 0
+          });
+
+          _this2.traer();
+
+          _this2.val = 'standard';
+          document.getElementById("btnAgregar").innerHTML = 'Agregar';
+        })["catch"](function (e) {
+          console.log(e);
+        });
+      }
     },
     deleteU: function deleteU(clave) {
       var _this3 = this;
@@ -4047,8 +4082,10 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     edit: function edit(proyecto) {
-      document.getElementById("btnActualizar").disabled = false;
-      document.getElementById("btnAgregar").disabled = true;
+      //document.getElementById("btnActualizar").disabled = false;
+      document.getElementById("btnAgregar").innerHTML = 'Actualizar';
+      this.val = 'auto';
+      console.log(this.val);
       this.proyecto.clave = proyecto.clave;
       this.proyecto.nombre = proyecto.nombre;
       this.proyecto.fecha = proyecto.fecha;
@@ -70085,24 +70122,6 @@ var render = function() {
                                       }
                                     },
                                     [_vm._v("Agregar")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass: "btn btn-primary",
-                                      attrs: {
-                                        type: "button",
-                                        id: "btnActualizar",
-                                        disabled: ""
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.update(_vm.proyecto.clave)
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("Actualizar")]
                                   )
                                 ]
                               )

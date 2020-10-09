@@ -55,8 +55,8 @@
                            <span>{{ v.errors[0] }}</span>
                            </validationProvider>
                         </div>
-                        <button type="submit" id="btnAgregar" class="btn btn-primary" >Agregar</button>
-                        <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(proyecto.clave)">Actualizar</button>
+                        <button type="submit" id="btnAgregar" class="btn btn-primary">Agregar</button>
+                        <!-- <button type="submit" id="btnActualizar" disabled class="btn btn-primary">Actualizar</button> -->
                      </form>
                    </validationObserver>
                   
@@ -106,6 +106,7 @@
 
 
    //v-on:click="insert(proyecto)"
+   //v-on:click="update(proyecto.clave)"
             
       export default {
    
@@ -138,6 +139,7 @@
                   errors: {},
                   message: null,
                   valid: true,
+                  val : 'standard',
 
                   
               }
@@ -146,6 +148,7 @@
       
           created(){
               this.traer()
+              console.log(this.val)
           },
       
           methods:{
@@ -270,8 +273,12 @@
               insert(clave){
          
                   self = this
-   
-                  axios.post('api/proyecto',
+
+                  if (this.val == 'standard'){
+
+                     console.log('Entró en el primer if')
+
+                     axios.post('api/proyecto',
       
                           {
                            clave : this.proyecto.clave,
@@ -305,6 +312,54 @@
                           console.log(e);
                       })
       
+                  } 
+   
+                  else if (this.val == 'auto') {
+
+                     console.log('Entró en el else if')
+
+                     axios.put(`api/proyecto/${this.proyecto.clave}`,
+                 {
+                        clave : this.proyecto.clave,
+                        nombre : this.proyecto.nombre,
+                        fecha : this.proyecto.fecha,
+                        descripcion : this.proyecto.descripcion,
+                        nomenclatura : this.proyecto.nomenclatura,
+                  })
+                               
+                 .then(response => {
+   
+                  this.proyecto.clave = ""
+                  this.proyecto.nombre = ""
+                  this.proyecto.fecha = ""
+                  this.proyecto.descripcion = "" 
+                  this.proyecto.nomenclatura = ""
+                   
+                         swal.fire({
+                            icon: 'success',
+                            title: 'Hecho',
+                            text: 'El proyecto se ha actualizado',
+                            index: 0,
+                           
+                            })
+   
+                  this.traer();
+                  this.val = 'standard'
+                  document.getElementById("btnAgregar").innerHTML = 'Agregar'; 
+                          
+                      })
+   
+                      
+                      .catch(e => {
+                          
+                          console.log(e);
+                      })
+
+
+                  }
+   
+              
+                  
               },
       
                deleteU(clave){
@@ -343,9 +398,13 @@
               },
    
               edit(proyecto){
-   
-               document.getElementById("btnActualizar").disabled = false;
-               document.getElementById("btnAgregar").disabled = true;
+
+               //document.getElementById("btnActualizar").disabled = false;
+                          
+               document.getElementById("btnAgregar").innerHTML = 'Actualizar'; 
+               
+               this.val = 'auto';
+               console.log(this.val);
    
                this.proyecto.clave = proyecto.clave
                this.proyecto.nombre = proyecto.nombre;
@@ -383,6 +442,7 @@
                             })
    
                   this.traer();
+                  
                           
                       })
    
