@@ -11,7 +11,6 @@
                      </button>
                   </div>
                   <div class="modal-body">
-                   
                    <validationObserver v-slot="{ handleSubmit }">
                      <form id="form" @submit.prevent="handleSubmit(insert)">
                         <div class="form-group">
@@ -19,7 +18,6 @@
                            <label>Clave</label>
                            <validationProvider v-slot="v" rules='required'>
                            <input type="text" class="form-control" v-model="proyecto.clave" >
-                           <!-- <div>{{ errors.clave }}</div> -->
                             <span>{{ v.errors[0] }}</span>
                            </validationProvider>
                         </div>
@@ -27,7 +25,6 @@
                            <label>Nombre</label>
                            <validationProvider v-slot="v" rules='required'>
                            <input type="text" class="form-control" v-model="proyecto.nombre" >
-                           <!-- <div>{{ errors.nombre }}</div> -->
                            <span>{{ v.errors[0] }}</span>
                            </validationProvider>
                         </div>
@@ -35,7 +32,6 @@
                            <label>Fecha</label>
                            <validationProvider v-slot="v" rules='required'>
                            <datepicker id="dd" v-model="date" :value="date" :format="customFormatter"></datepicker>
-                           <!-- <div>{{ errors.fecha }}</div> -->
                            <span>{{ v.errors[0] }}</span>
                            </validationProvider>
                         </div>
@@ -43,7 +39,6 @@
                            <label>Descripción</label>
                            <validationProvider v-slot="v" rules='required'>
                            <input type="text" class="form-control" v-model="proyecto.descripcion" >
-                           <!-- <div>{{ errors.descripcion }}</div> -->
                            <span>{{ v.errors[0] }}</span>
                            </validationProvider>
                         </div>
@@ -51,7 +46,6 @@
                            <label>Nomenclatura</label>
                            <validationProvider v-slot="v" rules='required'>
                            <input type="text" :maxlength="2" class="form-control" v-model="proyecto.nomenclatura" >
-                           <!-- <div>{{ errors.nomenclatura }}</div> -->
                            <span>{{ v.errors[0] }}</span>
                            </validationProvider>
                         </div>
@@ -177,98 +171,7 @@
                       })
                   
               },
-   
-   
-              validInsert(clave){
-
-                 if (this.validation()){
-                    this.insert(this.proyecto.clave);
-                 } 
-   
-                 else {
-                    console.log('Form not valid')
-                 }
-              },
-   
-              validation() {
-                 
-                 const validateNombre = nombre => {
-                  if (!nombre.length) {
-
-                     
-                     
-                     return { valid: false, error: "Este campo es requerido." };
-                  }
-                  return { valid: true, error: null };
-                  };
-   
-                  const validateFecha = fecha => {
-                  if (!fecha.length) {
-
-                     
-                     
-                     return { valid: false, error: 'Este campo es requerido.' };
-                  }
-   
-                  return { valid: true, error: null };
-                  }
-   
-                  const validateDescripcion = descripcion => {
-                  if (!descripcion.length) {
-
-                     
-                     
-                     return { valid: false, error: "Este campo es requerido." };
-                     
-                  }
-   
-                  return { valid: true, error: null };
-                  };
-   
-                  const validateNomenclatura = nomenclatura => {
-                  if (!nomenclatura.length) {
-
-                                    
-                     return { valid: false, error: "Este campo es requerido." };
-                  }
-                  
-                  return { valid: true, error: null };
-                  };
-   
-                  this.errors = {}
-   
-                  const validNombre = validateNombre(this.proyecto.nombre);
-                  this.errors.nombre = validNombre.error;
-                  if (this.valid) {
-                  this.valid = validNombre.valid
-                  
-
-                  }
-   
-                  const validFecha = validateFecha(this.proyecto.fecha);
-                  this.errors.fecha = validFecha.error;
-                  if (this.valid) {
-                  this.valid = validFecha.valid
-                  
-
-                  }
-   
-                  const validDescripcion = validateDescripcion(this.proyecto.descripcion);
-                  this.errors.descripcion = validDescripcion.error;
-                  if (this.valid) {
-                  this.valid = validDescripcion.valid
-                  
-                  }
-   
-                  const validNomenclatura = validateNomenclatura(this.proyecto.nomenclatura)
-                  this.errors.nomenclatura = validNomenclatura.error
-                  if (this.valid) {
-                  this.valid = validNomenclatura.valid
-                  
-                  }
-                      
-              },
-      
+          
               
               insert(clave){
          
@@ -305,6 +208,7 @@
                           })
       
                           this.traer();
+                          $("#dd").val('') 
        
                       })
                       .catch(e => {

@@ -11,67 +11,92 @@
                      </button>
                   </div>
                   <div class="modal-body">
-                     <form id="form">
+                     <validationObserver v-slot="{ handleSubmit }">
+                     <form id="form" @submit.prevent="handleSubmit(insert)">
                         <div class="form-group">
                            <label>Nombre</label>
+                           <validationProvider v-slot="v" rules='required'>
                            <input type="text" class="form-control" v-model="curso.nombre">
-                           <div>{{ errors.nombre }}</div>
+                           <span>{{ v.errors[0] }}</span>
+                           </validationProvider>
                         </div>
                         <div class="form-group">
                            <label>nom_sep</label>
+                           <validationProvider v-slot="v" rules='required'>
                            <input type="text" class="form-control" v-model="curso.nom_sep">
-                           <div>{{ errors.nom_sep }}</div>
+                           <span>{{ v.errors[0] }}</span>
+                           </validationProvider>
                         </div>
                         <div class="form-group">
                            <label>btotales</label>
+                           <validationProvider v-slot="v" rules='required'>
                            <input type="numeric" class="form-control" v-model="curso.btotales">
-                           <div>{{ errors.btotales }}</div>
+                           <span>{{ v.errors[0] }}</span>
+                           </validationProvider>
                         </div>
                         <div class="form-group">
                            <label>blib</label>
+                           <validationProvider v-slot="v" rules='required'>
                            <input type="numeric" class="form-control" v-model="curso.blib">
-                           <div>{{ errors.blib }}</div>
+                           <span>{{ v.errors[0] }}</span>
+                           </validationProvider>
                         </div>
                         <div class="form-group">
                            <label>Autor</label>
+                           <validationProvider v-slot="v" rules='required'>
                            <input type="text" class="form-control" v-model="curso.autor">
-                           <div>{{ errors.autor }}</div>
+                           <span>{{ v.errors[0] }}</span>
+                           </validationProvider>
                         </div>
                         <div class="form-group">
                            <label>cve_usuario</label>
+                           <validationProvider v-slot="v" rules='required'>
                            <select id="selectUsuario" v-model="selected">
                               <option :value="usuario.clave" v-for="usuario in usuarios" v-bind:key="usuario.clave">Nombre : {{usuario.nombre}}</option>
                            </select>
-                           <div>{{ errors.cve_usuario }}</div>
+                           <span>{{ v.errors[0] }}</span>
+                           </validationProvider>
                         </div>
                         <div class="form-group">
                            <label>Ruta descarga</label>
+                           <validationProvider v-slot="v" rules='required'>
                            <input type="url" class="form-control" v-model="curso.ruta_descarga">
-                           <div>{{ errors.ruta_descarga }}</div>
+                           <span>{{ v.errors[0] }}</span>
+                           </validationProvider>
                         </div>
                         <div class="form-group">
                            <label>Ruta ver</label>
+                           <validationProvider v-slot="v" rules='required'>
                            <input type="url" class="form-control" v-model="curso.ruta_ver">
-                           <div>{{ errors.ruta_ver }}</div>
+                           <span>{{ v.errors[0] }}</span>
+                           </validationProvider>
                         </div>
                         <div class="form-group">
                            <label>Status</label>
+                           <validationProvider v-slot="v" rules='required'>
                            <input type="text" class="form-control" v-model="curso.status">
-                           <div>{{ errors.status }}</div>
+                           <span>{{ v.errors[0] }}</span>
+                           </validationProvider>
+                           
                         </div>
                         <div class="form-group">
                            <label>Ruta Operación</label>
+                           <validationProvider v-slot="v" rules='required'>
                            <input type="url" class="form-control" v-model="curso.ruta_operacion">
-                           <div>{{ errors.ruta_operacion }}</div>
+                           <span>{{ v.errors[0] }}</span>
+                           </validationProvider>
                         </div>
                         <div class="form-group">
                            <label>Clave Status</label>
+                           <validationProvider v-slot="v" rules='required'>
                            <input type="numeric" class="form-control" v-model="curso.cve_status">
-                           <div>{{ errors.cve_status }}</div>
+                           <span>{{ v.errors[0] }}</span>
+                           </validationProvider>
                         </div>
-                        <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click="insert(curso)">Agregar</button>
-                        <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(curso.clave)">Actualizar</button>
+                        <button type="submit" id="btnAgregar" class="btn btn-primary" >Agregar</button>
+                        <!-- <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(curso.clave)">Actualizar</button> -->
                      </form>
+                     </validationObserver>
                   </div>
                </div>
             </div>
@@ -126,6 +151,12 @@
    </div>
 </template>
 <script>
+
+ import { ValidationProvider } from 'vee-validate';
+
+
+   //v-on:click="insert(curso)"
+
    export default {
    
        mounted(){
@@ -134,6 +165,12 @@
                 this.usuario.clave = $("#selectUsuario").val();
                 }.bind(this)); 
            
+       },
+
+       components:{
+
+          ValidationProvider
+
        },
    
        data(){
@@ -171,7 +208,8 @@
                   selected: "",
                   errors : {},
                   valid : true,
-                  message : null
+                  message : null,
+                  val : 'standard'
    
            }
    
@@ -184,193 +222,6 @@
    
        methods:{
    
-   
-          validation(){
-   
-      
-               const validateNombre = nombre => {
-               if (!nombre.length) {
-                  
-                  return { valid: false, error: 'Este campo es requerido.' };
-               }
-   
-               return { valid: true, error: null };
-               }
-   
-               const validateNomSep= nom_sep => {
-               if (!nom_sep.length) {
-                  
-                  return { valid: false, error: "Este campo es requerido." };
-                  
-               }
-   
-               return { valid: true, error: null };
-               };
-   
-               const validateBTotales = btotales => {
-               if (!btotales.length) {
-                  
-                  return { valid: false, error: "Este campo es requerido." };
-                  
-               }
-   
-               return { valid: true, error: null };
-               };
-   
-                const validateBLib = blib => {
-               if (!blib.length) {
-                  
-                  return { valid: false, error: "Este campo es requerido." };
-                  
-               }
-   
-               return { valid: true, error: null };
-               };
-   
-   
-                const validateAutor = autor => {
-               if (!autor.length) {
-                  
-                  return { valid: false, error: "Este campo es requerido." };
-                  
-               }
-   
-               return { valid: true, error: null };
-               };
-   
-   
-                const validateClaveUsuario = cve_usuario => {
-               if (!cve_usuario.length) {
-                  
-                  return { valid: false, error: "Este campo es requerido." };
-                  
-               }
-   
-               return { valid: true, error: null };
-               };
-   
-                const validateRutaDescarga = ruta_descarga => {
-               if (!ruta_descarga.length) {
-                  
-                  return { valid: false, error: "Este campo es requerido." };
-                  
-               }
-   
-               return { valid: true, error: null };
-               };
-   
-                const validateRutaVersion = ruta_ver => {
-               if (!ruta_ver.length) {
-                  
-                  return { valid: false, error: "Este campo es requerido." };
-                  
-               }
-   
-               return { valid: true, error: null };
-               };
-   
-                const validateStatus = status => {
-               if (!status.length) {
-                  
-                  return { valid: false, error: "Este campo es requerido." };
-                  
-               }
-   
-               return { valid: true, error: null };
-               };
-   
-                const validateRutaOperacion = ruta_operacion => {
-               if (!ruta_operacion.length) {
-                  
-                  return { valid: false, error: "Este campo es requerido." };
-                  
-               }
-   
-               return { valid: true, error: null };
-               };
-   
-                const validateClaveStatus = cve_status => {
-               if (!cve_status.length) {
-                  
-                  return { valid: false, error: "Este campo es requerido." };
-                  
-               }
-   
-               return { valid: true, error: null };
-               };
-   
-               this.errors = {}
-   
-               const validNombre = validateNombre(this.curso.nombre);
-               this.errors.nombre = validNombre.error;
-               if (this.valid) {
-               this.valid = validNombre.valid
-               }
-   
-               const validNomSep = validateNomSep(this.curso.nom_sep);
-               this.errors.nom_sep = validNomSep.error;
-               if (this.valid) {
-               this.valid = validNomSep.valid
-               }
-   
-               const validBTotales = validateBTotales(this.curso.btotales);
-               this.errors.btotales = validBTotales.error;
-               if (this.valid) {
-               this.valid = validBTotales.valid
-               }
-   
-               const validBLib = validateBLib(this.curso.blib);
-               this.errors.blib = validBLib.error;
-               if (this.valid) {
-               this.valid = validBLib.valid
-               }
-   
-               const validAutor = validateAutor(this.curso.autor)
-               this.errors.autor = validAutor.error
-               if (this.valid) {
-               this.valid = validAutor.valid
-               }
-   
-               const validClaveUsuario = validateClaveUsuario(this.curso.cve_usuario);
-               this.errors.cve_usuario = validClaveUsuario.error;
-               if (this.valid) {
-               this.valid = validClaveUsuario.valid
-               }
-   
-               const validRutaDescarga = validateRutaDescarga(this.curso.ruta_descarga);
-               this.errors.ruta_descarga = validRutaDescarga.error;
-               if (this.valid) {
-               this.valid = validRutaDescarga.valid
-               }
-   
-               const validRutaVersion = validateRutaVersion(this.curso.ruta_ver);
-               this.errors.ruta_ver = validRutaVersion.error;
-               if (this.valid) {
-               this.valid = validDescripcion.valid
-               }
-   
-               const validStatus = validateStatus(this.curso.status)
-               this.errors.status = validStatus.error
-               if (this.valid) {
-               this.valid = validStatus.valid
-               }
-   
-               const validRutaOperacion = validateRutaOperacion(this.curso.ruta_operacion);
-               this.errors.ruta_operacion = validRutaOperacion.error;
-               if (this.valid) {
-               this.valid = validRutaOperacion.valid
-               }
-   
-               const validClaveStatus = validateClaveStatus(this.curso.cve_status);
-               this.errors.cve_status = validClaveStatus.error;
-               if (this.valid) {
-               this.valid = validClaveStatus.valid
-               }
-   
-               return 1;
-   
-   
-          },
    
            traer(){
    
@@ -499,10 +350,12 @@
            },
    
            edit(curso){
-   
-   
-            document.getElementById("btnActualizar").disabled = false;
-            document.getElementById("btnAgregar").disabled = true;
+
+
+            document.getElementById("btnAgregar").innerHTML = 'Actualizar'; 
+               
+            this.val = 'auto';
+
    
             this.curso.clave = curso.clave
             this.curso.nombre = curso.nombre

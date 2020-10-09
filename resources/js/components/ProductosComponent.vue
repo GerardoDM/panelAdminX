@@ -11,21 +11,28 @@
                      </button>
                   </div>
                   <div class="modal-body">
-                     <form id="form">
+                     <validationObserver v-slot="{ handleSubmit }">
+                     <form id="form" @submit.prevent="handleSubmit(insert)">
                         <div class="form-group">
                            <label>Clave</label>
+                           <validationProvider v-slot="v" rules='required'>
                            <input type="text" class="form-control" v-model="producto.clave" >
-                           <div>{{ errors.clave }}</div>
+                           <span>{{v.errors[0]}}</span>
+                           </validationProvider>
                         </div>
                         <div class="form-group">
                            <label>Nombre</label>
+                           <validationProvider v-slot="v" rules='required'>
                            <input type="text" class="form-control" v-model="producto.nombre" >
-                           <div>{{ errors.nombre }}</div>
+                           <span>{{ v.errors[0] }}</span>
+                           </validationProvider>
                         </div>
                         <div class="form-group">
                            <label>Edicion</label>
+                           <validationProvider v-slot="v" rules='required'>
                            <input type="text" class="form-control" v-model="producto.edicion">
-                           <div>{{ errors.edicion }}</div>
+                           <span>{{ v.errors[0] }}</span>
+                           </validationProvider>
                         </div>
                         <div class="form-group">
                            <label>Logo Producto</label>
@@ -34,12 +41,15 @@
                         <img v-bind:src="imagePreview" width="200" height="200" v-show="showPreview"/>
                         <div class="form-group">
                            <label>Nomenclatura</label>
+                           <validationProvider v-slot="v" rules='required'>
                            <input type="text" :maxlength="3"  class="form-control" v-model="producto.nomenclatura" >
-                           <div>{{ errors.nomenclatura }}</div>
+                           <span>{{ v.errors[0] }}</span>
+                           </validationProvider>
                         </div>
-                        <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click="insert(producto)">Agregar</button>
-                        <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(producto.clave)">Actualizar</button>
+                        <button type="submit" id="btnAgregar" class="btn btn-primary" >Agregar</button>
+                        <!-- <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(producto.clave)">Actualizar</button> -->
                      </form>
+                     </validationObserver>
                   </div>
                </div>
             </div>
@@ -80,9 +90,19 @@
    </div>
 </template>
 <script>
+
+ import { ValidationProvider } from 'vee-validate';
+
+
+   //v-on:click="insert(producto)"
+
    export default {
        mounted(){
            
+       },
+
+       components: {
+          ValidationProvider,
        },
    
        data(){
@@ -103,6 +123,7 @@
                errors: {},
                message: null,
                valid: true,
+               val : 'standard'
            }
    
        },
@@ -154,75 +175,6 @@
    
         },
    
-        validation(){
-   
-               const validateClave = clave => {
-               if (!clave.length) {
-                  
-                  return { valid: false, error: "Este campo es requerido." };
-               }
-               return { valid: true, error: null };
-               };
-   
-               const validateNombre = nombre => {
-               if (!nombre.length) {
-                  
-                  return { valid: false, error: 'Este campo es requerido.' };
-               }
-   
-               return { valid: true, error: null };
-               }
-   
-               const validateEdicion = edicion => {
-               if (!edicion.length) {
-                  
-                  return { valid: false, error: "Este campo es requerido." };
-                  
-               }
-   
-               return { valid: true, error: null };
-               };
-   
-               const validateNomenclatura = nomenclatura => {
-               if (!nomenclatura.length) {
-                  
-                  return { valid: false, error: "Este campo es requerido." };
-                  
-               }
-   
-               return { valid: true, error: null };
-               };
-   
-               this.errors = {}
-   
-               const validClave = validateClave(this.producto.clave);
-               this.errors.clave = validClave.error;
-               if (this.valid) {
-               this.valid = validNombre.valid
-               }
-   
-               const validNombre = validateNombre(this.producto.nombre);
-               this.errors.nombre = validNombre.error;
-               if (this.valid) {
-               this.valid = validFecha.valid
-               }
-   
-               const validEdicion = validateEdicion(this.producto.edicion);
-               this.errors.edicion = validEdicion.error;
-               if (this.valid) {
-               this.valid = validDescripcion.valid
-               }
-   
-               const validNomenclatura = validateNomenclatura(this.producto.nomenclatura)
-               this.errors.nomenclatura = validNomenclatura.error
-               if (this.valid) {
-               this.valid = validNomenclatura.valid
-               }
-   
-               return 1;
-   
-   
-        },
    
            traer(){
    
@@ -241,7 +193,10 @@
            insert(clave){
    
                self = this
-               axios.post('api/producto',
+
+               if (this.val == 'standard'){
+
+                  axios.post('api/producto',
    
                        {
    
@@ -281,6 +236,13 @@
                        console.log(e);
                    })
    
+
+               }
+
+               else if (this.val == 'auto'){
+                  this.update(this.producto.clave)
+               }
+               
            },
    
             deleteU(clave){
@@ -324,8 +286,9 @@
    
            edit(producto){
    
-              document.getElementById("btnActualizar").disabled = false;
-              document.getElementById("btnAgregar").disabled = true;
+            document.getElementById("btnAgregar").innerHTML = 'Actualizar'; 
+               
+            this.val = 'auto';
    
             this.producto.clave = producto.clave
             this.producto.nombre = producto.nombre;

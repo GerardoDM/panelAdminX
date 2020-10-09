@@ -11,29 +11,37 @@
                      </button>
                   </div>
                   <div class="modal-body">
-                     <form id="form">
+                     <validationObserver v-slot="{ handleSubmit }">
+                     <form id="form" @submit.prevent="handleSubmit(insert)">
                         <div class="form-group">
                            <label>Producto</label>
-                           <select  id="selectProducto" v-model="selectedTwo">
+                           <validationProvider v-slot="v" rules='required'>
+                           <select id="selectProducto" v-model="selectedTwo">
                               <option :value="producto.clave" v-for="producto in productos" v-bind:key="producto.clave">{{producto.nombre}}</option>
                            </select>
-                           <div>{{ errors.cve_producto }}</div>
+                           <span>{{v.errors[0]}}</span>
+                           </validationProvider>
                         </div>
                         <div class="form-group" >
                            <label>Proyecto</label>
+                           <validationProvider v-slot="v" rules='required'>
                            <select id="selectProyecto" v-model="selected">
                               <option :value="proyecto.clave" v-for="proyecto in proyectos" v-bind:key="proyecto.clave">{{proyecto.nombre}}</option>
                            </select>
-                           <div>{{ errors.cve_proyecto }}</div>
+                           <span>{{v.errors[0]}}</span>
+                           </validationProvider>
                         </div>
                         <div class="form-group">
                            <label># de Licencias</label>
+                           <validationProvider v-slot="v" rules='required'>
                            <input type="numeric" class="form-control" v-model="pivot.nolicencias">
-                           <div>{{ errors.nolicencias }}</div>
+                           <span>{{v.errors[0]}}</span>
+                           </validationProvider>
                         </div>
-                        <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click.prevent="insert(pivot)">Agregar</button>
-                        <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(pivot.clave)">Actualizar</button>
+                        <button type="submit" id="btnAgregar" class="btn btn-primary" >Agregar</button>
+                        <!-- <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(pivot.clave)">Actualizar</button> -->
                      </form>
+                     </validationObserver>
                   </div>
                </div>
             </div>
@@ -72,6 +80,13 @@
    </div>
 </template>
 <script>
+
+import { ValidationProvider } from 'vee-validate';
+
+
+   //v-on:click.prevent="insert(pivot)"
+
+
    export default {
        mounted(){
    
@@ -85,6 +100,10 @@
                 }.bind(this)); 
         
             
+       },
+
+        components:{
+          ValidationProvider
        },
    
        data(){
@@ -122,7 +141,8 @@
                 selectedTwo : "",
                 errors : {},
                 valid : true,
-                message : null
+                message : null,
+                val : 'standard'
            
            }
    
@@ -135,60 +155,6 @@
        },
    
        methods:{
-   
-           validation(){
-   
-                const validateClaveProducto = cve_producto => {
-               if (!cve_producto.length) {
-                  
-                  return { valid: false, error: "Este campo es requerido." };
-               }
-               return { valid: true, error: null };
-               };
-   
-               const validateClaveProyecto = cve_proyecto => {
-               if (!cve_proyecto.length) {
-                  
-                  return { valid: false, error: 'Este campo es requerido.' };
-               }
-   
-               return { valid: true, error: null };
-               }
-   
-               const validateNumLicencias = nolicencias => {
-               if (!nolicencias.length) {
-                  
-                  return { valid: false, error: "Este campo es requerido." };
-                  
-               }
-   
-               return { valid: true, error: null };
-               };
-   
-   
-                this.errors = {}
-   
-               const validClaveProducto = validateClaveProducto(this.pivot.cve_producto);
-               this.errors.cve_producto = validClaveProducto.error;
-               if (this.valid) {
-               this.valid = validClaveProducto.valid
-               }
-   
-               const validClaveProyecto = validateClaveProyecto(this.pivot.cve_proyecto);
-               this.errors.cve_proyecto = validClaveProyecto.error;
-               if (this.valid) {
-               this.valid = validClaveProyecto.valid
-               }
-   
-               const validNumLicencias = validateNumLicencias(this.pivot.nolicencias);
-               this.errors.nolicencias = validNumLicencias.error;
-               if (this.valid) {
-               this.valid = validNumLicencias.valid
-               }
-   
-               return 1;
-   
-           },
    
            traer(){
    
@@ -314,8 +280,9 @@
    
            edit(pivot){
    
-              document.getElementById("btnActualizar").disabled = false;
-              document.getElementById("btnAgregar").disabled = true;
+            document.getElementById("btnAgregar").innerHTML = 'Actualizar'; 
+               
+            this.val = 'auto';
    
             this.pivot.clave = pivot.clave
             this.pivot.cve_producto = pivot.cve_producto;
