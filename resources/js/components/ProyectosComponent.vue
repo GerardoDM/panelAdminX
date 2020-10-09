@@ -11,35 +11,55 @@
                      </button>
                   </div>
                   <div class="modal-body">
-                     <form id="form">
+                   
+                   <validationObserver v-slot="{ handleSubmit }">
+                     <form id="form" @submit.prevent="handleSubmit(insert)">
                         <div class="form-group">
+                           
                            <label>Clave</label>
-                           <input type="text" class="form-control" v-model="proyecto.clave" required>
-                           <div>{{ errors.clave }}</div>
+                           <validationProvider v-slot="v" rules='required'>
+                           <input type="text" class="form-control" v-model="proyecto.clave" >
+                           <!-- <div>{{ errors.clave }}</div> -->
+                            <span>{{ v.errors[0] }}</span>
+                           </validationProvider>
                         </div>
                         <div class="form-group">
                            <label>Nombre</label>
-                           <input type="text" class="form-control" v-model="proyecto.nombre" required>
-                           <div>{{ errors.nombre }}</div>
+                           <validationProvider v-slot="v" rules='required'>
+                           <input type="text" class="form-control" v-model="proyecto.nombre" >
+                           <!-- <div>{{ errors.nombre }}</div> -->
+                           <span>{{ v.errors[0] }}</span>
+                           </validationProvider>
                         </div>
                         <div class="form-group">
                            <label>Fecha</label>
+                           <validationProvider v-slot="v" rules='required'>
                            <datepicker id="dd" v-model="date" :value="date" :format="customFormatter"></datepicker>
-                           <div>{{ errors.fecha }}</div>
+                           <!-- <div>{{ errors.fecha }}</div> -->
+                           <span>{{ v.errors[0] }}</span>
+                           </validationProvider>
                         </div>
                         <div class="form-group">
                            <label>Descripción</label>
-                           <input type="text" class="form-control" v-model="proyecto.descripcion" required>
-                           <div>{{ errors.descripcion }}</div>
+                           <validationProvider v-slot="v" rules='required'>
+                           <input type="text" class="form-control" v-model="proyecto.descripcion" >
+                           <!-- <div>{{ errors.descripcion }}</div> -->
+                           <span>{{ v.errors[0] }}</span>
+                           </validationProvider>
                         </div>
                         <div class="form-group">
                            <label>Nomenclatura</label>
-                           <input type="text" :maxlength="2" class="form-control" v-model="proyecto.nomenclatura" required>
-                           <div>{{ errors.nomenclatura }}</div>
+                           <validationProvider v-slot="v" rules='required'>
+                           <input type="text" :maxlength="2" class="form-control" v-model="proyecto.nomenclatura" >
+                           <!-- <div>{{ errors.nomenclatura }}</div> -->
+                           <span>{{ v.errors[0] }}</span>
+                           </validationProvider>
                         </div>
-                        <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click.prevent="insert(proyecto)">Agregar</button>
+                        <button type="submit" id="btnAgregar" class="btn btn-primary" >Agregar</button>
                         <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(proyecto.clave)">Actualizar</button>
                      </form>
+                   </validationObserver>
+                  
                   </div>
                </div>
             </div>
@@ -82,20 +102,27 @@
 <script>
    import Datepicker from 'vuejs-datepicker';
    import moment from 'moment'
-         
+   import { ValidationProvider } from 'vee-validate';
+
+
+   //v-on:click="insert(proyecto)"
+            
       export default {
    
           mounted(){
-              
+        
           },
    
           components: {
    
-              Datepicker
+              Datepicker,
+              ValidationProvider,
    
           },
       
           data(){
+
+            
               return {
                   proyectos: [],
       
@@ -111,6 +138,8 @@
                   errors: {},
                   message: null,
                   valid: true,
+
+                  
               }
       
           },

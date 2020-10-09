@@ -14,12 +14,12 @@
                      <form id="form">
                         <div class="form-group">
                            <label>Clave</label>
-                           <input type="text" class="form-control" v-model="producto.clave" required>
+                           <input type="text" class="form-control" v-model="producto.clave" >
                            <div>{{ errors.clave }}</div>
                         </div>
                         <div class="form-group">
                            <label>Nombre</label>
-                           <input type="text" class="form-control" v-model="producto.nombre" required>
+                           <input type="text" class="form-control" v-model="producto.nombre" >
                            <div>{{ errors.nombre }}</div>
                         </div>
                         <div class="form-group">
@@ -34,7 +34,7 @@
                         <img v-bind:src="imagePreview" width="200" height="200" v-show="showPreview"/>
                         <div class="form-group">
                            <label>Nomenclatura</label>
-                           <input type="text" :maxlength="3"  class="form-control" v-model="producto.nomenclatura" required>
+                           <input type="text" :maxlength="3"  class="form-control" v-model="producto.nomenclatura" >
                            <div>{{ errors.nomenclatura }}</div>
                         </div>
                         <button type="button" id="btnAgregar" class="btn btn-primary" v-on:click="insert(producto)">Agregar</button>

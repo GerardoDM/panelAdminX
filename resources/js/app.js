@@ -7,8 +7,38 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+
+//import { ValidationProvider, extend } from 'vee-validate';
+import * as VeeValidate from 'vee-validate'
+import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
+
+extend('positive', value => {
+    return value >= 0;
+    
+});
+
+extend('required', {
+    validate (value) {
+      return {
+        required: true,
+        valid: ['', null, undefined].indexOf(value) === -1
+      };
+    },
+    computesRequired: true,
+    message: 'Este campo es requerido'
+
+  });
+
+
+
+
+Vue.use(VeeValidate);
+
+
+
 import swal from 'sweetalert2'
 window.swal = swal;
+
 
 
 
@@ -31,6 +61,12 @@ Vue.component('proyectos-component', require( './components/ProyectosComponent.v
 Vue.component('pivot-component', require( './components/PivotComponent.vue').default);
 Vue.component('curso-component', require( './components/CursoComponent.vue').default);
 Vue.component('bloque-component', require( './components/BloqueComponent.vue').default);
+//Vue.component('validation-observer', VeeValidate.ValidationObserver);
+//Vue.component('validation-provider', VeeValidate.ValidationProvider);
+Vue.component('validationProvider', ValidationProvider);
+Vue.component('validationObserver', ValidationObserver);
+
+
 
 
 
