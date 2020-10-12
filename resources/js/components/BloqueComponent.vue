@@ -5,7 +5,7 @@
             <div class="modal-dialog" role="document">
                <div class="modal-content">
                   <div class="modal-header">
-                     <h5 class="modal-title" id="exampleModalLabel">Agregar bloque</h5>
+                     <h5 class="modal-title" id="modalTitle">Agregar bloque</h5>
                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                      <span aria-hidden="true">&times;</span>
                      </button>
@@ -185,8 +185,10 @@
            insert(clave){
       
                self = this
-   
-               axios.post('api/bloque',
+
+               if (this.val == 'standard'){
+
+                  axios.post('api/bloque',
    
                        {
    
@@ -198,8 +200,9 @@
                   ruta_portal : this.bloque.ruta_portal
                        
                        })
-                       
-                .then(response => {
+
+
+                   .then(response => {
    
                 this.bloque.clave  = ""
                 this.bloque.nombre = ""
@@ -209,6 +212,7 @@
                 this.bloque.ruta_portal = ""
    
                 this.selected = ""
+                $("#dd").val('') 
                                             
                        swal.fire({
                          icon: 'success',
@@ -218,6 +222,7 @@
                         
                        })
    
+
                        this.traer();
     
                    })
@@ -225,6 +230,20 @@
                        
                        console.log(e);
                    })
+
+
+               }
+
+               else if (this.val == 'auto'){
+                  this.update(clave)
+                  this.val = 'standard'
+                  document.getElementById("btnAgregar").innerHTML = 'Agregar'; 
+                  document.getElementById("modalTitle").innerHTML = 'Agregar bloque'; 
+               }
+   
+               
+                       
+               
    
            },
    
@@ -268,7 +287,8 @@
            edit(bloque){
    
    
-            document.getElementById("btnAgregar").innerHTML = 'Actualizar'; 
+            document.getElementById("btnAgregar").innerHTML = 'Actualizar';
+            document.getElementById("modalTitle").innerHTML = 'Actualizar producto'; 
                
             this.val = 'auto';
    

@@ -5,7 +5,7 @@
             <div class="modal-dialog" role="document">
                <div class="modal-content">
                   <div class="modal-header">
-                     <h5 class="modal-title" id="exampleModalLabel">Agregar relación</h5>
+                     <h5 class="modal-title" id="modalTitle">Agregar relación</h5>
                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                      <span aria-hidden="true">&times;</span>
                      </button>
@@ -201,7 +201,10 @@ import { ValidationProvider } from 'vee-validate';
            insert(clave){
    
                self = this
-               axios.post('api/pivot',
+
+               if (this.val == 'standard'){
+
+                  axios.post('api/pivot',
    
                        {
    
@@ -222,6 +225,7 @@ import { ValidationProvider } from 'vee-validate';
    
                     this.selected = ""
                     this.selectedTwo = ""
+                    $("#dd").val('') 
                     
                        swal.fire({
                          icon: 'success',
@@ -239,6 +243,18 @@ import { ValidationProvider } from 'vee-validate';
                        
                        console.log(e);
                    })
+
+               }
+
+               else if (this.val == 'auto'){
+
+                  this.update(clave)
+                  this.val = 'standard';
+                  document.getElementById("btnAgregar").innerHTML = 'Agregar'; 
+                  document.getElementById("modalTitle").innerHTML = 'Agregar relacion'; 
+
+               }
+               
    
            },
    
@@ -281,6 +297,7 @@ import { ValidationProvider } from 'vee-validate';
            edit(pivot){
    
             document.getElementById("btnAgregar").innerHTML = 'Actualizar'; 
+            document.getElementById("modalTitle").innerHTML = 'Actualizar relacion'; 
                
             this.val = 'auto';
    

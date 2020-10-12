@@ -5,7 +5,7 @@
             <div class="modal-dialog" role="document">
                <div class="modal-content">
                   <div class="modal-header">
-                     <h5 class="modal-title" id="exampleModalLabel">Agregar proyecto</h5>
+                     <h5 class="modal-title" id="modalTitle">Agregar proyecto</h5>
                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                      <span aria-hidden="true">&times;</span>
                      </button>
@@ -198,6 +198,7 @@
                         this.proyecto.fecha = ""
                         this.proyecto.descripcion = "" 
                         this.proyecto.nomenclatura = ""
+                        $("#dd").val('') 
                                                
                           swal.fire({
                             icon: 'success',
@@ -208,7 +209,7 @@
                           })
       
                           this.traer();
-                          $("#dd").val('') 
+                          
        
                       })
                       .catch(e => {
@@ -220,45 +221,13 @@
    
                   else if (this.val == 'auto') {
 
-                     console.log('Entró en el else if')
-
-                     axios.put(`api/proyecto/${this.proyecto.clave}`,
-                 {
-                        clave : this.proyecto.clave,
-                        nombre : this.proyecto.nombre,
-                        fecha : this.proyecto.fecha,
-                        descripcion : this.proyecto.descripcion,
-                        nomenclatura : this.proyecto.nomenclatura,
-                  })
-                               
-                 .then(response => {
-   
-                  this.proyecto.clave = ""
-                  this.proyecto.nombre = ""
-                  this.proyecto.fecha = ""
-                  this.proyecto.descripcion = "" 
-                  this.proyecto.nomenclatura = ""
-                   
-                         swal.fire({
-                            icon: 'success',
-                            title: 'Hecho',
-                            text: 'El proyecto se ha actualizado',
-                            index: 0,
-                           
-                            })
-   
-                  this.traer();
+                  console.log('Entró en el else if')
+      
+                  this.update(clave)
                   this.val = 'standard'
                   document.getElementById("btnAgregar").innerHTML = 'Agregar'; 
+                  document.getElementById("modalTitle").innerHTML = 'Agregar proyecto'; 
                           
-                      })
-   
-                      
-                      .catch(e => {
-                          
-                          console.log(e);
-                      })
-
 
                   }
    

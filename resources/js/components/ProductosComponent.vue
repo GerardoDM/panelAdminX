@@ -5,7 +5,7 @@
             <div class="modal-dialog" role="document">
                <div class="modal-content">
                   <div class="modal-header">
-                     <h5 class="modal-title" id="exampleModalLabel">Agregar producto</h5>
+                     <h5 class="modal-title" id="modalTitle">Agregar producto</h5>
                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                      <span aria-hidden="true">&times;</span>
                      </button>
@@ -216,6 +216,7 @@
                      this.producto.logo_producto = "" 
                      this.producto.nomenclatura = ""
                      this.imagePreview = false
+                     $("#dd").val('') 
                        
                                         
    
@@ -240,7 +241,13 @@
                }
 
                else if (this.val == 'auto'){
-                  this.update(this.producto.clave)
+                 
+                  this.update(clave)
+                  this.val = 'standard';
+                  document.getElementById("btnAgregar").innerHTML = 'Agregar'; 
+                  document.getElementById("modalTitle").innerHTML = 'Agregar producto'; 
+
+
                }
                
            },
@@ -287,6 +294,7 @@
            edit(producto){
    
             document.getElementById("btnAgregar").innerHTML = 'Actualizar'; 
+            document.getElementById("modalTitle").innerHTML = 'Actualizar producto'; 
                
             this.val = 'auto';
    
@@ -295,6 +303,8 @@
             this.producto.edicion = producto.edicion;
             this.producto.logo_producto = producto.logo_producto;
             this.producto.nomenclatura = producto.nomenclatura;
+            this.imagePreview = this.producto.logo_producto.name;
+            this.showPreview = this.producto.logo_producto.name;
    
            },
    
@@ -303,11 +313,12 @@
              self = this;
              axios.put(`api/producto/${clave}`,
               {
-                       nombre : this.producto.nombre,
-                       edicion : this.producto.edicion,
-                       logo_producto : this.producto.logo_producto.name,
-                       nomenclatura : this.producto.nomenclatura,
-                       })
+                     clave: this.producto.clave,
+                     nombre : this.producto.nombre,
+                     edicion : this.producto.edicion,
+                     logo_producto : this.producto.logo_producto.name,
+                     nomenclatura : this.producto.nomenclatura,
+               })
               
               
               .then(response => {

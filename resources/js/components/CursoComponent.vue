@@ -5,7 +5,7 @@
             <div class="modal-dialog" role="document">
                <div class="modal-content">
                   <div class="modal-header">
-                     <h5 class="modal-title" id="exampleModalLabel">Agregar curso</h5>
+                     <h5 class="modal-title" id="modalTitle">Agregar curso</h5>
                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                      <span aria-hidden="true">&times;</span>
                      </button>
@@ -255,8 +255,10 @@
            insert(clave){
       
                self = this
-   
-               axios.post('api/curso',
+
+               if (this.val == 'standard'){
+
+                  axios.post('api/curso',
    
                        {
    
@@ -291,6 +293,7 @@
                 this.curso.cve_status = ""
    
                 this.selected = ""
+                $("#dd").val('') 
    
                      
                                             
@@ -309,6 +312,19 @@
                        
                        console.log(e);
                    })
+
+               }
+
+               else if (this.val == 'auto'){
+
+                  this.update(clave)
+                  this.val = 'standard';
+                  document.getElementById("btnAgregar").innerHTML = 'Agregar'; 
+                  document.getElementById("modalTitle").innerHTML = 'Agregar curso'; 
+
+               }
+   
+               
    
            },
    
@@ -352,7 +368,8 @@
            edit(curso){
 
 
-            document.getElementById("btnAgregar").innerHTML = 'Actualizar'; 
+            document.getElementById("btnAgregar").innerHTML = 'Actualizar';
+            document.getElementById("modalTitle").innerHTML = 'Actualizar curso'; 
                
             this.val = 'auto';
 

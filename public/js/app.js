@@ -2069,32 +2069,41 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       self = this;
-      axios.post('api/bloque', {
-        clave: this.bloque.clave,
-        nombre: this.bloque.nombre,
-        cve_curso: this.curso.clave,
-        cve_status: this.bloque.cve_status,
-        version: this.bloque.version,
-        ruta_portal: this.bloque.ruta_portal
-      }).then(function (response) {
-        _this3.bloque.clave = "";
-        _this3.bloque.nombre = "";
-        _this3.curso.clave = "";
-        _this3.bloque.cve_status = "";
-        _this3.bloque.version = "";
-        _this3.bloque.ruta_portal = "";
-        _this3.selected = "";
-        swal.fire({
-          icon: 'success',
-          title: 'Hecho',
-          text: 'El bloque se ha creado',
-          index: 0
-        });
 
-        _this3.traer();
-      })["catch"](function (e) {
-        console.log(e);
-      });
+      if (this.val == 'standard') {
+        axios.post('api/bloque', {
+          clave: this.bloque.clave,
+          nombre: this.bloque.nombre,
+          cve_curso: this.curso.clave,
+          cve_status: this.bloque.cve_status,
+          version: this.bloque.version,
+          ruta_portal: this.bloque.ruta_portal
+        }).then(function (response) {
+          _this3.bloque.clave = "";
+          _this3.bloque.nombre = "";
+          _this3.curso.clave = "";
+          _this3.bloque.cve_status = "";
+          _this3.bloque.version = "";
+          _this3.bloque.ruta_portal = "";
+          _this3.selected = "";
+          $("#dd").val('');
+          swal.fire({
+            icon: 'success',
+            title: 'Hecho',
+            text: 'El bloque se ha creado',
+            index: 0
+          });
+
+          _this3.traer();
+        })["catch"](function (e) {
+          console.log(e);
+        });
+      } else if (this.val == 'auto') {
+        this.update(clave);
+        this.val = 'standard';
+        document.getElementById("btnAgregar").innerHTML = 'Agregar';
+        document.getElementById("modalTitle").innerHTML = 'Agregar bloque';
+      }
     },
     deleteU: function deleteU(clave) {
       var _this4 = this;
@@ -2122,6 +2131,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     edit: function edit(bloque) {
       document.getElementById("btnAgregar").innerHTML = 'Actualizar';
+      document.getElementById("modalTitle").innerHTML = 'Actualizar producto';
       this.val = 'auto';
       this.bloque.clave = bloque.clave;
       this.bloque.nombre = bloque.nombre;
@@ -2404,44 +2414,53 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       self = this;
-      axios.post('api/curso', {
-        clave: this.curso.clave,
-        nombre: this.curso.nombre,
-        nom_sep: this.curso.nom_sep,
-        btotales: this.curso.btotales,
-        blib: this.curso.blib,
-        autor: this.curso.autor,
-        cve_usuario: this.usuario.clave,
-        ruta_descarga: this.curso.ruta_descarga,
-        ruta_ver: this.curso.ruta_ver,
-        status: this.curso.status,
-        ruta_operacion: this.curso.ruta_operacion,
-        cve_status: this.curso.cve_status
-      }).then(function (response) {
-        _this3.curso.clave = "";
-        _this3.curso.nombre = "";
-        _this3.curso.nom_sep = "";
-        _this3.curso.btotales = "";
-        _this3.curso.blib = "";
-        _this3.curso.autor = "";
-        _this3.curso.cve_usuario = "";
-        _this3.curso.ruta_descarga = "";
-        _this3.curso.ruta_ver = "";
-        _this3.curso.status = "";
-        _this3.curso.ruta_operacion = "";
-        _this3.curso.cve_status = "";
-        _this3.selected = "";
-        swal.fire({
-          icon: 'success',
-          title: 'Hecho',
-          text: 'El curso se ha creado',
-          index: 0
-        });
 
-        _this3.traer();
-      })["catch"](function (e) {
-        console.log(e);
-      });
+      if (this.val == 'standard') {
+        axios.post('api/curso', {
+          clave: this.curso.clave,
+          nombre: this.curso.nombre,
+          nom_sep: this.curso.nom_sep,
+          btotales: this.curso.btotales,
+          blib: this.curso.blib,
+          autor: this.curso.autor,
+          cve_usuario: this.usuario.clave,
+          ruta_descarga: this.curso.ruta_descarga,
+          ruta_ver: this.curso.ruta_ver,
+          status: this.curso.status,
+          ruta_operacion: this.curso.ruta_operacion,
+          cve_status: this.curso.cve_status
+        }).then(function (response) {
+          _this3.curso.clave = "";
+          _this3.curso.nombre = "";
+          _this3.curso.nom_sep = "";
+          _this3.curso.btotales = "";
+          _this3.curso.blib = "";
+          _this3.curso.autor = "";
+          _this3.curso.cve_usuario = "";
+          _this3.curso.ruta_descarga = "";
+          _this3.curso.ruta_ver = "";
+          _this3.curso.status = "";
+          _this3.curso.ruta_operacion = "";
+          _this3.curso.cve_status = "";
+          _this3.selected = "";
+          $("#dd").val('');
+          swal.fire({
+            icon: 'success',
+            title: 'Hecho',
+            text: 'El curso se ha creado',
+            index: 0
+          });
+
+          _this3.traer();
+        })["catch"](function (e) {
+          console.log(e);
+        });
+      } else if (this.val == 'auto') {
+        this.update(clave);
+        this.val = 'standard';
+        document.getElementById("btnAgregar").innerHTML = 'Agregar';
+        document.getElementById("modalTitle").innerHTML = 'Agregar curso';
+      }
     },
     deleteU: function deleteU(clave) {
       var _this4 = this;
@@ -2469,6 +2488,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     edit: function edit(curso) {
       document.getElementById("btnAgregar").innerHTML = 'Actualizar';
+      document.getElementById("modalTitle").innerHTML = 'Actualizar curso';
       this.val = 'auto';
       this.curso.clave = curso.clave;
       this.curso.nombre = curso.nombre;
@@ -2963,29 +2983,38 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       self = this;
-      axios.post('api/pivot', {
-        clave: this.pivot.clave,
-        cve_producto: this.producto.clave,
-        cve_proyecto: this.proyecto.clave,
-        nolicencias: this.pivot.nolicencias
-      }).then(function (response) {
-        _this4.pivot.clave = "";
-        _this4.pivot.cve_producto = "";
-        _this4.pivot.cve_proyecto = "";
-        _this4.pivot.nolicencias = "";
-        _this4.selected = "";
-        _this4.selectedTwo = "";
-        swal.fire({
-          icon: 'success',
-          title: 'Hecho',
-          text: 'La relación se ha creado',
-          index: 0
-        });
 
-        _this4.traer();
-      })["catch"](function (e) {
-        console.log(e);
-      });
+      if (this.val == 'standard') {
+        axios.post('api/pivot', {
+          clave: this.pivot.clave,
+          cve_producto: this.producto.clave,
+          cve_proyecto: this.proyecto.clave,
+          nolicencias: this.pivot.nolicencias
+        }).then(function (response) {
+          _this4.pivot.clave = "";
+          _this4.pivot.cve_producto = "";
+          _this4.pivot.cve_proyecto = "";
+          _this4.pivot.nolicencias = "";
+          _this4.selected = "";
+          _this4.selectedTwo = "";
+          $("#dd").val('');
+          swal.fire({
+            icon: 'success',
+            title: 'Hecho',
+            text: 'La relación se ha creado',
+            index: 0
+          });
+
+          _this4.traer();
+        })["catch"](function (e) {
+          console.log(e);
+        });
+      } else if (this.val == 'auto') {
+        this.update(clave);
+        this.val = 'standard';
+        document.getElementById("btnAgregar").innerHTML = 'Agregar';
+        document.getElementById("modalTitle").innerHTML = 'Agregar relacion';
+      }
     },
     deleteU: function deleteU(clave) {
       var _this5 = this;
@@ -3013,6 +3042,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     edit: function edit(pivot) {
       document.getElementById("btnAgregar").innerHTML = 'Actualizar';
+      document.getElementById("modalTitle").innerHTML = 'Actualizar relacion';
       this.val = 'auto';
       this.pivot.clave = pivot.clave;
       this.pivot.cve_producto = pivot.cve_producto;
@@ -3249,6 +3279,7 @@ __webpack_require__.r(__webpack_exports__);
           _this2.producto.logo_producto = "";
           _this2.producto.nomenclatura = "";
           _this2.imagePreview = false;
+          $("#dd").val('');
           swal.fire({
             icon: 'success',
             title: 'Hecho',
@@ -3261,7 +3292,10 @@ __webpack_require__.r(__webpack_exports__);
           console.log(e);
         });
       } else if (this.val == 'auto') {
-        this.update(this.producto.clave);
+        this.update(clave);
+        this.val = 'standard';
+        document.getElementById("btnAgregar").innerHTML = 'Agregar';
+        document.getElementById("modalTitle").innerHTML = 'Agregar producto';
       }
     },
     deleteU: function deleteU(clave) {
@@ -3290,18 +3324,22 @@ __webpack_require__.r(__webpack_exports__);
     },
     edit: function edit(producto) {
       document.getElementById("btnAgregar").innerHTML = 'Actualizar';
+      document.getElementById("modalTitle").innerHTML = 'Actualizar producto';
       this.val = 'auto';
       this.producto.clave = producto.clave;
       this.producto.nombre = producto.nombre;
       this.producto.edicion = producto.edicion;
       this.producto.logo_producto = producto.logo_producto;
       this.producto.nomenclatura = producto.nomenclatura;
+      this.imagePreview = this.producto.logo_producto.name;
+      this.showPreview = this.producto.logo_producto.name;
     },
     update: function update(clave) {
       var _this4 = this;
 
       self = this;
       axios.put("api/producto/".concat(clave), {
+        clave: this.producto.clave,
         nombre: this.producto.nombre,
         edicion: this.producto.edicion,
         logo_producto: this.producto.logo_producto.name,
@@ -3506,6 +3544,7 @@ __webpack_require__.r(__webpack_exports__);
           _this2.proyecto.fecha = "";
           _this2.proyecto.descripcion = "";
           _this2.proyecto.nomenclatura = "";
+          $("#dd").val('');
           swal.fire({
             icon: 'success',
             title: 'Hecho',
@@ -3514,39 +3553,15 @@ __webpack_require__.r(__webpack_exports__);
           });
 
           _this2.traer();
-
-          $("#dd").val('');
         })["catch"](function (e) {
           console.log(e);
         });
       } else if (this.val == 'auto') {
         console.log('Entró en el else if');
-        axios.put("api/proyecto/".concat(this.proyecto.clave), {
-          clave: this.proyecto.clave,
-          nombre: this.proyecto.nombre,
-          fecha: this.proyecto.fecha,
-          descripcion: this.proyecto.descripcion,
-          nomenclatura: this.proyecto.nomenclatura
-        }).then(function (response) {
-          _this2.proyecto.clave = "";
-          _this2.proyecto.nombre = "";
-          _this2.proyecto.fecha = "";
-          _this2.proyecto.descripcion = "";
-          _this2.proyecto.nomenclatura = "";
-          swal.fire({
-            icon: 'success',
-            title: 'Hecho',
-            text: 'El proyecto se ha actualizado',
-            index: 0
-          });
-
-          _this2.traer();
-
-          _this2.val = 'standard';
-          document.getElementById("btnAgregar").innerHTML = 'Agregar';
-        })["catch"](function (e) {
-          console.log(e);
-        });
+        this.update(clave);
+        this.val = 'standard';
+        document.getElementById("btnAgregar").innerHTML = 'Agregar';
+        document.getElementById("modalTitle").innerHTML = 'Agregar proyecto';
       }
     },
     deleteU: function deleteU(clave) {
@@ -67425,11 +67440,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "h5",
-        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [_vm._v("Agregar bloque")]
-      ),
+      _c("h5", { staticClass: "modal-title", attrs: { id: "modalTitle" } }, [
+        _vm._v("Agregar bloque")
+      ]),
       _vm._v(" "),
       _c(
         "button",
@@ -68430,11 +68443,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "h5",
-        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [_vm._v("Agregar curso")]
-      ),
+      _c("h5", { staticClass: "modal-title", attrs: { id: "modalTitle" } }, [
+        _vm._v("Agregar curso")
+      ]),
       _vm._v(" "),
       _c(
         "button",
@@ -69457,11 +69468,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "h5",
-        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [_vm._v("Agregar relación")]
-      ),
+      _c("h5", { staticClass: "modal-title", attrs: { id: "modalTitle" } }, [
+        _vm._v("Agregar relación")
+      ]),
       _vm._v(" "),
       _c(
         "button",
@@ -69998,11 +70007,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "h5",
-        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [_vm._v("Agregar producto")]
-      ),
+      _c("h5", { staticClass: "modal-title", attrs: { id: "modalTitle" } }, [
+        _vm._v("Agregar producto")
+      ]),
       _vm._v(" "),
       _c(
         "button",
@@ -70567,11 +70574,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "h5",
-        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [_vm._v("Agregar proyecto")]
-      ),
+      _c("h5", { staticClass: "modal-title", attrs: { id: "modalTitle" } }, [
+        _vm._v("Agregar proyecto")
+      ]),
       _vm._v(" "),
       _c(
         "button",
