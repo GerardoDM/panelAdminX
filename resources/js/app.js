@@ -8,16 +8,11 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-//import { ValidationProvider, extend } from 'vee-validate';
 import * as VeeValidate from 'vee-validate'
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
-import VueRouter from 'vue-router'
-
-
-
 import swal from 'sweetalert2'
-import { routes } from './routes';
-import router from './routes';
+import {  router } from './routes.js';
+
 
 
 extend('positive', value => {
@@ -72,8 +67,6 @@ Vue.component('pivot-component', require( './components/PivotComponent.vue').def
 Vue.component('curso-component', require( './components/CursoComponent.vue').default);
 Vue.component('bloque-component', require( './components/BloqueComponent.vue').default);
 Vue.component('app-component', require( './components/App.vue').default);
-//Vue.component('validation-observer', VeeValidate.ValidationObserver);
-//Vue.component('validation-provider', VeeValidate.ValidationProvider);
 Vue.component('validationProvider', ValidationProvider);
 Vue.component('validationObserver', ValidationObserver);
 
@@ -90,8 +83,9 @@ Vue.component('validationObserver', ValidationObserver);
 const app = new Vue({
     el: '#app',
     
-    routes,
-    router
+    router,
+    
+    
 
     
        
@@ -134,5 +128,3 @@ const toast = swal.mixin({
 
 //     ],
 // });
-
-export default router;

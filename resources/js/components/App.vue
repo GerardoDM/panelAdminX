@@ -1,29 +1,40 @@
 <template>
-    <div>
-        <h1>Vue Router Demo App</h1>
+     <!-- Navbar -->
+<div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Admin</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+     
+       
+        <router-link to='/cursos'>Cursos</router-link> 
+        
+          <router-link to='/bloques'>Bloques</router-link> 
+        
+       
+          <router-link to='/productos' >Productos</router-link> 
+    
+       
+          <router-link to='/proyectos'>Proyectos</router-link>
 
-        <p>
-            <!-- <router-link :to="{ name: 'bloques' }">Bloques</router-link>
-            <router-link :to="{ name: 'cursos' }">Cursos</router-link>
-            <router-link :to="{ name: 'productos' }">Productos</router-link>
-            <router-link :to="{ name: 'proyectos' }">Proyectos</router-link>
-            <router-link :to="{ name: 'pivot' }">Productos-Proyectos</router-link>  -->
-            <router-link to="/bloques">FSFS</router-link> 
-             <router-view></router-view>  
-           
-        </p>
-
-        <div class="container">
-             
-        </div>
+          <router-link to='/prueba'>Prueba</router-link>  
+          
+        
+      </ul>
     </div>
+  </nav>
+  <div class="container">
+            <router-view></router-view> 
+        </div>
+        </div>
 </template>
 <script>
     export default {
-        mounted(){
-   
-           console.log('Mount')
-           
-       },
+       
     }
 </script>
+ 
+          

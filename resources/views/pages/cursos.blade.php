@@ -8,10 +8,12 @@
 </head>
 <body>
     
-    @include('includes.navbar')
+    {{-- @include('includes.navbar') --}}
 
     <main id = "app">
+        
         <curso-component></curso-component>
+        
     </main>
 
 </body>

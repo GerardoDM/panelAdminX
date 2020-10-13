@@ -11,12 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 
-Route::get('index', function () {
+Route::get('prueba', function () {
     return view('prueba');
 });
 
@@ -44,7 +44,7 @@ Route::get('bloques', function () {
     return view('pages.bloques');
 });
 
-Route::get('spa', function () {
+Route::get('/', function () {
     return view('spa');
 });
 
