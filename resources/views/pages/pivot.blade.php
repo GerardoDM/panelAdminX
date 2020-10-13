@@ -11,6 +11,7 @@
     @include('includes.navbar')
     
     <main id = "app">
+        <app-component></app-component>
         <pivot-component></pivot-component>
     </main>
 

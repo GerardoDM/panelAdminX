@@ -11,7 +11,7 @@
     {{-- @include('includes.navbar') --}}
     
     <main id = "app">
-        
+        <app-component></app-component>
         <bloque-component></bloque-component>
          
     </main>

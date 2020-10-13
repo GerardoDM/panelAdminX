@@ -9,19 +9,21 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
      
-       
-        <router-link to='/cursos'>Cursos</router-link> 
-        
-          <router-link to='/bloques'>Bloques</router-link> 
-        
-       
-          <router-link to='/productos' >Productos</router-link> 
-    
-       
-          <router-link to='/proyectos'>Proyectos</router-link>
-
-          <router-link to='/prueba'>Prueba</router-link>  
-          
+       <li class="nav-item">
+        <router-link to='/cursos' class="nav-link">Cursos</router-link> 
+       </li>
+        <li class="nav-item">
+          <router-link to='/bloques' class="nav-link">Bloques</router-link> 
+        </li>
+        <li class="nav-item">
+          <router-link to='/productos' class="nav-link">Productos</router-link> 
+        </li>
+       <li class="nav-item">
+          <router-link to='/proyectos' class="nav-link">Proyectos</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link to='/pivot' class="nav-link">Productos-Proyectos</router-link>  
+        </li>
         
       </ul>
     </div>
