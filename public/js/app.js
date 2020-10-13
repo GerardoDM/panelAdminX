@@ -89347,8 +89347,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "router", function() { return router; });
 /* harmony import */ var _components_BloqueComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/BloqueComponent.vue */ "./resources/js/components/BloqueComponent.vue");
 /* harmony import */ var _components_CursoComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/CursoComponent.vue */ "./resources/js/components/CursoComponent.vue");
-/* harmony import */ var _components_ProyectosComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/ProyectosComponent.vue */ "./resources/js/components/ProyectosComponent.vue");
-/* harmony import */ var _components_ProductosComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/ProductosComponent.vue */ "./resources/js/components/ProductosComponent.vue");
+/* harmony import */ var _components_ProductosComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/ProductosComponent.vue */ "./resources/js/components/ProductosComponent.vue");
+/* harmony import */ var _components_ProyectosComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/ProyectosComponent.vue */ "./resources/js/components/ProyectosComponent.vue");
 /* harmony import */ var _components_PruebaComponent_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/PruebaComponent.vue */ "./resources/js/components/PruebaComponent.vue");
 /* harmony import */ var _components_PivotComponent_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/PivotComponent.vue */ "./resources/js/components/PivotComponent.vue");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
@@ -89375,11 +89375,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_7__["default"]({
   }, {
     name: 'productos',
     path: '/productos',
-    component: _components_ProyectosComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    component: _components_ProductosComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   }, {
     name: 'proyectos',
     path: '/proyectos',
-    component: _components_ProductosComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    component: _components_ProyectosComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   }, {
     name: 'prueba',
     path: '/prueba',

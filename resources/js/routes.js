@@ -2,8 +2,8 @@
 
 import BloqueComponent from './components/BloqueComponent.vue';
 import CursoComponent from './components/CursoComponent.vue';
-import ProductoComponent from './components/ProyectosComponent.vue';
-import ProyectoComponent from './components/ProductosComponent.vue';
+import ProductoComponent from './components/ProductosComponent.vue';
+import ProyectoComponent from './components/ProyectosComponent.vue';
 import PruebaComponent from './components/PruebaComponent.vue';
 import PivotComponent from './components/PivotComponent.vue';
 import Vue from 'vue';
