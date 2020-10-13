@@ -1,12 +1,31 @@
 
 
-import FormComponent from './components/FormComponent.vue';
+import BloqueComponent from './components/BloqueComponent.vue';
+import CursoComponent from './components/CursoComponent.vue';
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+Vue.use(VueRouter);
 
 export const routes = [
     
     {
-        name: 'edit',
-        path: '/edit/:clave',
-        component: FormComponent
-    }
+        name: 'bloques',
+        path: '/bloques',
+        component: BloqueComponent
+    },
+
+
+    {
+        name: 'cursos',
+        path: '/cursos',
+        component: CursoComponent
+    },
+
+   
+
+
 ];
+
+export default new VueRouter({
+
+})

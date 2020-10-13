@@ -44,6 +44,10 @@ Route::get('bloques', function () {
     return view('pages.bloques');
 });
 
+Route::get('spa', function () {
+    return view('spa');
+});
+
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
