@@ -17,13 +17,15 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        Auth::shouldUse('usuario'); 
         
-        if ($guard == "usuario" && Auth::guard('usuario')->check()) {
-            dd(Auth::guard('usuario')->check());
+        
+        if (Auth::guard($guard)->check()) {
+        return redirect()->route('usuario.home');
         }
-
         return $next($request);
+        
+        
+
         //   if (Auth::guard($guard)->check()) {
         //       return redirect('/home');
         //   }

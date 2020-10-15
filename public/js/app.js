@@ -3234,7 +3234,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
- //v-on:click="insert(producto)"
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -3328,7 +3327,7 @@ __webpack_require__.r(__webpack_exports__);
           _this2.producto.edicion = "";
           _this2.producto.logo_producto = "";
           _this2.producto.nomenclatura = "";
-          _this2.imagePreview = false;
+          _this2.showPreview = false;
           $("#dd").val('');
           swal.fire({
             icon: 'success',
@@ -3378,11 +3377,46 @@ __webpack_require__.r(__webpack_exports__);
       this.val = 'auto';
       this.producto.clave = producto.clave;
       this.producto.nombre = producto.nombre;
-      this.producto.edicion = producto.edicion;
-      this.producto.logo_producto = producto.logo_producto;
-      this.producto.nomenclatura = producto.nomenclatura;
-      this.imagePreview = this.producto.logo_producto.name;
-      this.showPreview = this.producto.logo_producto.name;
+      this.producto.edicion = producto.edicion; // this.producto.logo_producto = producto.logo_producto;
+
+      this.producto.nomenclatura = producto.nomenclatura; // this.imagePreview = producto.logo_producto;
+      //console.log(this.imagePreview);
+
+      console.log(producto.logo_producto);
+      /*
+      Initialize a File Reader object
+      */
+
+      var reader = new FileReader();
+      /*
+      Add an event listener to the reader that when the file
+      has been loaded, we flag the show preview as true and set the
+      image to be what was read from the reader.
+      */
+
+      this.showPreview = true;
+      /*
+      Check to see if the file is not empty.
+      */
+
+      if (producto.logo_producto) {
+        console.log('primer if');
+        /*
+            Ensure the file is an image file.
+            
+        */
+
+        if (/\.(jpe?g|png|gif)$/i.test(producto.logo_producto)) {
+          console.log("here");
+          /*
+          Fire the readAsDataURL method which will read the file in and
+          upon completion fire a 'load' event which we will listen to and
+          display the image in the preview.
+          */
+
+          reader.readAsDataURL(producto.logo_producto.name);
+        }
+      }
     },
     update: function update(clave) {
       var _this4 = this;

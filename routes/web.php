@@ -48,16 +48,23 @@ Route::get('/', function () {
     return view('spa');
 });
 
-Auth::routes();
+
+Auth::routes(['register' => false]);
 
 //Route::get('/home', 'HomeController@index')->name('home');
+
+
+
+
+//Autenticacion
 
 
 Route::prefix('usuario')
     ->as('usuario.')
     ->group(function() {
                 
-        Route::get('home', 'Home\UsuariosHomeController@index')->name('home')->middleware('auth:usuario');
+        Route::get('home', 'Home\UsuariosHomeController@index')->name('home')->middleware('auth');
+       
         
 
 Route::namespace('Auth\Login')

@@ -1,12 +1,11 @@
 <!-- Authentication Links -->
-@guest('usuario')
 <li class="nav-item">
     <a class="nav-link" href="{{ route('usuario.login') }}">{{ __('Usuario Login') }}</a>
 </li>
-@else
+
 <li class="nav-item dropdown">
     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-        {{ Auth::guard('usuario')->user()->mail }} 
+        {{ Auth::user()->mail }} 
         <span class="caret"></span>
     </a>
 
@@ -22,4 +21,3 @@
         </form>
     </div>
 </li>
-@endguest
