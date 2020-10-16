@@ -61,6 +61,16 @@ class UsuariosLoginController extends DefaultLoginController
     //     return $request->only($this->username(), 'pass');
     // }
 
+    public function logout(Request $request) {
+        // Laravel default implementation
+        $this->guard()->logout();
+        $request->session()->invalidate();
+        
+        // Added this
+        $request->session()->regenerateToken();
+        return $request->session()->token();
+    }
+
 
     public function login(Request $request){
 

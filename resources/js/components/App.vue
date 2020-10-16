@@ -27,6 +27,9 @@
     </div>
     <form class="form-inline">
           <button class="btn btn-outline-success my-2 my-sm-0" type="button">{{user.nickname}}</button>
+          <button class="btn btn-outline-danger my-2 my-sm-0" type="button" v-on:click="logout()">Logout</button>
+          <!-- <input type="hidden" name="_token" v-bind:value="csrf"> -->
+          
     </form>
 
   </nav>
@@ -49,6 +52,29 @@
 
          mounted() {
             console.log(this.user)
+        },
+
+        methods : {
+          logout(){
+            axios.post('usuario/logout')   
+                               
+                 .then(response => {
+
+                   console.log('logged out');
+                   window.location.href = 'usuario/login';
+
+   
+                          
+                      })
+   
+                      
+                      .catch(e => {
+                          
+                          console.log(e);
+                      })
+
+
+          }
         }
        
     }

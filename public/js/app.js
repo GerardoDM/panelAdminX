@@ -1945,6 +1945,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user'],
   data: function data() {
@@ -1952,6 +1955,16 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     console.log(this.user);
+  },
+  methods: {
+    logout: function logout() {
+      axios.post('usuario/logout').then(function (response) {
+        console.log('logged out');
+        window.location.href = 'usuario/login';
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    }
   }
 });
 
@@ -67052,6 +67065,20 @@ var render = function() {
               attrs: { type: "button" }
             },
             [_vm._v(_vm._s(_vm.user.nickname))]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-outline-danger my-2 my-sm-0",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  return _vm.logout()
+                }
+              }
+            },
+            [_vm._v("Logout")]
           )
         ])
       ],

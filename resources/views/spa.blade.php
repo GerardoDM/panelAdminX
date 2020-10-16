@@ -11,7 +11,7 @@
   
    
     <main id="app">
-        <app-component :user={{ Auth::user() }}></app-component>
+        <app-component :user={{ Auth::user() }} ></app-component>
   
     </main>
 

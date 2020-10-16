@@ -71,6 +71,6 @@ Route::namespace('Auth\Login')
       ->group(function() {
             Route::get('login', 'UsuariosLoginController@showLoginForm')->name('login');
             Route::post('login', 'UsuariosLoginController@login')->name('login');
-            Route::post('logout', 'UsuariosLoginController@logout')->name('logout');
+            Route::post('logout', 'UsuariosLoginController@logout')->name('logout')->middleware('web');
       });
  });

@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 //     return $request->user();
 // });
 
+
 Route::get('/usuarios', 'UsuarioController@index');
 Route::post('/usuario', 'UsuarioController@create');
 Route::delete('/usuario/{clave}', 'UsuarioController@delete');
