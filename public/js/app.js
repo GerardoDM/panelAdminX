@@ -1941,7 +1941,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['user'],
+  data: function data() {
+    return {};
+  },
+  mounted: function mounted() {
+    console.log(this.user);
+  }
+});
 
 /***/ }),
 
@@ -67030,7 +67042,18 @@ var render = function() {
               )
             ])
           ]
-        )
+        ),
+        _vm._v(" "),
+        _c("form", { staticClass: "form-inline" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-outline-success my-2 my-sm-0",
+              attrs: { type: "button" }
+            },
+            [_vm._v(_vm._s(_vm.user.nickname))]
+          )
+        ])
       ],
       1
     ),
