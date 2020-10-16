@@ -67,6 +67,8 @@ Vue.component('pivot-component', require( './components/PivotComponent.vue').def
 Vue.component('curso-component', require( './components/CursoComponent.vue').default);
 Vue.component('bloque-component', require( './components/BloqueComponent.vue').default);
 Vue.component('app-component', require( './components/App.vue').default);
+Vue.component('dash-component', require( './components/DashComponent.vue').default);
+
 Vue.component('validationProvider', ValidationProvider);
 Vue.component('validationObserver', ValidationObserver);
 
@@ -102,29 +104,3 @@ const toast = swal.mixin({
   window.toast = toast;
 
 
-//   const routers = new VueRouter({
-//     mode: 'history',
-//     routes: [
-//         {
-//             path: '/bloques',
-//             name: 'bloques',
-//             component: BloqueComponent,
-//         },
-//         {
-//             path: '/cursos',
-//             name: 'cursos',
-//             component: CursoComponent,
-//         },
-//         {
-//             path: '/productos',
-//             name: 'productos',
-//             component: ProductosComponent,
-//           },
-//           {
-//             path: '/proyectos',
-//             name: 'proyectos',
-//             component: ProyectosComponent,
-//         },
-
-//     ],
-// });

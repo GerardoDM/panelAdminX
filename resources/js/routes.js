@@ -6,6 +6,7 @@ import ProductoComponent from './components/ProductosComponent.vue';
 import ProyectoComponent from './components/ProyectosComponent.vue';
 import PruebaComponent from './components/PruebaComponent.vue';
 import PivotComponent from './components/PivotComponent.vue';
+import DashComponent from './components/DashComponent.vue';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
@@ -15,7 +16,12 @@ Vue.use(VueRouter);
 export const router = new VueRouter({
 
     routes : [
-    
+        
+        {
+            name: 'dash',
+            path: '/',
+            component: DashComponent
+        },
     
         {
             name: 'bloques',

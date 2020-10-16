@@ -1,7 +1,8 @@
 @extends('spa')
     
     
-    @section('content')
+    @section('pages.content')
+ 
     <main id = "app">
         <app-component></app-component>
         

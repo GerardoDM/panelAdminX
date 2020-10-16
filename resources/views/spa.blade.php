@@ -8,9 +8,13 @@
     <title>SPA Test</title>
 </head>
 <body>
+  
+   
+    <main id="app">
+        <app-component></app-component>
+  
+    </main>
 
-    @yield('content')
-    
 </body>
 <script src="{{mix('js/app.js')}}"></script>
 </html>
