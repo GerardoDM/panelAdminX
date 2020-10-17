@@ -72,6 +72,9 @@ class UsuariosLoginController extends DefaultLoginController
     }
 
 
+    
+
+
     public function login(Request $request){
 
 
@@ -91,7 +94,7 @@ class UsuariosLoginController extends DefaultLoginController
                 // Get the currently authenticated user...
                // return $user = Auth::user();
 
-                return redirect()->route('usuario.home');
+                return redirect()->route('/');
 
              }
 

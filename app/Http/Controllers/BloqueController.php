@@ -10,6 +10,12 @@ use \Validator;
 class BloqueController extends Controller
 {
 
+    public function view(){
+
+        return view('pages.bloques');
+        
+    }
+
     public function index(){
 
         $bloques = Bloque::all();

@@ -9,6 +9,15 @@ use Illuminate\Http\Request;
 
 class PivotController extends Controller
 {
+
+
+    public function view(){
+
+        return view('pages.pivot');
+        
+    }
+
+
     public function index(){
 
         

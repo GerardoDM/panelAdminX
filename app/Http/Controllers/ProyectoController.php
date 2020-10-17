@@ -10,6 +10,14 @@ use Illuminate\Http\Request;
 
 class ProyectoController extends Controller
 {
+
+    public function view(){
+
+        return view('pages.proyectos');
+    
+    }
+
+
     public function index(){
 
         $proyectos = Proyecto::all();

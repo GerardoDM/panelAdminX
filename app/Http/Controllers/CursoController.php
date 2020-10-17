@@ -10,6 +10,12 @@ use \Validator;
 class CursoController extends Controller
 {
 
+    public function view(){
+
+        return view('pages.cursos');
+        
+    }
+
     public function index(){
 
         $cursos = Curso::all();

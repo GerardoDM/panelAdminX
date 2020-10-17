@@ -16,43 +16,21 @@
 // });
 
 
-Route::get('prueba', function () {
-    return view('prueba');
-});
 
-Route::get('form', function () {
-    return view('form');
-});
 
-Route::get('productos', function () {
-    return view('pages.productos');
-})->middleware('auth');
 
-Route::get('proyectos', function () {
-    return view('pages.proyectos');
-})->middleware('auth');
-
-Route::get('pivot', function () {
-    return view('pages.pivot');
-})->middleware('auth');
-
-Route::get('cursos', function () {
-    return view('pages.cursos');
-})->middleware('auth');
-
-Route::get('bloques', function () {
-    return view('pages.bloques');
-})->middleware('auth');
-
-Route::get('/', function () {
-    return view('spa');
-})->middleware('auth');
-
+Route::group(['middleware' => 'auth'], function () {
+        Route::get('productos', 'ProductoController@view');
+        Route::get('proyectos', 'ProyectoController@view');
+        Route::get('pivot', 'PivotController@view');
+        Route::get('bloques', 'BloqueController@view');
+        Route::get('cursos', 'CursoController@view');
+        Route::get('/', 'DashController@view')->name('/');
+  });
 
 Auth::routes(['register' => false]);
 
 //Route::get('/home', 'HomeController@index')->name('home');
-
 
 
 
