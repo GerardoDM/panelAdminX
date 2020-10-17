@@ -26,27 +26,27 @@ Route::get('form', function () {
 
 Route::get('productos', function () {
     return view('pages.productos');
-});
+})->middleware('auth');
 
 Route::get('proyectos', function () {
     return view('pages.proyectos');
-});
+})->middleware('auth');
 
 Route::get('pivot', function () {
     return view('pages.pivot');
-});
+})->middleware('auth');
 
 Route::get('cursos', function () {
     return view('pages.cursos');
-});
+})->middleware('auth');
 
 Route::get('bloques', function () {
     return view('pages.bloques');
-});
+})->middleware('auth');
 
 Route::get('/', function () {
     return view('spa');
-});
+})->middleware('auth');
 
 
 Auth::routes(['register' => false]);

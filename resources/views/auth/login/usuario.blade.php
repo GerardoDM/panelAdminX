@@ -5,16 +5,16 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                <div class="card-header">{{ __('Ingrese sus credenciales') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('usuario.login') }}">
                         @csrf
 
-                        <div class="form-group row">
-                            <label for="mail" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                        <div class="form-group">
+                            <label for="mail">{{ __('E-Mail Address') }}</label>
 
-                            <div class="col-md-6">
+                            
                                 <input id="mail" type="email" class="form-control @error('mail') is-invalid @enderror" name="mail" value="{{ old('mail') }}" required autocomplete="mail" autofocus>
 
                                 @error('mail')
@@ -22,13 +22,13 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>
+                          
                         </div>
 
-                        <div class="form-group row">
-                            <label for="pass" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                        <div class="form-group">
+                            <label for="pass">{{ __('Password') }}</label>
 
-                            <div class="col-md-6">
+                            
                                 <input id="pass" type="password" class="form-control @error('pass') is-invalid @enderror" name="pass" required autocomplete="current-password">
 
                                 @error('pass')
@@ -36,15 +36,15 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>
+                          
                         </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                        <div class="form-group">
+                           
+                                <button type="submit" class="btn btn-primary btn-block mt-4">
                                     {{ __('Login') }}
                                 </button>
-                            </div>
+                          
                         </div>
                     </form>
                 </div>
