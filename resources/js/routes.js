@@ -4,7 +4,6 @@ import BloqueComponent from './components/BloqueComponent.vue';
 import CursoComponent from './components/CursoComponent.vue';
 import ProductoComponent from './components/ProductosComponent.vue';
 import ProyectoComponent from './components/ProyectosComponent.vue';
-import PruebaComponent from './components/PruebaComponent.vue';
 import PivotComponent from './components/PivotComponent.vue';
 import DashComponent from './components/DashComponent.vue';
 import Vue from 'vue';
@@ -46,12 +45,6 @@ export const router = new VueRouter({
             name: 'proyectos',
             path: '/proyectos',
             component: ProyectoComponent
-        },
-    
-        {
-            name: 'prueba',
-            path: '/prueba',
-            component: PruebaComponent
         },
 
         {

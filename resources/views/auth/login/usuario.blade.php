@@ -3,16 +3,16 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-6">
             <div class="card">
-                <div class="card-header">{{ __('Ingrese sus credenciales') }}</div>
+                <div class="card-header text-white bg-dark">{{ __('Ingrese sus credenciales') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('usuario.login') }}">
                         @csrf
 
                         <div class="form-group">
-                            <label for="mail">{{ __('E-Mail Address') }}</label>
+                            <label for="mail">{{ __('E-Mail') }}</label>
 
                             
                                 <input id="mail" type="email" class="form-control @error('mail') is-invalid @enderror" name="mail" value="{{ old('mail') }}" required autocomplete="mail" autofocus>

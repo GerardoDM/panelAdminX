@@ -2,7 +2,7 @@
      <!-- Navbar -->
 <div>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <router-link to='/' class="navbar-brand">Admin</router-link>
+    <router-link to='/' class="navbar-brand">Admin-Xvolution</router-link>
   
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
