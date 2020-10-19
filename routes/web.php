@@ -11,13 +11,6 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-
-
-
 
 Route::group(['middleware' => 'auth'], function () {
         Route::get('productos', 'ProductoController@view');
@@ -30,21 +23,13 @@ Route::group(['middleware' => 'auth'], function () {
 
 Auth::routes(['register' => false]);
 
-//Route::get('/home', 'HomeController@index')->name('home');
-
-
-
-//Autenticacion
-
-
 Route::prefix('usuario')
     ->as('usuario.')
     ->group(function() {
                 
         Route::get('home', 'Home\UsuariosHomeController@index')->name('home')->middleware('auth');
        
-        
-
+      
 Route::namespace('Auth\Login')
       ->group(function() {
             Route::get('login', 'UsuariosLoginController@showLoginForm')->name('login');

@@ -5,8 +5,9 @@
  */
 
 require('./bootstrap');
-
 window.Vue = require('vue');
+Vue.use(VeeValidate);
+window.swal = swal;
 
 import * as VeeValidate from 'vee-validate'
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
@@ -35,13 +36,6 @@ extend('required', {
 
 
 
-Vue.use(VeeValidate);
-
-
-
-
-
-window.swal = swal;
 
 
 // router.onError(callback)
@@ -58,8 +52,6 @@ window.swal = swal;
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('prueba-component', require( './components/PruebaComponent.vue').default);
 Vue.component('form-component', require( './components/FormComponent.vue').default);
 Vue.component('productos-component', require( './components/ProductosComponent.vue').default);
 Vue.component('proyectos-component', require( './components/ProyectosComponent.vue').default);
@@ -84,12 +76,7 @@ Vue.component('validationObserver', ValidationObserver);
 
 const app = new Vue({
     el: '#app',
-    
     router,
-    
-    
-
-    
        
 
 });

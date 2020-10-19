@@ -14,34 +14,13 @@ class UsuariosLoginController extends DefaultLoginController
 
     public $user;
 
-    //protected $redirectTo = '/usuario/home';
-
-    // public function __construct()
-    // {
-
-    //     //Auth::shouldUse('usuario');
-
-    //     $this->middleware('guest:usuario')->except('logout');
-    // }
+    
     public function showLoginForm()
     {
         return view('auth.login.usuario');
     }
 
-    // public function username()
-    // {
-    //     return 'mail';
-    // }
-
-
-    // protected function guard()
-    // {
-
-    //     //Auth::shouldUse('');
-    //    // return Auth::guard('usuario');
-    // }
-
-
+    
     protected function validateLogin(Request $request){
         $this->validate($request, [
             $this->username() => 'required',
@@ -49,17 +28,6 @@ class UsuariosLoginController extends DefaultLoginController
         ]);
     }
 
-    // protected function attemptLogin(Request $request)
-    // {
-    //       return $this->guard()->attempt($this->credentials($request));
-    // }
-
-
-    // protected function credentials(Request $request)
-    
-    // {
-    //     return $request->only($this->username(), 'pass');
-    // }
 
     public function logout(Request $request) {
         // Laravel default implementation
@@ -70,9 +38,6 @@ class UsuariosLoginController extends DefaultLoginController
         $request->session()->regenerateToken();
         return $request->session()->token();
     }
-
-
-    
 
 
     public function login(Request $request){
@@ -89,10 +54,7 @@ class UsuariosLoginController extends DefaultLoginController
                 
 
             auth()->loginUsingId($usuario->clave);
-              //return Auth::guard('web')->loginUsingId($usuario->clave);
-
-                // Get the currently authenticated user...
-               // return $user = Auth::user();
+        
 
                 return redirect()->route('/');
 
@@ -107,16 +69,8 @@ class UsuariosLoginController extends DefaultLoginController
 
     public function loginDos(Request $request){
 
-        // return $request->all();
 
         // CAN ONLY DO AUTH::ATTEMPT WITH A HASHED PASSWORD 
-
-        // if (Auth::attempt(['mail' => $request->mail,'password' => $request->pass], false)){
-    
-        //      return redirect()->intended(route('usuario.home'));
-        // }
-    
-        // return $this->sendFailedLoginResponse($request);
 
         //  METHOD WITHOUT ATTEMPT , UNHASHED PASSWORD, AUTH::LOGIN RETURNS NULL
 
@@ -132,13 +86,7 @@ class UsuariosLoginController extends DefaultLoginController
                 return $usuario;
             
                 auth()->loginUsingId($usuario->clave);
-               // Auth::login($user);
-               //dd(auth()->loginUsingId($usuario->clave));
-
-
-               //dd($this->credentials($request));
-              // dd($this->attemptLogin($request));
-               //dd($request);
+               
                 return redirect('usuario/home');
                         
             }
@@ -146,16 +94,7 @@ class UsuariosLoginController extends DefaultLoginController
            //   $request = $user; IS WRONG BECAUSE VALIDATELOGIN() ONLY ACCEPTS REQUEST TYPE OBJECT, NOT USER
            // ATTEMPTLOGIN() RETURNS FALSE
 
-        // $this->validateLogin($request);
-
-        // if ($this->attemptLogin($request)){
-           
-        //     dd('ooooo');
-        //     return redirect('/usuario/home');
-
-        // }
-
-        // dd($this->attemptLogin($request));
+    
         
     }
 

@@ -1,7 +1,0 @@
-<template>
-    <div class="container">
-    <h2>Hola</h2>
-    </div>
-  
-</template>
-
