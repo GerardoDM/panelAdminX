@@ -101,9 +101,6 @@
    import moment from 'moment'
    import { ValidationProvider } from 'vee-validate';
 
-
-   //v-on:click="insert(proyecto)"
-   //v-on:click="update(proyecto.clave)"
             
       export default {
    
@@ -222,9 +219,9 @@
    
                   else if (this.val == 'auto') {
 
-                  console.log('Entró en el else if')
+                 
       
-                  this.update(clave)
+                  this.update(this.proyecto.clave)
                   this.val = 'standard'
                   document.getElementById("btnAgregar").innerHTML = 'Agregar'; 
                   document.getElementById("modalTitle").innerHTML = 'Agregar proyecto'; 

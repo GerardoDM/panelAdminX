@@ -100,7 +100,6 @@
 
  import { ValidationProvider } from 'vee-validate';
 
-   //v-on:click="insert(bloque)"
 
    export default {
    
@@ -236,7 +235,8 @@
                }
 
                else if (this.val == 'auto'){
-                  this.update(clave)
+                  this.update(this.bloque.clave)
+                  
                   this.val = 'standard'
                   document.getElementById("btnAgregar").innerHTML = 'Agregar'; 
                   document.getElementById("modalTitle").innerHTML = 'Agregar bloque'; 
@@ -294,11 +294,15 @@
             this.val = 'auto';
    
             this.bloque.clave = bloque.clave
+            
             this.bloque.nombre = bloque.nombre
             this.bloque.cve_curso = bloque.cve_curso
             this.bloque.cve_status = bloque.cve_status
             this.bloque.version = bloque.version
             this.bloque.ruta_portal = bloque.ruta_portal
+            
+            this.selected = bloque.cve_curso
+            console.log(this.bloque.cve_curso)
     
            },
    
@@ -309,7 +313,7 @@
               {
                   clave  : this.bloque.clave,
                   nombre : this.bloque.nombre,
-                  cve_curso : this.curso.clave,
+                  cve_curso : this.bloque.cve_curso,
                   cve_status : this.bloque.cve_status,
                   version : this.bloque.version,
                   ruta_portal : this.bloque.ruta_portal                    

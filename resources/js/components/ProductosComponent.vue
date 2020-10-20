@@ -239,7 +239,7 @@
 
                else if (this.val == 'auto'){
                  
-                  this.update(clave)
+                  this.update(this.producto.clave)
                   this.val = 'standard';
                   document.getElementById("btnAgregar").innerHTML = 'Agregar'; 
                   document.getElementById("modalTitle").innerHTML = 'Agregar producto'; 

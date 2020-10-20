@@ -2078,7 +2078,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
- //v-on:click="insert(bloque)"
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -2171,7 +2170,7 @@ __webpack_require__.r(__webpack_exports__);
           console.log(e);
         });
       } else if (this.val == 'auto') {
-        this.update(clave);
+        this.update(this.bloque.clave);
         this.val = 'standard';
         document.getElementById("btnAgregar").innerHTML = 'Agregar';
         document.getElementById("modalTitle").innerHTML = 'Agregar bloque';
@@ -2211,6 +2210,8 @@ __webpack_require__.r(__webpack_exports__);
       this.bloque.cve_status = bloque.cve_status;
       this.bloque.version = bloque.version;
       this.bloque.ruta_portal = bloque.ruta_portal;
+      this.selected = bloque.cve_curso;
+      console.log(this.bloque.cve_curso);
     },
     update: function update(clave) {
       var _this5 = this;
@@ -2219,7 +2220,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.put("api/bloque/".concat(clave), {
         clave: this.bloque.clave,
         nombre: this.bloque.nombre,
-        cve_curso: this.curso.clave,
+        cve_curso: this.bloque.cve_curso,
         cve_status: this.bloque.cve_status,
         version: this.bloque.version,
         ruta_portal: this.bloque.ruta_portal
@@ -2411,7 +2412,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
- //v-on:click="insert(curso)"
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -2529,7 +2529,7 @@ __webpack_require__.r(__webpack_exports__);
           console.log(e);
         });
       } else if (this.val == 'auto') {
-        this.update(clave);
+        this.update(this.curso.clave);
         this.val = 'standard';
         document.getElementById("btnAgregar").innerHTML = 'Agregar';
         document.getElementById("modalTitle").innerHTML = 'Agregar curso';
@@ -2575,6 +2575,7 @@ __webpack_require__.r(__webpack_exports__);
       this.curso.status = curso.status;
       this.curso.ruta_operacion = curso.ruta_operacion;
       this.curso.cve_status = curso.cve_status;
+      this.selected = curso.cve_usuario;
     },
     update: function update(clave) {
       var _this5 = this;
@@ -2587,7 +2588,7 @@ __webpack_require__.r(__webpack_exports__);
         btotales: this.curso.btotales,
         blib: this.curso.blib,
         autor: this.curso.autor,
-        cve_usuario: this.usuario.clave,
+        cve_usuario: this.curso.cve_usuario,
         ruta_descarga: this.curso.ruta_descarga,
         ruta_ver: this.curso.ruta_ver,
         status: this.curso.status,
@@ -2953,7 +2954,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
- //v-on:click.prevent="insert(pivot)"
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -3067,7 +3067,7 @@ __webpack_require__.r(__webpack_exports__);
           console.log(e);
         });
       } else if (this.val == 'auto') {
-        this.update(clave);
+        this.update(this.pivot.clave);
         this.val = 'standard';
         document.getElementById("btnAgregar").innerHTML = 'Agregar';
         document.getElementById("modalTitle").innerHTML = 'Agregar relacion';
@@ -3105,6 +3105,8 @@ __webpack_require__.r(__webpack_exports__);
       this.pivot.cve_producto = pivot.cve_producto;
       this.pivot.cve_proyecto = pivot.cve_proyecto;
       this.pivot.nolicencias = pivot.nolicencias;
+      this.selected = pivot.cve_proyecto;
+      this.selectedTwo = pivot.cve_producto;
     },
     update: function update(clave) {
       var _this6 = this;
@@ -3348,7 +3350,7 @@ __webpack_require__.r(__webpack_exports__);
           console.log(e);
         });
       } else if (this.val == 'auto') {
-        this.update(clave);
+        this.update(this.producto.clave);
         this.val = 'standard';
         document.getElementById("btnAgregar").innerHTML = 'Agregar';
         document.getElementById("modalTitle").innerHTML = 'Agregar producto';
@@ -3572,8 +3574,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 
- //v-on:click="insert(proyecto)"
-//v-on:click="update(proyecto.clave)"
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -3650,8 +3650,7 @@ __webpack_require__.r(__webpack_exports__);
           console.log(e);
         });
       } else if (this.val == 'auto') {
-        console.log('Entró en el else if');
-        this.update(clave);
+        this.update(this.proyecto.clave);
         this.val = 'standard';
         document.getElementById("btnAgregar").innerHTML = 'Agregar';
         document.getElementById("modalTitle").innerHTML = 'Agregar proyecto';

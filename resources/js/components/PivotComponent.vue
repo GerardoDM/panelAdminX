@@ -84,9 +84,6 @@
 import { ValidationProvider } from 'vee-validate';
 
 
-   //v-on:click.prevent="insert(pivot)"
-
-
    export default {
        mounted(){
    
@@ -248,7 +245,7 @@ import { ValidationProvider } from 'vee-validate';
 
                else if (this.val == 'auto'){
 
-                  this.update(clave)
+                  this.update(this.pivot.clave)
                   this.val = 'standard';
                   document.getElementById("btnAgregar").innerHTML = 'Agregar'; 
                   document.getElementById("modalTitle").innerHTML = 'Agregar relacion'; 
@@ -305,6 +302,8 @@ import { ValidationProvider } from 'vee-validate';
             this.pivot.cve_producto = pivot.cve_producto;
             this.pivot.cve_proyecto = pivot.cve_proyecto;
             this.pivot.nolicencias = pivot.nolicencias;
+            this.selected = pivot.cve_proyecto
+            this.selectedTwo = pivot.cve_producto
    
    
            },

@@ -64,6 +64,7 @@ class BloqueController extends Controller
     public function update(Request $request, $clave){
 
         $bloque = Validator::make($request->all(), [
+            'clave' => 'required',
             'nombre' => 'required',
             'cve_curso' => 'required',
             'cve_status' => 'required',

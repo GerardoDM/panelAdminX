@@ -154,9 +154,7 @@
 <script>
 
  import { ValidationProvider } from 'vee-validate';
-
-
-   //v-on:click="insert(curso)"
+   
 
    export default {
    
@@ -318,7 +316,7 @@
 
                else if (this.val == 'auto'){
 
-                  this.update(clave)
+                  this.update(this.curso.clave)
                   this.val = 'standard';
                   document.getElementById("btnAgregar").innerHTML = 'Agregar'; 
                   document.getElementById("modalTitle").innerHTML = 'Agregar curso'; 
@@ -387,6 +385,7 @@
             this.curso.status = curso.status
             this.curso.ruta_operacion = curso.ruta_operacion
             this.curso.cve_status = curso.cve_status
+            this.selected = curso.cve_usuario
             
    
            },
@@ -403,7 +402,7 @@
                   btotales : this.curso.btotales,
                   blib : this.curso.blib,
                   autor : this.curso.autor,
-                  cve_usuario : this.usuario.clave,
+                  cve_usuario : this.curso.cve_usuario,
                   ruta_descarga : this.curso.ruta_descarga,
                   ruta_ver : this.curso.ruta_ver,
                   status : this.curso.status,
