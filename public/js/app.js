@@ -2412,6 +2412,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -2455,36 +2459,62 @@ __webpack_require__.r(__webpack_exports__);
       errors: {},
       valid: true,
       message: null,
-      val: 'standard'
+      val: 'standard',
+      search: "",
+      query: ""
     };
   },
   created: function created() {
     this.traer();
-    this.traerUsuarios();
+    this.traerUsuarios(); //   Fire.$on('searching', () => {
+    //      let query = this.$parent.search;
+    //      axios.get('api/searchCurso?q=' + query)
+    //     .then(response => {
+    //               this.cursos = response.data;
+    //               this.traer()
+    //           })
+    //           .catch(e => {
+    //               console.log(e);
+    //           })
+    //   })
   },
   methods: {
-    traer: function traer() {
+    searchit: function searchit() {
       var _this = this;
 
       self = this;
+      var query = this.search;
+      axios.get('api/searchCurso?q=' + query).then(function (response) {
+        _this.cursos = response.data; //   this.traer()
+        //   this.traerUsuarios()
+
+        console.log('success');
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    },
+    traer: function traer() {
+      var _this2 = this;
+
+      self = this;
       axios.get('/api/cursos').then(function (response) {
-        _this.cursos = response.data;
+        _this2.cursos = response.data;
       })["catch"](function (e) {
         console.log(e);
       });
     },
     traerUsuarios: function traerUsuarios() {
-      var _this2 = this;
+      var _this3 = this;
 
       self = this;
       axios.get('/api/usuarios').then(function (response) {
-        _this2.usuarios = response.data;
+        _this3.usuarios = response.data;
       })["catch"](function (e) {
         console.log(e);
       });
     },
     insert: function insert(clave) {
-      var _this3 = this;
+      var _this4 = this;
 
       self = this;
 
@@ -2503,19 +2533,19 @@ __webpack_require__.r(__webpack_exports__);
           ruta_operacion: this.curso.ruta_operacion,
           cve_status: this.curso.cve_status
         }).then(function (response) {
-          _this3.curso.clave = "";
-          _this3.curso.nombre = "";
-          _this3.curso.nom_sep = "";
-          _this3.curso.btotales = "";
-          _this3.curso.blib = "";
-          _this3.curso.autor = "";
-          _this3.curso.cve_usuario = "";
-          _this3.curso.ruta_descarga = "";
-          _this3.curso.ruta_ver = "";
-          _this3.curso.status = "";
-          _this3.curso.ruta_operacion = "";
-          _this3.curso.cve_status = "";
-          _this3.selected = "";
+          _this4.curso.clave = "";
+          _this4.curso.nombre = "";
+          _this4.curso.nom_sep = "";
+          _this4.curso.btotales = "";
+          _this4.curso.blib = "";
+          _this4.curso.autor = "";
+          _this4.curso.cve_usuario = "";
+          _this4.curso.ruta_descarga = "";
+          _this4.curso.ruta_ver = "";
+          _this4.curso.status = "";
+          _this4.curso.ruta_operacion = "";
+          _this4.curso.cve_status = "";
+          _this4.selected = "";
           $("#dd").val('');
           swal.fire({
             icon: 'success',
@@ -2524,7 +2554,7 @@ __webpack_require__.r(__webpack_exports__);
             index: 0
           });
 
-          _this3.traer();
+          _this4.traer();
         })["catch"](function (e) {
           console.log(e);
         });
@@ -2536,7 +2566,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     deleteU: function deleteU(clave) {
-      var _this4 = this;
+      var _this5 = this;
 
       self = this;
       axios["delete"]("/api/curso/".concat(clave)).then(function (response) {
@@ -2552,7 +2582,7 @@ __webpack_require__.r(__webpack_exports__);
           if (result.isConfirmed) {
             swal.fire('Eliminado', 'El curso ha sido borrado', 'success');
 
-            _this4.traer();
+            _this5.traer();
           }
         });
       })["catch"](function (e) {
@@ -2578,7 +2608,7 @@ __webpack_require__.r(__webpack_exports__);
       this.selected = curso.cve_usuario;
     },
     update: function update(clave) {
-      var _this5 = this;
+      var _this6 = this;
 
       self = this;
       axios.put("api/curso/".concat(clave), {
@@ -2595,19 +2625,19 @@ __webpack_require__.r(__webpack_exports__);
         ruta_operacion: this.curso.ruta_operacion,
         cve_status: this.curso.cve_status
       }).then(function (response) {
-        _this5.curso.clave = "";
-        _this5.curso.nombre = "";
-        _this5.curso.nom_sep = "";
-        _this5.curso.btotales = "";
-        _this5.curso.blib = "";
-        _this5.curso.autor = "";
-        _this5.curso.cve_usuario = "";
-        _this5.curso.ruta_descarga = "";
-        _this5.curso.ruta_ver = "";
-        _this5.curso.status = "";
-        _this5.curso.ruta_operacion = "";
-        _this5.curso.cve_status = "";
-        _this5.selected = "";
+        _this6.curso.clave = "";
+        _this6.curso.nombre = "";
+        _this6.curso.nom_sep = "";
+        _this6.curso.btotales = "";
+        _this6.curso.blib = "";
+        _this6.curso.autor = "";
+        _this6.curso.cve_usuario = "";
+        _this6.curso.ruta_descarga = "";
+        _this6.curso.ruta_ver = "";
+        _this6.curso.status = "";
+        _this6.curso.ruta_operacion = "";
+        _this6.curso.cve_status = "";
+        _this6.selected = "";
         swal.fire({
           icon: 'success',
           title: 'Hecho',
@@ -2615,7 +2645,7 @@ __webpack_require__.r(__webpack_exports__);
           index: 0
         });
 
-        _this5.traer();
+        _this6.traer();
       })["catch"](function (e) {
         console.log(e);
       });
@@ -68493,6 +68523,46 @@ var render = function() {
       [
         _c("h2", { staticClass: "mb-4" }, [_vm._v("Cursos")]),
         _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.search,
+              expression: "search"
+            }
+          ],
+          staticClass: "form-control mr-sm-2",
+          attrs: { type: "search", placeholder: "Search" },
+          domProps: { value: _vm.search },
+          on: {
+            keyup: function($event) {
+              if (
+                !$event.type.indexOf("key") &&
+                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+              ) {
+                return null
+              }
+              return _vm.searchit()
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.search = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-outline-success my-2 my-sm-0",
+            attrs: { type: "submit" }
+          },
+          [_vm._v("Search")]
+        ),
+        _vm._v(" "),
         _c("table", { staticClass: "table table-hover table-dark" }, [
           _vm._m(1),
           _vm._v(" "),
@@ -88484,7 +88554,8 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 Vue.use(vee_validate__WEBPACK_IMPORTED_MODULE_0__);
-window.swal = sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a;
+window.swal = sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a; //window.Fire = new Vue();
+
 
 
 
@@ -88531,7 +88602,16 @@ Vue.component('validationObserver', vee_validate__WEBPACK_IMPORTED_MODULE_0__["V
 
 var app = new Vue({
   el: '#app',
-  router: _routes_js__WEBPACK_IMPORTED_MODULE_2__["router"]
+  router: _routes_js__WEBPACK_IMPORTED_MODULE_2__["router"] // data:{
+  //   search:''
+  // },
+  // methods:{
+  //   searchit(){
+  //     Fire.$emit('searching');
+  //     console.log('search method');
+  //   }
+  // }
+
 });
 var toast = sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.mixin({
   toast: true,

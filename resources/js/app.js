@@ -8,6 +8,7 @@ require('./bootstrap');
 window.Vue = require('vue');
 Vue.use(VeeValidate);
 window.swal = swal;
+//window.Fire = new Vue();
 
 import * as VeeValidate from 'vee-validate'
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
@@ -77,6 +78,16 @@ Vue.component('validationObserver', ValidationObserver);
 const app = new Vue({
     el: '#app',
     router,
+    // data:{
+    //   search:''
+    // },
+
+    // methods:{
+    //   searchit(){
+    //     Fire.$emit('searching');
+    //     console.log('search method');
+    //   }
+    // }
        
 
 });
@@ -89,5 +100,8 @@ const toast = swal.mixin({
     timer: 3000
   });
   window.toast = toast;
+
+
+
 
 

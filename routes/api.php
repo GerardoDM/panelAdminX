@@ -42,6 +42,7 @@ Route::get('/cursos', 'CursoController@index');
 Route::post('/curso', 'CursoController@create');
 Route::delete('/curso/{clave}', 'CursoController@delete');
 Route::put('/curso/{clave}', 'CursoController@update');
+Route::get('/searchCurso', 'CursoController@search');
 
 Route::get('/bloques', 'BloqueController@index');
 Route::post('/bloque', 'BloqueController@create');

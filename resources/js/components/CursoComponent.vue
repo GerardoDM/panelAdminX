@@ -105,6 +105,10 @@
       </div>
       <div class="container; mt-4" style="height:400px; width:max; overflow-y: scroll">
          <h2 class="mb-4">Cursos</h2>
+          
+            <input class="form-control mr-sm-2" v-model="search" type="search" @keyup.enter="searchit()" placeholder="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" >Search</button>
+         
          <table class="table table-hover table-dark">
             <thead>
                <tr>
@@ -208,18 +212,59 @@
                   errors : {},
                   valid : true,
                   message : null,
-                  val : 'standard'
+                  val : 'standard',
+                  search:"",
+                  query: ""
    
            }
    
        },
    
        created(){
-           this.traer()
-           this.traerUsuarios()
+           this.traer();
+           this.traerUsuarios();
+
+          
+
+         //   Fire.$on('searching', () => {
+         //      let query = this.$parent.search;
+         //      axios.get('api/searchCurso?q=' + query)
+            
+         //     .then(response => {
+         //               this.cursos = response.data;
+         //               this.traer()
+         //           })
+         //           .catch(e => {
+                       
+         //               console.log(e);
+         //           })
+         //   })
        },
    
        methods:{
+
+          searchit(){
+
+             
+              self = this
+
+              let query = this.search;
+
+              axios.get('api/searchCurso?q=' + query)
+             .then(response => {
+                       this.cursos = response.data;
+                     //   this.traer()
+                     //   this.traerUsuarios()
+                       console.log('success')
+                   })
+                   .catch(e => {
+                       console.log(e);
+                   })
+           
+
+
+
+          },
    
    
            traer(){

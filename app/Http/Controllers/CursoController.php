@@ -110,6 +110,23 @@ class CursoController extends Controller
         return response()->json(['Curso' => $curso], 201);
 
     }
+
+    public function search(){
+
+        if ($search = \Request::get('q')) {
+            $cursos = Curso::where(function($query) use ($search){
+                $query->where('nombre','LIKE',"%$search%");
+                        
+            })->get();
+        }else{
+
+            return response()->json($cursos->messages(), 400);
+            
+        }
+
+        return $cursos;
+
+    }
 }
 
 
