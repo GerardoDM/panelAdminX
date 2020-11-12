@@ -14,8 +14,15 @@ import * as VeeValidate from 'vee-validate'
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
 import swal from 'sweetalert2'
 import {  router } from './routes.js';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 
+
+library.add(faUserSecret)
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 extend('positive', value => {
     return value >= 0;
