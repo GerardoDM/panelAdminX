@@ -6,23 +6,26 @@
 
 require('./bootstrap');
 window.Vue = require('vue');
-Vue.use(VeeValidate);
 window.swal = swal;
-//window.Fire = new Vue();
+Vue.use(VeeValidate);
+
+
 
 import * as VeeValidate from 'vee-validate'
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
 import swal from 'sweetalert2'
 import {  router } from './routes.js';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
+import { faAngleUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 
 
-library.add(faUserSecret)
+library.add(faAngleDown)
+library.add(faAngleUp)
 
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+
 
 extend('positive', value => {
     return value >= 0;
@@ -68,9 +71,9 @@ Vue.component('curso-component', require( './components/CursoComponent.vue').def
 Vue.component('bloque-component', require( './components/BloqueComponent.vue').default);
 Vue.component('app-component', require( './components/App.vue').default);
 Vue.component('dash-component', require( './components/DashComponent.vue').default);
-
 Vue.component('validationProvider', ValidationProvider);
 Vue.component('validationObserver', ValidationObserver);
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 
 
@@ -85,16 +88,7 @@ Vue.component('validationObserver', ValidationObserver);
 const app = new Vue({
     el: '#app',
     router,
-    // data:{
-    //   search:''
-    // },
 
-    // methods:{
-    //   searchit(){
-    //     Fire.$emit('searching');
-    //     console.log('search method');
-    //   }
-    // }
        
 
 });

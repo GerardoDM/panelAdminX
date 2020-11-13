@@ -12522,6 +12522,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -12567,60 +12593,76 @@ __webpack_require__.r(__webpack_exports__);
       message: null,
       val: 'standard',
       search: "",
-      query: ""
+      query: "",
+      currentSort: 'clave',
+      currentSortDir: 'asc'
     };
   },
   created: function created() {
     this.traer();
-    this.traerUsuarios(); //   Fire.$on('searching', () => {
-    //      let query = this.$parent.search;
-    //      axios.get('api/searchCurso?q=' + query)
-    //     .then(response => {
-    //               this.cursos = response.data;
-    //               this.traer()
-    //           })
-    //           .catch(e => {
-    //               console.log(e);
-    //           })
-    //   })
+    this.traerUsuarios();
+  },
+  computed: {
+    sortedCursos: function sortedCursos() {
+      var _this = this;
+
+      return this.cursos.sort(function (a, b) {
+        var modifier = 1;
+        if (_this.currentSortDir === 'desc') modifier = -1;
+        if (a[_this.currentSort] < b[_this.currentSort]) return -1 * modifier;
+        if (a[_this.currentSort] > b[_this.currentSort]) return 1 * modifier;
+        return 0;
+      });
+    }
   },
   methods: {
+    sortBy: function sortBy(s) {
+      //if s == current sort, reverse
+      if (s === this.currentSort) {
+        this.currentSortDir = this.currentSortDir === 'asc' ? 'desc' : 'asc';
+      }
+
+      this.currentSort = s;
+    },
+    so: function so(prop) {
+      this.cursos.sort(function (a, b) {
+        return a[prop] < b[prop] ? -1 : 1;
+      });
+    },
     searchit: function searchit() {
-      var _this = this;
+      var _this2 = this;
 
       self = this;
       var query = this.search;
       axios.get('api/searchCurso?q=' + query).then(function (response) {
-        _this.cursos = response.data; //   this.traer()
-        //   this.traerUsuarios()
-
+        _this2.cursos = response.data;
         console.log('success');
       })["catch"](function (e) {
         console.log(e);
       });
     },
     traer: function traer() {
-      var _this2 = this;
+      var _this3 = this;
 
       self = this;
       axios.get('/api/cursos').then(function (response) {
-        _this2.cursos = response.data;
+        _this3.cursos = response.data;
       })["catch"](function (e) {
         console.log(e);
       });
     },
     traerUsuarios: function traerUsuarios() {
-      var _this3 = this;
+      var _this4 = this;
 
       self = this;
       axios.get('/api/usuarios').then(function (response) {
-        _this3.usuarios = response.data;
+        _this4.usuarios = response.data;
       })["catch"](function (e) {
         console.log(e);
       });
     },
     insert: function insert(clave) {
-      var _this4 = this;
+      var _this5 = this;
 
       self = this;
 
@@ -12639,19 +12681,19 @@ __webpack_require__.r(__webpack_exports__);
           ruta_operacion: this.curso.ruta_operacion,
           cve_status: this.curso.cve_status
         }).then(function (response) {
-          _this4.curso.clave = "";
-          _this4.curso.nombre = "";
-          _this4.curso.nom_sep = "";
-          _this4.curso.btotales = "";
-          _this4.curso.blib = "";
-          _this4.curso.autor = "";
-          _this4.curso.cve_usuario = "";
-          _this4.curso.ruta_descarga = "";
-          _this4.curso.ruta_ver = "";
-          _this4.curso.status = "";
-          _this4.curso.ruta_operacion = "";
-          _this4.curso.cve_status = "";
-          _this4.selected = "";
+          _this5.curso.clave = "";
+          _this5.curso.nombre = "";
+          _this5.curso.nom_sep = "";
+          _this5.curso.btotales = "";
+          _this5.curso.blib = "";
+          _this5.curso.autor = "";
+          _this5.curso.cve_usuario = "";
+          _this5.curso.ruta_descarga = "";
+          _this5.curso.ruta_ver = "";
+          _this5.curso.status = "";
+          _this5.curso.ruta_operacion = "";
+          _this5.curso.cve_status = "";
+          _this5.selected = "";
           $("#dd").val('');
           swal.fire({
             icon: 'success',
@@ -12660,7 +12702,7 @@ __webpack_require__.r(__webpack_exports__);
             index: 0
           });
 
-          _this4.traer();
+          _this5.traer();
         })["catch"](function (e) {
           console.log(e);
         });
@@ -12672,7 +12714,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     deleteU: function deleteU(clave) {
-      var _this5 = this;
+      var _this6 = this;
 
       self = this;
       axios["delete"]("/api/curso/".concat(clave)).then(function (response) {
@@ -12688,7 +12730,7 @@ __webpack_require__.r(__webpack_exports__);
           if (result.isConfirmed) {
             swal.fire('Eliminado', 'El curso ha sido borrado', 'success');
 
-            _this5.traer();
+            _this6.traer();
           }
         });
       })["catch"](function (e) {
@@ -12714,7 +12756,7 @@ __webpack_require__.r(__webpack_exports__);
       this.selected = curso.cve_usuario;
     },
     update: function update(clave) {
-      var _this6 = this;
+      var _this7 = this;
 
       self = this;
       axios.put("api/curso/".concat(clave), {
@@ -12731,19 +12773,19 @@ __webpack_require__.r(__webpack_exports__);
         ruta_operacion: this.curso.ruta_operacion,
         cve_status: this.curso.cve_status
       }).then(function (response) {
-        _this6.curso.clave = "";
-        _this6.curso.nombre = "";
-        _this6.curso.nom_sep = "";
-        _this6.curso.btotales = "";
-        _this6.curso.blib = "";
-        _this6.curso.autor = "";
-        _this6.curso.cve_usuario = "";
-        _this6.curso.ruta_descarga = "";
-        _this6.curso.ruta_ver = "";
-        _this6.curso.status = "";
-        _this6.curso.ruta_operacion = "";
-        _this6.curso.cve_status = "";
-        _this6.selected = "";
+        _this7.curso.clave = "";
+        _this7.curso.nombre = "";
+        _this7.curso.nom_sep = "";
+        _this7.curso.btotales = "";
+        _this7.curso.blib = "";
+        _this7.curso.autor = "";
+        _this7.curso.cve_usuario = "";
+        _this7.curso.ruta_descarga = "";
+        _this7.curso.ruta_ver = "";
+        _this7.curso.status = "";
+        _this7.curso.ruta_operacion = "";
+        _this7.curso.cve_status = "";
+        _this7.selected = "";
         swal.fire({
           icon: 'success',
           title: 'Hecho',
@@ -12751,7 +12793,7 @@ __webpack_require__.r(__webpack_exports__);
           index: 0
         });
 
-        _this6.traer();
+        _this7.traer();
       })["catch"](function (e) {
         console.log(e);
       });
@@ -77832,1006 +77874,1239 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container" },
-    [
-      _c("font-awesome-icon", { attrs: { icon: "user-secret" } }),
-      _vm._v(" "),
-      _c("div", [
-        _c(
-          "div",
-          {
-            staticClass: "modal fade",
-            attrs: {
-              id: "exampleModal",
-              tabindex: "-1",
-              role: "dialog",
-              "aria-labelledby": "exampleModalLabel",
-              "aria-hidden": "true"
-            }
-          },
-          [
-            _c(
-              "div",
-              { staticClass: "modal-dialog", attrs: { role: "document" } },
-              [
-                _c("div", { staticClass: "modal-content" }, [
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "modal-body" },
-                    [
-                      _c("validationObserver", {
-                        scopedSlots: _vm._u([
-                          {
-                            key: "default",
-                            fn: function(ref) {
-                              var handleSubmit = ref.handleSubmit
-                              return [
-                                _c(
-                                  "form",
-                                  {
-                                    attrs: { id: "form" },
-                                    on: {
-                                      submit: function($event) {
-                                        $event.preventDefault()
-                                        return handleSubmit(_vm.insert)
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _c(
-                                      "div",
-                                      { staticClass: "form-group" },
-                                      [
-                                        _c("label", [_vm._v("Nombre")]),
-                                        _vm._v(" "),
-                                        _c("validationProvider", {
-                                          attrs: { rules: "required" },
-                                          scopedSlots: _vm._u(
-                                            [
-                                              {
-                                                key: "default",
-                                                fn: function(v) {
-                                                  return [
-                                                    _c("input", {
-                                                      directives: [
-                                                        {
-                                                          name: "model",
-                                                          rawName: "v-model",
-                                                          value:
-                                                            _vm.curso.nombre,
-                                                          expression:
-                                                            "curso.nombre"
-                                                        }
-                                                      ],
-                                                      staticClass:
-                                                        "form-control",
-                                                      attrs: { type: "text" },
-                                                      domProps: {
-                                                        value: _vm.curso.nombre
-                                                      },
-                                                      on: {
-                                                        input: function(
-                                                          $event
-                                                        ) {
-                                                          if (
-                                                            $event.target
-                                                              .composing
-                                                          ) {
-                                                            return
-                                                          }
-                                                          _vm.$set(
-                                                            _vm.curso,
-                                                            "nombre",
-                                                            $event.target.value
-                                                          )
-                                                        }
-                                                      }
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _c("span", [
-                                                      _vm._v(
-                                                        _vm._s(v.errors[0])
-                                                      )
-                                                    ])
-                                                  ]
-                                                }
-                                              }
-                                            ],
-                                            null,
-                                            true
-                                          )
-                                        })
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      { staticClass: "form-group" },
-                                      [
-                                        _c("label", [_vm._v("nom_sep")]),
-                                        _vm._v(" "),
-                                        _c("validationProvider", {
-                                          attrs: { rules: "required" },
-                                          scopedSlots: _vm._u(
-                                            [
-                                              {
-                                                key: "default",
-                                                fn: function(v) {
-                                                  return [
-                                                    _c("input", {
-                                                      directives: [
-                                                        {
-                                                          name: "model",
-                                                          rawName: "v-model",
-                                                          value:
-                                                            _vm.curso.nom_sep,
-                                                          expression:
-                                                            "curso.nom_sep"
-                                                        }
-                                                      ],
-                                                      staticClass:
-                                                        "form-control",
-                                                      attrs: { type: "text" },
-                                                      domProps: {
-                                                        value: _vm.curso.nom_sep
-                                                      },
-                                                      on: {
-                                                        input: function(
-                                                          $event
-                                                        ) {
-                                                          if (
-                                                            $event.target
-                                                              .composing
-                                                          ) {
-                                                            return
-                                                          }
-                                                          _vm.$set(
-                                                            _vm.curso,
-                                                            "nom_sep",
-                                                            $event.target.value
-                                                          )
-                                                        }
-                                                      }
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _c("span", [
-                                                      _vm._v(
-                                                        _vm._s(v.errors[0])
-                                                      )
-                                                    ])
-                                                  ]
-                                                }
-                                              }
-                                            ],
-                                            null,
-                                            true
-                                          )
-                                        })
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      { staticClass: "form-group" },
-                                      [
-                                        _c("label", [_vm._v("btotales")]),
-                                        _vm._v(" "),
-                                        _c("validationProvider", {
-                                          attrs: { rules: "required" },
-                                          scopedSlots: _vm._u(
-                                            [
-                                              {
-                                                key: "default",
-                                                fn: function(v) {
-                                                  return [
-                                                    _c("input", {
-                                                      directives: [
-                                                        {
-                                                          name: "model",
-                                                          rawName: "v-model",
-                                                          value:
-                                                            _vm.curso.btotales,
-                                                          expression:
-                                                            "curso.btotales"
-                                                        }
-                                                      ],
-                                                      staticClass:
-                                                        "form-control",
-                                                      attrs: {
-                                                        type: "numeric"
-                                                      },
-                                                      domProps: {
-                                                        value:
-                                                          _vm.curso.btotales
-                                                      },
-                                                      on: {
-                                                        input: function(
-                                                          $event
-                                                        ) {
-                                                          if (
-                                                            $event.target
-                                                              .composing
-                                                          ) {
-                                                            return
-                                                          }
-                                                          _vm.$set(
-                                                            _vm.curso,
-                                                            "btotales",
-                                                            $event.target.value
-                                                          )
-                                                        }
-                                                      }
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _c("span", [
-                                                      _vm._v(
-                                                        _vm._s(v.errors[0])
-                                                      )
-                                                    ])
-                                                  ]
-                                                }
-                                              }
-                                            ],
-                                            null,
-                                            true
-                                          )
-                                        })
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      { staticClass: "form-group" },
-                                      [
-                                        _c("label", [_vm._v("blib")]),
-                                        _vm._v(" "),
-                                        _c("validationProvider", {
-                                          attrs: { rules: "required" },
-                                          scopedSlots: _vm._u(
-                                            [
-                                              {
-                                                key: "default",
-                                                fn: function(v) {
-                                                  return [
-                                                    _c("input", {
-                                                      directives: [
-                                                        {
-                                                          name: "model",
-                                                          rawName: "v-model",
-                                                          value: _vm.curso.blib,
-                                                          expression:
-                                                            "curso.blib"
-                                                        }
-                                                      ],
-                                                      staticClass:
-                                                        "form-control",
-                                                      attrs: {
-                                                        type: "numeric"
-                                                      },
-                                                      domProps: {
-                                                        value: _vm.curso.blib
-                                                      },
-                                                      on: {
-                                                        input: function(
-                                                          $event
-                                                        ) {
-                                                          if (
-                                                            $event.target
-                                                              .composing
-                                                          ) {
-                                                            return
-                                                          }
-                                                          _vm.$set(
-                                                            _vm.curso,
-                                                            "blib",
-                                                            $event.target.value
-                                                          )
-                                                        }
-                                                      }
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _c("span", [
-                                                      _vm._v(
-                                                        _vm._s(v.errors[0])
-                                                      )
-                                                    ])
-                                                  ]
-                                                }
-                                              }
-                                            ],
-                                            null,
-                                            true
-                                          )
-                                        })
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      { staticClass: "form-group" },
-                                      [
-                                        _c("label", [_vm._v("Autor")]),
-                                        _vm._v(" "),
-                                        _c("validationProvider", {
-                                          attrs: { rules: "required" },
-                                          scopedSlots: _vm._u(
-                                            [
-                                              {
-                                                key: "default",
-                                                fn: function(v) {
-                                                  return [
-                                                    _c("input", {
-                                                      directives: [
-                                                        {
-                                                          name: "model",
-                                                          rawName: "v-model",
-                                                          value:
-                                                            _vm.curso.autor,
-                                                          expression:
-                                                            "curso.autor"
-                                                        }
-                                                      ],
-                                                      staticClass:
-                                                        "form-control",
-                                                      attrs: { type: "text" },
-                                                      domProps: {
-                                                        value: _vm.curso.autor
-                                                      },
-                                                      on: {
-                                                        input: function(
-                                                          $event
-                                                        ) {
-                                                          if (
-                                                            $event.target
-                                                              .composing
-                                                          ) {
-                                                            return
-                                                          }
-                                                          _vm.$set(
-                                                            _vm.curso,
-                                                            "autor",
-                                                            $event.target.value
-                                                          )
-                                                        }
-                                                      }
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _c("span", [
-                                                      _vm._v(
-                                                        _vm._s(v.errors[0])
-                                                      )
-                                                    ])
-                                                  ]
-                                                }
-                                              }
-                                            ],
-                                            null,
-                                            true
-                                          )
-                                        })
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      { staticClass: "form-group" },
-                                      [
-                                        _c("label", [_vm._v("cve_usuario")]),
-                                        _vm._v(" "),
-                                        _c("validationProvider", {
-                                          attrs: { rules: "required" },
-                                          scopedSlots: _vm._u(
-                                            [
-                                              {
-                                                key: "default",
-                                                fn: function(v) {
-                                                  return [
-                                                    _c(
-                                                      "select",
-                                                      {
-                                                        directives: [
-                                                          {
-                                                            name: "model",
-                                                            rawName: "v-model",
-                                                            value: _vm.selected,
-                                                            expression:
-                                                              "selected"
-                                                          }
-                                                        ],
-                                                        attrs: {
-                                                          id: "selectUsuario"
-                                                        },
-                                                        on: {
-                                                          change: function(
-                                                            $event
-                                                          ) {
-                                                            var $$selectedVal = Array.prototype.filter
-                                                              .call(
-                                                                $event.target
-                                                                  .options,
-                                                                function(o) {
-                                                                  return o.selected
-                                                                }
-                                                              )
-                                                              .map(function(o) {
-                                                                var val =
-                                                                  "_value" in o
-                                                                    ? o._value
-                                                                    : o.value
-                                                                return val
-                                                              })
-                                                            _vm.selected = $event
-                                                              .target.multiple
-                                                              ? $$selectedVal
-                                                              : $$selectedVal[0]
-                                                          }
-                                                        }
-                                                      },
-                                                      _vm._l(
-                                                        _vm.usuarios,
-                                                        function(usuario) {
-                                                          return _c(
-                                                            "option",
-                                                            {
-                                                              key:
-                                                                usuario.clave,
-                                                              domProps: {
-                                                                value:
-                                                                  usuario.clave
-                                                              }
-                                                            },
-                                                            [
-                                                              _vm._v(
-                                                                "Nombre : " +
-                                                                  _vm._s(
-                                                                    usuario.nombre
-                                                                  )
-                                                              )
-                                                            ]
-                                                          )
-                                                        }
-                                                      ),
-                                                      0
-                                                    ),
-                                                    _vm._v(" "),
-                                                    _c("span", [
-                                                      _vm._v(
-                                                        _vm._s(v.errors[0])
-                                                      )
-                                                    ])
-                                                  ]
-                                                }
-                                              }
-                                            ],
-                                            null,
-                                            true
-                                          )
-                                        })
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      { staticClass: "form-group" },
-                                      [
-                                        _c("label", [_vm._v("Ruta descarga")]),
-                                        _vm._v(" "),
-                                        _c("validationProvider", {
-                                          attrs: { rules: "required" },
-                                          scopedSlots: _vm._u(
-                                            [
-                                              {
-                                                key: "default",
-                                                fn: function(v) {
-                                                  return [
-                                                    _c("input", {
-                                                      directives: [
-                                                        {
-                                                          name: "model",
-                                                          rawName: "v-model",
-                                                          value:
-                                                            _vm.curso
-                                                              .ruta_descarga,
-                                                          expression:
-                                                            "curso.ruta_descarga"
-                                                        }
-                                                      ],
-                                                      staticClass:
-                                                        "form-control",
-                                                      attrs: { type: "url" },
-                                                      domProps: {
-                                                        value:
-                                                          _vm.curso
-                                                            .ruta_descarga
-                                                      },
-                                                      on: {
-                                                        input: function(
-                                                          $event
-                                                        ) {
-                                                          if (
-                                                            $event.target
-                                                              .composing
-                                                          ) {
-                                                            return
-                                                          }
-                                                          _vm.$set(
-                                                            _vm.curso,
-                                                            "ruta_descarga",
-                                                            $event.target.value
-                                                          )
-                                                        }
-                                                      }
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _c("span", [
-                                                      _vm._v(
-                                                        _vm._s(v.errors[0])
-                                                      )
-                                                    ])
-                                                  ]
-                                                }
-                                              }
-                                            ],
-                                            null,
-                                            true
-                                          )
-                                        })
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      { staticClass: "form-group" },
-                                      [
-                                        _c("label", [_vm._v("Ruta ver")]),
-                                        _vm._v(" "),
-                                        _c("validationProvider", {
-                                          attrs: { rules: "required" },
-                                          scopedSlots: _vm._u(
-                                            [
-                                              {
-                                                key: "default",
-                                                fn: function(v) {
-                                                  return [
-                                                    _c("input", {
-                                                      directives: [
-                                                        {
-                                                          name: "model",
-                                                          rawName: "v-model",
-                                                          value:
-                                                            _vm.curso.ruta_ver,
-                                                          expression:
-                                                            "curso.ruta_ver"
-                                                        }
-                                                      ],
-                                                      staticClass:
-                                                        "form-control",
-                                                      attrs: { type: "url" },
-                                                      domProps: {
-                                                        value:
-                                                          _vm.curso.ruta_ver
-                                                      },
-                                                      on: {
-                                                        input: function(
-                                                          $event
-                                                        ) {
-                                                          if (
-                                                            $event.target
-                                                              .composing
-                                                          ) {
-                                                            return
-                                                          }
-                                                          _vm.$set(
-                                                            _vm.curso,
-                                                            "ruta_ver",
-                                                            $event.target.value
-                                                          )
-                                                        }
-                                                      }
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _c("span", [
-                                                      _vm._v(
-                                                        _vm._s(v.errors[0])
-                                                      )
-                                                    ])
-                                                  ]
-                                                }
-                                              }
-                                            ],
-                                            null,
-                                            true
-                                          )
-                                        })
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      { staticClass: "form-group" },
-                                      [
-                                        _c("label", [_vm._v("Status")]),
-                                        _vm._v(" "),
-                                        _c("validationProvider", {
-                                          attrs: { rules: "required" },
-                                          scopedSlots: _vm._u(
-                                            [
-                                              {
-                                                key: "default",
-                                                fn: function(v) {
-                                                  return [
-                                                    _c("input", {
-                                                      directives: [
-                                                        {
-                                                          name: "model",
-                                                          rawName: "v-model",
-                                                          value:
-                                                            _vm.curso.status,
-                                                          expression:
-                                                            "curso.status"
-                                                        }
-                                                      ],
-                                                      staticClass:
-                                                        "form-control",
-                                                      attrs: { type: "text" },
-                                                      domProps: {
-                                                        value: _vm.curso.status
-                                                      },
-                                                      on: {
-                                                        input: function(
-                                                          $event
-                                                        ) {
-                                                          if (
-                                                            $event.target
-                                                              .composing
-                                                          ) {
-                                                            return
-                                                          }
-                                                          _vm.$set(
-                                                            _vm.curso,
-                                                            "status",
-                                                            $event.target.value
-                                                          )
-                                                        }
-                                                      }
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _c("span", [
-                                                      _vm._v(
-                                                        _vm._s(v.errors[0])
-                                                      )
-                                                    ])
-                                                  ]
-                                                }
-                                              }
-                                            ],
-                                            null,
-                                            true
-                                          )
-                                        })
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      { staticClass: "form-group" },
-                                      [
-                                        _c("label", [_vm._v("Ruta Operación")]),
-                                        _vm._v(" "),
-                                        _c("validationProvider", {
-                                          attrs: { rules: "required" },
-                                          scopedSlots: _vm._u(
-                                            [
-                                              {
-                                                key: "default",
-                                                fn: function(v) {
-                                                  return [
-                                                    _c("input", {
-                                                      directives: [
-                                                        {
-                                                          name: "model",
-                                                          rawName: "v-model",
-                                                          value:
-                                                            _vm.curso
-                                                              .ruta_operacion,
-                                                          expression:
-                                                            "curso.ruta_operacion"
-                                                        }
-                                                      ],
-                                                      staticClass:
-                                                        "form-control",
-                                                      attrs: { type: "url" },
-                                                      domProps: {
-                                                        value:
-                                                          _vm.curso
-                                                            .ruta_operacion
-                                                      },
-                                                      on: {
-                                                        input: function(
-                                                          $event
-                                                        ) {
-                                                          if (
-                                                            $event.target
-                                                              .composing
-                                                          ) {
-                                                            return
-                                                          }
-                                                          _vm.$set(
-                                                            _vm.curso,
-                                                            "ruta_operacion",
-                                                            $event.target.value
-                                                          )
-                                                        }
-                                                      }
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _c("span", [
-                                                      _vm._v(
-                                                        _vm._s(v.errors[0])
-                                                      )
-                                                    ])
-                                                  ]
-                                                }
-                                              }
-                                            ],
-                                            null,
-                                            true
-                                          )
-                                        })
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      { staticClass: "form-group" },
-                                      [
-                                        _c("label", [_vm._v("Clave Status")]),
-                                        _vm._v(" "),
-                                        _c("validationProvider", {
-                                          attrs: { rules: "required" },
-                                          scopedSlots: _vm._u(
-                                            [
-                                              {
-                                                key: "default",
-                                                fn: function(v) {
-                                                  return [
-                                                    _c("input", {
-                                                      directives: [
-                                                        {
-                                                          name: "model",
-                                                          rawName: "v-model",
-                                                          value:
-                                                            _vm.curso
-                                                              .cve_status,
-                                                          expression:
-                                                            "curso.cve_status"
-                                                        }
-                                                      ],
-                                                      staticClass:
-                                                        "form-control",
-                                                      attrs: {
-                                                        type: "numeric"
-                                                      },
-                                                      domProps: {
-                                                        value:
-                                                          _vm.curso.cve_status
-                                                      },
-                                                      on: {
-                                                        input: function(
-                                                          $event
-                                                        ) {
-                                                          if (
-                                                            $event.target
-                                                              .composing
-                                                          ) {
-                                                            return
-                                                          }
-                                                          _vm.$set(
-                                                            _vm.curso,
-                                                            "cve_status",
-                                                            $event.target.value
-                                                          )
-                                                        }
-                                                      }
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _c("span", [
-                                                      _vm._v(
-                                                        _vm._s(v.errors[0])
-                                                      )
-                                                    ])
-                                                  ]
-                                                }
-                                              }
-                                            ],
-                                            null,
-                                            true
-                                          )
-                                        })
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass: "btn btn-primary",
-                                        attrs: {
-                                          type: "submit",
-                                          id: "btnAgregar"
-                                        }
-                                      },
-                                      [_vm._v("Agregar")]
-                                    )
-                                  ]
-                                )
-                              ]
-                            }
-                          }
-                        ])
-                      })
-                    ],
-                    1
-                  )
-                ])
-              ]
-            )
-          ]
-        )
-      ]),
-      _vm._v(" "),
+  return _c("div", { staticClass: "container" }, [
+    _c("div", [
       _c(
         "div",
         {
-          staticClass: "container; mt-4",
-          staticStyle: { height: "400px", width: "max", "overflow-y": "scroll" }
-        },
-        [
-          _c("h2", { staticClass: "mb-4" }, [_vm._v("Cursos")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.search,
-                expression: "search"
-              }
-            ],
-            staticClass: "form-control mr-sm-2",
-            attrs: { type: "search", placeholder: "Search" },
-            domProps: { value: _vm.search },
-            on: {
-              keyup: function($event) {
-                if (
-                  !$event.type.indexOf("key") &&
-                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                ) {
-                  return null
-                }
-                return _vm.searchit()
-              },
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.search = $event.target.value
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-outline-success my-2 my-sm-0",
-              attrs: { type: "submit" }
-            },
-            [_vm._v("Search")]
-          ),
-          _vm._v(" "),
-          _c("table", { staticClass: "table table-hover table-dark" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.cursos, function(curso) {
-                return _c("tr", { key: curso.clave }, [
-                  _c("th", [_vm._v(_vm._s(curso.clave))]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v(_vm._s(curso.nombre))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(curso.nom_sep))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(curso.btotales))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(curso.blib))]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v(_vm._s(curso.autor))]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v(_vm._s(curso.cve_usuario))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(curso.ruta_descarga))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(curso.ruta_ver))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(curso.status))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(curso.ruta_operacion))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(curso.cve_status))]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-secondary",
-                        attrs: {
-                          type: "button",
-                          "data-toggle": "modal",
-                          "data-target": "#exampleModal"
-                        },
-                        on: {
-                          click: function($event) {
-                            return _vm.edit(curso)
-                          }
-                        }
-                      },
-                      [_vm._v("\n                  Editar\n                  ")]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            return _vm.deleteU(curso.clave)
-                          }
-                        }
-                      },
-                      [_vm._v("Eliminar")]
-                    )
-                  ])
-                ])
-              }),
-              0
-            )
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary btn-block mt-4",
+          staticClass: "modal fade",
           attrs: {
-            type: "button",
-            "data-toggle": "modal",
-            "data-target": "#exampleModal"
+            id: "exampleModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "exampleModalLabel",
+            "aria-hidden": "true"
           }
         },
-        [_vm._v("Agregar")]
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "modal-body" },
+                  [
+                    _c("validationObserver", {
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function(ref) {
+                            var handleSubmit = ref.handleSubmit
+                            return [
+                              _c(
+                                "form",
+                                {
+                                  attrs: { id: "form" },
+                                  on: {
+                                    submit: function($event) {
+                                      $event.preventDefault()
+                                      return handleSubmit(_vm.insert)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    { staticClass: "form-group" },
+                                    [
+                                      _c("label", [_vm._v("Nombre")]),
+                                      _vm._v(" "),
+                                      _c("validationProvider", {
+                                        attrs: { rules: "required" },
+                                        scopedSlots: _vm._u(
+                                          [
+                                            {
+                                              key: "default",
+                                              fn: function(v) {
+                                                return [
+                                                  _c("input", {
+                                                    directives: [
+                                                      {
+                                                        name: "model",
+                                                        rawName: "v-model",
+                                                        value: _vm.curso.nombre,
+                                                        expression:
+                                                          "curso.nombre"
+                                                      }
+                                                    ],
+                                                    staticClass: "form-control",
+                                                    attrs: { type: "text" },
+                                                    domProps: {
+                                                      value: _vm.curso.nombre
+                                                    },
+                                                    on: {
+                                                      input: function($event) {
+                                                        if (
+                                                          $event.target
+                                                            .composing
+                                                        ) {
+                                                          return
+                                                        }
+                                                        _vm.$set(
+                                                          _vm.curso,
+                                                          "nombre",
+                                                          $event.target.value
+                                                        )
+                                                      }
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c("span", [
+                                                    _vm._v(_vm._s(v.errors[0]))
+                                                  ])
+                                                ]
+                                              }
+                                            }
+                                          ],
+                                          null,
+                                          true
+                                        )
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "form-group" },
+                                    [
+                                      _c("label", [_vm._v("nom_sep")]),
+                                      _vm._v(" "),
+                                      _c("validationProvider", {
+                                        attrs: { rules: "required" },
+                                        scopedSlots: _vm._u(
+                                          [
+                                            {
+                                              key: "default",
+                                              fn: function(v) {
+                                                return [
+                                                  _c("input", {
+                                                    directives: [
+                                                      {
+                                                        name: "model",
+                                                        rawName: "v-model",
+                                                        value:
+                                                          _vm.curso.nom_sep,
+                                                        expression:
+                                                          "curso.nom_sep"
+                                                      }
+                                                    ],
+                                                    staticClass: "form-control",
+                                                    attrs: { type: "text" },
+                                                    domProps: {
+                                                      value: _vm.curso.nom_sep
+                                                    },
+                                                    on: {
+                                                      input: function($event) {
+                                                        if (
+                                                          $event.target
+                                                            .composing
+                                                        ) {
+                                                          return
+                                                        }
+                                                        _vm.$set(
+                                                          _vm.curso,
+                                                          "nom_sep",
+                                                          $event.target.value
+                                                        )
+                                                      }
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c("span", [
+                                                    _vm._v(_vm._s(v.errors[0]))
+                                                  ])
+                                                ]
+                                              }
+                                            }
+                                          ],
+                                          null,
+                                          true
+                                        )
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "form-group" },
+                                    [
+                                      _c("label", [_vm._v("btotales")]),
+                                      _vm._v(" "),
+                                      _c("validationProvider", {
+                                        attrs: { rules: "required" },
+                                        scopedSlots: _vm._u(
+                                          [
+                                            {
+                                              key: "default",
+                                              fn: function(v) {
+                                                return [
+                                                  _c("input", {
+                                                    directives: [
+                                                      {
+                                                        name: "model",
+                                                        rawName: "v-model",
+                                                        value:
+                                                          _vm.curso.btotales,
+                                                        expression:
+                                                          "curso.btotales"
+                                                      }
+                                                    ],
+                                                    staticClass: "form-control",
+                                                    attrs: { type: "numeric" },
+                                                    domProps: {
+                                                      value: _vm.curso.btotales
+                                                    },
+                                                    on: {
+                                                      input: function($event) {
+                                                        if (
+                                                          $event.target
+                                                            .composing
+                                                        ) {
+                                                          return
+                                                        }
+                                                        _vm.$set(
+                                                          _vm.curso,
+                                                          "btotales",
+                                                          $event.target.value
+                                                        )
+                                                      }
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c("span", [
+                                                    _vm._v(_vm._s(v.errors[0]))
+                                                  ])
+                                                ]
+                                              }
+                                            }
+                                          ],
+                                          null,
+                                          true
+                                        )
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "form-group" },
+                                    [
+                                      _c("label", [_vm._v("blib")]),
+                                      _vm._v(" "),
+                                      _c("validationProvider", {
+                                        attrs: { rules: "required" },
+                                        scopedSlots: _vm._u(
+                                          [
+                                            {
+                                              key: "default",
+                                              fn: function(v) {
+                                                return [
+                                                  _c("input", {
+                                                    directives: [
+                                                      {
+                                                        name: "model",
+                                                        rawName: "v-model",
+                                                        value: _vm.curso.blib,
+                                                        expression: "curso.blib"
+                                                      }
+                                                    ],
+                                                    staticClass: "form-control",
+                                                    attrs: { type: "numeric" },
+                                                    domProps: {
+                                                      value: _vm.curso.blib
+                                                    },
+                                                    on: {
+                                                      input: function($event) {
+                                                        if (
+                                                          $event.target
+                                                            .composing
+                                                        ) {
+                                                          return
+                                                        }
+                                                        _vm.$set(
+                                                          _vm.curso,
+                                                          "blib",
+                                                          $event.target.value
+                                                        )
+                                                      }
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c("span", [
+                                                    _vm._v(_vm._s(v.errors[0]))
+                                                  ])
+                                                ]
+                                              }
+                                            }
+                                          ],
+                                          null,
+                                          true
+                                        )
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "form-group" },
+                                    [
+                                      _c("label", [_vm._v("Autor")]),
+                                      _vm._v(" "),
+                                      _c("validationProvider", {
+                                        attrs: { rules: "required" },
+                                        scopedSlots: _vm._u(
+                                          [
+                                            {
+                                              key: "default",
+                                              fn: function(v) {
+                                                return [
+                                                  _c("input", {
+                                                    directives: [
+                                                      {
+                                                        name: "model",
+                                                        rawName: "v-model",
+                                                        value: _vm.curso.autor,
+                                                        expression:
+                                                          "curso.autor"
+                                                      }
+                                                    ],
+                                                    staticClass: "form-control",
+                                                    attrs: { type: "text" },
+                                                    domProps: {
+                                                      value: _vm.curso.autor
+                                                    },
+                                                    on: {
+                                                      input: function($event) {
+                                                        if (
+                                                          $event.target
+                                                            .composing
+                                                        ) {
+                                                          return
+                                                        }
+                                                        _vm.$set(
+                                                          _vm.curso,
+                                                          "autor",
+                                                          $event.target.value
+                                                        )
+                                                      }
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c("span", [
+                                                    _vm._v(_vm._s(v.errors[0]))
+                                                  ])
+                                                ]
+                                              }
+                                            }
+                                          ],
+                                          null,
+                                          true
+                                        )
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "form-group" },
+                                    [
+                                      _c("label", [_vm._v("cve_usuario")]),
+                                      _vm._v(" "),
+                                      _c("validationProvider", {
+                                        attrs: { rules: "required" },
+                                        scopedSlots: _vm._u(
+                                          [
+                                            {
+                                              key: "default",
+                                              fn: function(v) {
+                                                return [
+                                                  _c(
+                                                    "select",
+                                                    {
+                                                      directives: [
+                                                        {
+                                                          name: "model",
+                                                          rawName: "v-model",
+                                                          value: _vm.selected,
+                                                          expression: "selected"
+                                                        }
+                                                      ],
+                                                      attrs: {
+                                                        id: "selectUsuario"
+                                                      },
+                                                      on: {
+                                                        change: function(
+                                                          $event
+                                                        ) {
+                                                          var $$selectedVal = Array.prototype.filter
+                                                            .call(
+                                                              $event.target
+                                                                .options,
+                                                              function(o) {
+                                                                return o.selected
+                                                              }
+                                                            )
+                                                            .map(function(o) {
+                                                              var val =
+                                                                "_value" in o
+                                                                  ? o._value
+                                                                  : o.value
+                                                              return val
+                                                            })
+                                                          _vm.selected = $event
+                                                            .target.multiple
+                                                            ? $$selectedVal
+                                                            : $$selectedVal[0]
+                                                        }
+                                                      }
+                                                    },
+                                                    _vm._l(
+                                                      _vm.usuarios,
+                                                      function(usuario) {
+                                                        return _c(
+                                                          "option",
+                                                          {
+                                                            key: usuario.clave,
+                                                            domProps: {
+                                                              value:
+                                                                usuario.clave
+                                                            }
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "Nombre : " +
+                                                                _vm._s(
+                                                                  usuario.nombre
+                                                                )
+                                                            )
+                                                          ]
+                                                        )
+                                                      }
+                                                    ),
+                                                    0
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c("span", [
+                                                    _vm._v(_vm._s(v.errors[0]))
+                                                  ])
+                                                ]
+                                              }
+                                            }
+                                          ],
+                                          null,
+                                          true
+                                        )
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "form-group" },
+                                    [
+                                      _c("label", [_vm._v("Ruta descarga")]),
+                                      _vm._v(" "),
+                                      _c("validationProvider", {
+                                        attrs: { rules: "required" },
+                                        scopedSlots: _vm._u(
+                                          [
+                                            {
+                                              key: "default",
+                                              fn: function(v) {
+                                                return [
+                                                  _c("input", {
+                                                    directives: [
+                                                      {
+                                                        name: "model",
+                                                        rawName: "v-model",
+                                                        value:
+                                                          _vm.curso
+                                                            .ruta_descarga,
+                                                        expression:
+                                                          "curso.ruta_descarga"
+                                                      }
+                                                    ],
+                                                    staticClass: "form-control",
+                                                    attrs: { type: "url" },
+                                                    domProps: {
+                                                      value:
+                                                        _vm.curso.ruta_descarga
+                                                    },
+                                                    on: {
+                                                      input: function($event) {
+                                                        if (
+                                                          $event.target
+                                                            .composing
+                                                        ) {
+                                                          return
+                                                        }
+                                                        _vm.$set(
+                                                          _vm.curso,
+                                                          "ruta_descarga",
+                                                          $event.target.value
+                                                        )
+                                                      }
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c("span", [
+                                                    _vm._v(_vm._s(v.errors[0]))
+                                                  ])
+                                                ]
+                                              }
+                                            }
+                                          ],
+                                          null,
+                                          true
+                                        )
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "form-group" },
+                                    [
+                                      _c("label", [_vm._v("Ruta ver")]),
+                                      _vm._v(" "),
+                                      _c("validationProvider", {
+                                        attrs: { rules: "required" },
+                                        scopedSlots: _vm._u(
+                                          [
+                                            {
+                                              key: "default",
+                                              fn: function(v) {
+                                                return [
+                                                  _c("input", {
+                                                    directives: [
+                                                      {
+                                                        name: "model",
+                                                        rawName: "v-model",
+                                                        value:
+                                                          _vm.curso.ruta_ver,
+                                                        expression:
+                                                          "curso.ruta_ver"
+                                                      }
+                                                    ],
+                                                    staticClass: "form-control",
+                                                    attrs: { type: "url" },
+                                                    domProps: {
+                                                      value: _vm.curso.ruta_ver
+                                                    },
+                                                    on: {
+                                                      input: function($event) {
+                                                        if (
+                                                          $event.target
+                                                            .composing
+                                                        ) {
+                                                          return
+                                                        }
+                                                        _vm.$set(
+                                                          _vm.curso,
+                                                          "ruta_ver",
+                                                          $event.target.value
+                                                        )
+                                                      }
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c("span", [
+                                                    _vm._v(_vm._s(v.errors[0]))
+                                                  ])
+                                                ]
+                                              }
+                                            }
+                                          ],
+                                          null,
+                                          true
+                                        )
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "form-group" },
+                                    [
+                                      _c("label", [_vm._v("Status")]),
+                                      _vm._v(" "),
+                                      _c("validationProvider", {
+                                        attrs: { rules: "required" },
+                                        scopedSlots: _vm._u(
+                                          [
+                                            {
+                                              key: "default",
+                                              fn: function(v) {
+                                                return [
+                                                  _c("input", {
+                                                    directives: [
+                                                      {
+                                                        name: "model",
+                                                        rawName: "v-model",
+                                                        value: _vm.curso.status,
+                                                        expression:
+                                                          "curso.status"
+                                                      }
+                                                    ],
+                                                    staticClass: "form-control",
+                                                    attrs: { type: "text" },
+                                                    domProps: {
+                                                      value: _vm.curso.status
+                                                    },
+                                                    on: {
+                                                      input: function($event) {
+                                                        if (
+                                                          $event.target
+                                                            .composing
+                                                        ) {
+                                                          return
+                                                        }
+                                                        _vm.$set(
+                                                          _vm.curso,
+                                                          "status",
+                                                          $event.target.value
+                                                        )
+                                                      }
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c("span", [
+                                                    _vm._v(_vm._s(v.errors[0]))
+                                                  ])
+                                                ]
+                                              }
+                                            }
+                                          ],
+                                          null,
+                                          true
+                                        )
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "form-group" },
+                                    [
+                                      _c("label", [_vm._v("Ruta Operación")]),
+                                      _vm._v(" "),
+                                      _c("validationProvider", {
+                                        attrs: { rules: "required" },
+                                        scopedSlots: _vm._u(
+                                          [
+                                            {
+                                              key: "default",
+                                              fn: function(v) {
+                                                return [
+                                                  _c("input", {
+                                                    directives: [
+                                                      {
+                                                        name: "model",
+                                                        rawName: "v-model",
+                                                        value:
+                                                          _vm.curso
+                                                            .ruta_operacion,
+                                                        expression:
+                                                          "curso.ruta_operacion"
+                                                      }
+                                                    ],
+                                                    staticClass: "form-control",
+                                                    attrs: { type: "url" },
+                                                    domProps: {
+                                                      value:
+                                                        _vm.curso.ruta_operacion
+                                                    },
+                                                    on: {
+                                                      input: function($event) {
+                                                        if (
+                                                          $event.target
+                                                            .composing
+                                                        ) {
+                                                          return
+                                                        }
+                                                        _vm.$set(
+                                                          _vm.curso,
+                                                          "ruta_operacion",
+                                                          $event.target.value
+                                                        )
+                                                      }
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c("span", [
+                                                    _vm._v(_vm._s(v.errors[0]))
+                                                  ])
+                                                ]
+                                              }
+                                            }
+                                          ],
+                                          null,
+                                          true
+                                        )
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "form-group" },
+                                    [
+                                      _c("label", [_vm._v("Clave Status")]),
+                                      _vm._v(" "),
+                                      _c("validationProvider", {
+                                        attrs: { rules: "required" },
+                                        scopedSlots: _vm._u(
+                                          [
+                                            {
+                                              key: "default",
+                                              fn: function(v) {
+                                                return [
+                                                  _c("input", {
+                                                    directives: [
+                                                      {
+                                                        name: "model",
+                                                        rawName: "v-model",
+                                                        value:
+                                                          _vm.curso.cve_status,
+                                                        expression:
+                                                          "curso.cve_status"
+                                                      }
+                                                    ],
+                                                    staticClass: "form-control",
+                                                    attrs: { type: "numeric" },
+                                                    domProps: {
+                                                      value:
+                                                        _vm.curso.cve_status
+                                                    },
+                                                    on: {
+                                                      input: function($event) {
+                                                        if (
+                                                          $event.target
+                                                            .composing
+                                                        ) {
+                                                          return
+                                                        }
+                                                        _vm.$set(
+                                                          _vm.curso,
+                                                          "cve_status",
+                                                          $event.target.value
+                                                        )
+                                                      }
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c("span", [
+                                                    _vm._v(_vm._s(v.errors[0]))
+                                                  ])
+                                                ]
+                                              }
+                                            }
+                                          ],
+                                          null,
+                                          true
+                                        )
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-primary",
+                                      attrs: {
+                                        type: "submit",
+                                        id: "btnAgregar"
+                                      }
+                                    },
+                                    [_vm._v("Agregar")]
+                                  )
+                                ]
+                              )
+                            ]
+                          }
+                        }
+                      ])
+                    })
+                  ],
+                  1
+                )
+              ])
+            ]
+          )
+        ]
       )
-    ],
-    1
-  )
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "container; mt-4",
+        staticStyle: { height: "400px", width: "max", "overflow-y": "scroll" }
+      },
+      [
+        _c("h2", { staticClass: "mb-4" }, [_vm._v("Cursos")]),
+        _vm._v(" "),
+        _c(
+          "button",
+          { staticClass: "btn btn-outline-success my-2 my-sm-0" },
+          [_c("font-awesome-icon", { attrs: { icon: "angle-down" } })],
+          1
+        ),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.search,
+              expression: "search"
+            }
+          ],
+          staticClass: "form-control mr-sm-2",
+          attrs: { type: "search", placeholder: "Search" },
+          domProps: { value: _vm.search },
+          on: {
+            keyup: function($event) {
+              if (
+                !$event.type.indexOf("key") &&
+                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+              ) {
+                return null
+              }
+              return _vm.searchit()
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.search = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-outline-success my-2 my-sm-0",
+            attrs: { type: "submit" }
+          },
+          [_vm._v("Search")]
+        ),
+        _vm._v(" "),
+        _c("table", { staticClass: "table table-hover table-dark" }, [
+          _c("thead", [
+            _c("tr", [
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [
+                  _vm._v("Clave"),
+                  _c("font-awesome-icon", {
+                    attrs: { icon: "angle-down" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sortBy("clave")
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [
+                  _vm._v("Nombre\n                   "),
+                  _c("font-awesome-icon", {
+                    attrs: { icon: "angle-down" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sortBy("nombre")
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [
+                  _vm._v("nom sep\n                   "),
+                  _c("font-awesome-icon", {
+                    attrs: { icon: "angle-down" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sortBy("nom_sep")
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [
+                  _vm._v("btotales\n                   "),
+                  _c("font-awesome-icon", {
+                    attrs: { icon: "angle-down" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sortBy("btotales")
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [
+                  _vm._v("blib\n                   "),
+                  _c("font-awesome-icon", {
+                    attrs: { icon: "angle-down" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sortBy("blib")
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [
+                  _vm._v("Autor\n                   "),
+                  _c("font-awesome-icon", {
+                    attrs: { icon: "angle-down" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sortBy("autor")
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [
+                  _vm._v("Clave Usuario\n                   "),
+                  _c("font-awesome-icon", {
+                    attrs: { icon: "angle-down" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sortBy()
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [
+                  _vm._v("Ruta descarga\n                   "),
+                  _c("font-awesome-icon", {
+                    attrs: { icon: "angle-down" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sortBy()
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [
+                  _vm._v("Ruta ver\n                   "),
+                  _c("font-awesome-icon", {
+                    attrs: { icon: "angle-down" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sortBy()
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [
+                  _vm._v("Status\n                   "),
+                  _c("font-awesome-icon", {
+                    attrs: { icon: "angle-down" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sortBy()
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [
+                  _vm._v("Ruta operación\n                   "),
+                  _c("font-awesome-icon", {
+                    attrs: { icon: "angle-down" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sortBy()
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [
+                  _vm._v("Clave status\n                   "),
+                  _c("font-awesome-icon", {
+                    attrs: { icon: "angle-down" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sortBy()
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [_vm._v("Acción")]
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [_vm._v("Acción")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.sortedCursos, function(curso) {
+              return _c("tr", { key: curso.clave }, [
+                _c("th", [_vm._v(_vm._s(curso.clave))]),
+                _vm._v(" "),
+                _c("th", [_vm._v(_vm._s(curso.nombre))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(curso.nom_sep))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(curso.btotales))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(curso.blib))]),
+                _vm._v(" "),
+                _c("th", [_vm._v(_vm._s(curso.autor))]),
+                _vm._v(" "),
+                _c("th", [_vm._v(_vm._s(curso.cve_usuario))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(curso.ruta_descarga))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(curso.ruta_ver))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(curso.status))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(curso.ruta_operacion))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(curso.cve_status))]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary",
+                      attrs: {
+                        type: "button",
+                        "data-toggle": "modal",
+                        "data-target": "#exampleModal"
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.edit(curso)
+                        }
+                      }
+                    },
+                    [_vm._v("\n                  Editar\n                  ")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.deleteU(curso.clave)
+                        }
+                      }
+                    },
+                    [_vm._v("Eliminar")]
+                  )
+                ])
+              ])
+            }),
+            0
+          )
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary btn-block mt-4",
+        attrs: {
+          type: "button",
+          "data-toggle": "modal",
+          "data-target": "#exampleModal"
+        }
+      },
+      [_vm._v("Agregar")]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -78855,126 +79130,6 @@ var staticRenderFns = [
         },
         [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
       )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Clave")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Nombre")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("nom sep")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("btotales")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("blib")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Autor")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Clave Usuario")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Ruta descarga")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Ruta ver")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Status")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Ruta operación")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Clave status")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Acción")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Acción")]
-        )
-      ])
     ])
   }
 ]
@@ -98738,8 +98893,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+window.swal = sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a;
 Vue.use(vee_validate__WEBPACK_IMPORTED_MODULE_0__);
-window.swal = sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a; //window.Fire = new Vue();
 
 
 
@@ -98748,8 +98903,8 @@ window.swal = sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a; //window.Fire 
 
 
 
-_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_3__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faUserSecret"]);
-Vue.component('font-awesome-icon', _fortawesome_vue_fontawesome__WEBPACK_IMPORTED_MODULE_5__["FontAwesomeIcon"]);
+_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_3__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faAngleDown"]);
+_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_3__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faAngleUp"]);
 Object(vee_validate__WEBPACK_IMPORTED_MODULE_0__["extend"])('positive', function (value) {
   return value >= 0;
 });
@@ -98784,6 +98939,7 @@ Vue.component('app-component', __webpack_require__(/*! ./components/App.vue */ "
 Vue.component('dash-component', __webpack_require__(/*! ./components/DashComponent.vue */ "./resources/js/components/DashComponent.vue")["default"]);
 Vue.component('validationProvider', vee_validate__WEBPACK_IMPORTED_MODULE_0__["ValidationProvider"]);
 Vue.component('validationObserver', vee_validate__WEBPACK_IMPORTED_MODULE_0__["ValidationObserver"]);
+Vue.component('font-awesome-icon', _fortawesome_vue_fontawesome__WEBPACK_IMPORTED_MODULE_5__["FontAwesomeIcon"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -98792,16 +98948,7 @@ Vue.component('validationObserver', vee_validate__WEBPACK_IMPORTED_MODULE_0__["V
 
 var app = new Vue({
   el: '#app',
-  router: _routes_js__WEBPACK_IMPORTED_MODULE_2__["router"] // data:{
-  //   search:''
-  // },
-  // methods:{
-  //   searchit(){
-  //     Fire.$emit('searching');
-  //     console.log('search method');
-  //   }
-  // }
-
+  router: _routes_js__WEBPACK_IMPORTED_MODULE_2__["router"]
 });
 var toast = sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.mixin({
   toast: true,

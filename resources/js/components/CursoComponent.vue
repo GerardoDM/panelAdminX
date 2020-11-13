@@ -1,7 +1,7 @@
 <template>
    <div class="container">
 
-      <font-awesome-icon icon="user-secret" />
+      
       
       <div>
          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -18,6 +18,7 @@
                      <form id="form" @submit.prevent="handleSubmit(insert)">
                         <div class="form-group">
                            <label>Nombre</label>
+                           
                            <validationProvider v-slot="v" rules='required'>
                            <input type="text" class="form-control" v-model="curso.nombre">
                            <span>{{ v.errors[0] }}</span>
@@ -107,6 +108,7 @@
       </div>
       <div class="container; mt-4" style="height:400px; width:max; overflow-y: scroll">
          <h2 class="mb-4">Cursos</h2>
+         <button class="btn btn-outline-success my-2 my-sm-0"><font-awesome-icon icon="angle-down"/></button> 
           
             <input class="form-control mr-sm-2" v-model="search" type="search" @keyup.enter="searchit()" placeholder="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit" >Search</button>
@@ -114,24 +116,48 @@
          <table class="table table-hover table-dark">
             <thead>
                <tr>
-                  <th style="position:sticky; top:0; background: #000000">Clave</th>
-                  <th style="position:sticky; top:0; background: #000000">Nombre</th>
-                  <th style="position:sticky; top:0; background: #000000">nom sep</th>
-                  <th style="position:sticky; top:0; background: #000000">btotales</th>
-                  <th style="position:sticky; top:0; background: #000000">blib</th>
-                  <th style="position:sticky; top:0; background: #000000">Autor</th>
-                  <th style="position:sticky; top:0; background: #000000">Clave Usuario</th>
-                  <th style="position:sticky; top:0; background: #000000">Ruta descarga</th>
-                  <th style="position:sticky; top:0; background: #000000">Ruta ver</th>
-                  <th style="position:sticky; top:0; background: #000000">Status</th>
-                  <th style="position:sticky; top:0; background: #000000">Ruta operación</th>
-                  <th style="position:sticky; top:0; background: #000000">Clave status</th>
+                  <th style="position:sticky; top:0; background: #000000">Clave<font-awesome-icon icon="angle-down" @click="sortBy('clave')"/></th>
+                  
+                  <th style="position:sticky; top:0; background: #000000">Nombre
+                      <font-awesome-icon icon="angle-down" @click="sortBy('nombre')"/>
+                  </th>
+                  
+                  <th style="position:sticky; top:0; background: #000000">nom sep
+                      <font-awesome-icon icon="angle-down" @click="sortBy('nom_sep')"/>
+                  </th>
+                  <th style="position:sticky; top:0; background: #000000">btotales
+                      <font-awesome-icon icon="angle-down" @click="sortBy('btotales')"/>
+                  </th>
+                  <th style="position:sticky; top:0; background: #000000">blib
+                      <font-awesome-icon icon="angle-down" @click="sortBy('blib')"/>
+                  </th>
+                  <th style="position:sticky; top:0; background: #000000">Autor
+                      <font-awesome-icon icon="angle-down" @click="sortBy('autor')"/>
+                  </th>
+                  <th style="position:sticky; top:0; background: #000000">Clave Usuario
+                      <font-awesome-icon icon="angle-down" @click="sortBy()"/>
+                  </th>
+                  <th style="position:sticky; top:0; background: #000000">Ruta descarga
+                      <font-awesome-icon icon="angle-down" @click="sortBy()"/>
+                  </th>
+                  <th style="position:sticky; top:0; background: #000000">Ruta ver
+                      <font-awesome-icon icon="angle-down" @click="sortBy()"/>
+                  </th>
+                  <th style="position:sticky; top:0; background: #000000">Status
+                      <font-awesome-icon icon="angle-down" @click="sortBy()"/>
+                  </th>
+                  <th style="position:sticky; top:0; background: #000000">Ruta operación
+                      <font-awesome-icon icon="angle-down" @click="sortBy()"/>
+                  </th>
+                  <th style="position:sticky; top:0; background: #000000">Clave status
+                      <font-awesome-icon icon="angle-down" @click="sortBy()"/>
+                  </th>
                   <th style="position:sticky; top:0; background: #000000">Acción</th>
                   <th style="position:sticky; top:0; background: #000000">Acción</th>
                </tr>
             </thead>
             <tbody>
-               <tr v-for="curso in cursos" v-bind:key="curso.clave">
+               <tr v-for="curso in sortedCursos" v-bind:key="curso.clave">
                   <th>{{curso.clave}}</th>
                   <th>{{curso.nombre}}</th>
                   <td>{{curso.nom_sep}}</td>
@@ -216,7 +242,10 @@
                   message : null,
                   val : 'standard',
                   search:"",
-                  query: ""
+                  query: "",
+                  currentSort:'clave',
+                  currentSortDir:'asc'
+               
    
            }
    
@@ -226,24 +255,35 @@
            this.traer();
            this.traerUsuarios();
 
-          
-
-         //   Fire.$on('searching', () => {
-         //      let query = this.$parent.search;
-         //      axios.get('api/searchCurso?q=' + query)
-            
-         //     .then(response => {
-         //               this.cursos = response.data;
-         //               this.traer()
-         //           })
-         //           .catch(e => {
-                       
-         //               console.log(e);
-         //           })
-         //   })
        },
+
+
+       computed:{
+         sortedCursos:function() {
+            return this.cursos.sort((a,b) => {
+               let modifier = 1;
+               if(this.currentSortDir === 'desc') modifier = -1;
+               if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+               if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+               return 0;
+            });
+         }
+         },
    
        methods:{
+
+          sortBy(s) {
+         //if s == current sort, reverse
+         if(s === this.currentSort) {
+            this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
+         }
+         this.currentSort = s;
+  },
+
+
+          so(prop){
+             this.cursos.sort((a,b) => a[prop] < b[prop] ? -1 : 1)
+          },
 
           searchit(){
 
@@ -255,16 +295,13 @@
               axios.get('api/searchCurso?q=' + query)
              .then(response => {
                        this.cursos = response.data;
-                     //   this.traer()
-                     //   this.traerUsuarios()
+            
                        console.log('success')
                    })
                    .catch(e => {
                        console.log(e);
                    })
            
-
-
 
           },
    
