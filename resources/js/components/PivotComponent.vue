@@ -47,8 +47,17 @@
             </div>
          </div>
       </div>
-      <div class="container; mt-4" style="height:400px; overflow-y: scroll">
-         <h2 class="mb-4">Productos-Proyectos</h2>
+      <hr> 
+       <h2 class="mb-4">Productos-Proyectos</h2>
+           <div class="form-inline">
+          
+            <input class="form-control mr-sm-2" v-model="search" type="search" @keyup.enter="searchit()" placeholder="Buscar por nombre">
+             <button class="btn btn-success my-2 my-sm-0" type="button"><font-awesome-icon icon="search" @click="searchit()"/></button>
+         </div>
+      <div class="container; mt-2" style="height:450px; overflow-y: scroll">
+       
+         <hr>
+
          <table class="table table-hover table-dark" >
             <thead>
                <tr>

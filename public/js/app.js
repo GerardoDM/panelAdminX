@@ -12182,6 +12182,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -12548,6 +12558,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -12601,17 +12619,22 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.traer();
     this.traerUsuarios();
+    console.log(this.cursos);
   },
   computed: {
     sortedCursos: function sortedCursos() {
       var _this = this;
 
       return this.cursos.sort(function (a, b) {
-        var modifier = 1;
-        if (_this.currentSortDir === 'desc') modifier = -1;
-        if (a[_this.currentSort] < b[_this.currentSort]) return -1 * modifier;
-        if (a[_this.currentSort] > b[_this.currentSort]) return 1 * modifier;
-        return 0;
+        try {
+          //a.nombre.localeCompare(b.nombre, undefined, { sensitivity: 'base' })
+          // b.nombre.localeCompare(a.nombre, undefined, { sensitivity: 'base' })
+          var modifier = 1;
+          if (_this.currentSortDir === 'desc') modifier = -1;
+          if (a[_this.currentSort] < b[_this.currentSort]) return -1 * modifier;
+          if (a[_this.currentSort] > b[_this.currentSort]) return 1 * modifier;
+          return 0;
+        } catch (error) {}
       });
     }
   },
@@ -12816,7 +12839,123 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {},
+  data: function data() {
+    return {
+      bloques: [],
+      cursos: [],
+      productos: [],
+      proyectos: [],
+      contadorBloques: null,
+      contadorCursos: null,
+      contadorProductos: null,
+      contadorProyectos: null
+    };
+  },
+  created: function created() {
+    this.traerCursos();
+    this.traerBloques();
+    this.traerProductos();
+    this.traerProyectos();
+  },
+  methods: {
+    traerBloques: function traerBloques() {
+      var _this = this;
+
+      self = this;
+      axios.get('/api/bloques').then(function (response) {
+        _this.bloques = response.data;
+        _this.contadorBloques = _this.bloques.length;
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    },
+    traerCursos: function traerCursos() {
+      var _this2 = this;
+
+      self = this;
+      axios.get('/api/cursos').then(function (response) {
+        _this2.cursos = response.data;
+        _this2.contadorCursos = _this2.cursos.length;
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    },
+    traerProductos: function traerProductos() {
+      var _this3 = this;
+
+      self = this;
+      axios.get('/api/productos').then(function (response) {
+        _this3.productos = response.data;
+        _this3.contadorProductos = _this3.productos.length;
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    },
+    traerProyectos: function traerProyectos() {
+      var _this4 = this;
+
+      self = this;
+      axios.get('/api/proyectos').then(function (response) {
+        _this4.proyectos = response.data;
+        _this4.contadorProyectos = _this4.proyectos.length;
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    }
+  }
+});
 
 /***/ }),
 
@@ -13051,6 +13190,15 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -13421,6 +13569,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -13652,6 +13810,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -77208,13 +77375,13 @@ var render = function() {
               staticClass: "btn btn-outline-success my-2 my-sm-0",
               attrs: { type: "button" }
             },
-            [_vm._v(_vm._s(_vm.user.nickname))]
+            [_vm._v("Usuario: " + _vm._s(_vm.user.nickname))]
           ),
           _vm._v(" "),
           _c(
             "button",
             {
-              staticClass: "btn btn-outline-danger my-2 my-sm-0",
+              staticClass: "btn btn-outline-danger my-2 my-sm-0 ml-4",
               attrs: { type: "button" },
               on: {
                 click: function($event) {
@@ -77671,14 +77838,70 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
+    _c("h2", { staticClass: "mb-4" }, [_vm._v("Bloques")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-inline" }, [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.search,
+            expression: "search"
+          }
+        ],
+        staticClass: "form-control mr-sm-2",
+        attrs: { type: "search", placeholder: "Buscar por nombre" },
+        domProps: { value: _vm.search },
+        on: {
+          keyup: function($event) {
+            if (
+              !$event.type.indexOf("key") &&
+              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+            ) {
+              return null
+            }
+            return _vm.searchit()
+          },
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.search = $event.target.value
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-success my-2 my-sm-0",
+          attrs: { type: "button" }
+        },
+        [
+          _c("font-awesome-icon", {
+            attrs: { icon: "search" },
+            on: {
+              click: function($event) {
+                return _vm.searchit()
+              }
+            }
+          })
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
     _c(
       "div",
       {
-        staticClass: "container; mt-4",
-        staticStyle: { height: "400px", width: "max", "overflow-y": "scroll" }
+        staticClass: "container; mt-2",
+        staticStyle: { height: "450px", width: "max", "overflow-y": "scroll" }
       },
       [
-        _c("h2", { staticClass: "mb-4" }, [_vm._v("Bloques")]),
+        _c("hr"),
         _vm._v(" "),
         _c("table", { staticClass: "table table-hover table-dark" }, [
           _vm._m(1),
@@ -78662,22 +78885,17 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
+    _c("h2", { staticClass: "mb-4" }, [_vm._v("Cursos")]),
+    _vm._v(" "),
     _c(
       "div",
       {
-        staticClass: "container; mt-4",
-        staticStyle: { height: "400px", width: "max", "overflow-y": "scroll" }
+        staticClass: "form-inline",
+        staticStyle: { position: "sticky", top: "0" }
       },
       [
-        _c("h2", { staticClass: "mb-4" }, [_vm._v("Cursos")]),
-        _vm._v(" "),
-        _c(
-          "button",
-          { staticClass: "btn btn-outline-success my-2 my-sm-0" },
-          [_c("font-awesome-icon", { attrs: { icon: "angle-down" } })],
-          1
-        ),
-        _vm._v(" "),
         _c("input", {
           directives: [
             {
@@ -78688,7 +78906,7 @@ var render = function() {
             }
           ],
           staticClass: "form-control mr-sm-2",
-          attrs: { type: "search", placeholder: "Search" },
+          attrs: { type: "search", placeholder: "Buscar por nombre" },
           domProps: { value: _vm.search },
           on: {
             keyup: function($event) {
@@ -78712,11 +78930,32 @@ var render = function() {
         _c(
           "button",
           {
-            staticClass: "btn btn-outline-success my-2 my-sm-0",
-            attrs: { type: "submit" }
+            staticClass: "btn btn-success my-2 my-sm-0",
+            attrs: { type: "button" }
           },
-          [_vm._v("Search")]
-        ),
+          [
+            _c("font-awesome-icon", {
+              attrs: { icon: "search" },
+              on: {
+                click: function($event) {
+                  return _vm.searchit()
+                }
+              }
+            })
+          ],
+          1
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "container; mt-2",
+        staticStyle: { height: "450px", width: "max", "overflow-y": "scroll" }
+      },
+      [
+        _c("hr"),
         _vm._v(" "),
         _c("table", { staticClass: "table table-hover table-dark" }, [
           _c("thead", [
@@ -79154,7 +79393,79 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c("div", [
+    _c("hr"),
+    _vm._v(" "),
+    _c("h5", [_vm._v("Dashboard")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-header" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c("h5", { staticClass: "card-title" }, [_vm._v("Bloques")]),
+        _vm._v(" "),
+        _c("p", { staticClass: "card-text" }, [
+          _vm._v("Cantidad actual de registros: " + _vm._s(_vm.contadorBloques))
+        ]),
+        _vm._v(" "),
+        _c("a", { staticClass: "btn btn-primary", attrs: { href: "#" } }, [
+          _vm._v("Ver")
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-header" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c("h5", { staticClass: "card-title" }, [_vm._v("Cursos")]),
+        _vm._v(" "),
+        _c("p", { staticClass: "card-text" }, [
+          _vm._v("Cantidad actual de registros: " + _vm._s(_vm.contadorCursos))
+        ]),
+        _vm._v(" "),
+        _c("a", { staticClass: "btn btn-primary", attrs: { href: "#" } }, [
+          _vm._v("Ver")
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-header" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c("h5", { staticClass: "card-title" }, [_vm._v("Productos")]),
+        _vm._v(" "),
+        _c("p", { staticClass: "card-text" }, [
+          _vm._v(
+            "Cantidad actual de registros: " + _vm._s(_vm.contadorProductos)
+          )
+        ]),
+        _vm._v(" "),
+        _c("a", { staticClass: "btn btn-primary", attrs: { href: "#" } }, [
+          _vm._v("Ver")
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-header" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c("h5", { staticClass: "card-title" }, [_vm._v("Proyectos")]),
+        _vm._v(" "),
+        _c("p", { staticClass: "card-text" }, [
+          _vm._v(
+            "Cantidad actual de registros: " + _vm._s(_vm.contadorProyectos)
+          )
+        ]),
+        _vm._v(" "),
+        _c("a", { staticClass: "btn btn-primary", attrs: { href: "#" } }, [
+          _vm._v("Ver")
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -79909,14 +80220,70 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
+    _c("h2", { staticClass: "mb-4" }, [_vm._v("Productos-Proyectos")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-inline" }, [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.search,
+            expression: "search"
+          }
+        ],
+        staticClass: "form-control mr-sm-2",
+        attrs: { type: "search", placeholder: "Buscar por nombre" },
+        domProps: { value: _vm.search },
+        on: {
+          keyup: function($event) {
+            if (
+              !$event.type.indexOf("key") &&
+              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+            ) {
+              return null
+            }
+            return _vm.searchit()
+          },
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.search = $event.target.value
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-success my-2 my-sm-0",
+          attrs: { type: "button" }
+        },
+        [
+          _c("font-awesome-icon", {
+            attrs: { icon: "search" },
+            on: {
+              click: function($event) {
+                return _vm.searchit()
+              }
+            }
+          })
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
     _c(
       "div",
       {
-        staticClass: "container; mt-4",
-        staticStyle: { height: "400px", "overflow-y": "scroll" }
+        staticClass: "container; mt-2",
+        staticStyle: { height: "450px", "overflow-y": "scroll" }
       },
       [
-        _c("h2", { staticClass: "mb-4" }, [_vm._v("Productos-Proyectos")]),
+        _c("hr"),
         _vm._v(" "),
         _c("table", { staticClass: "table table-hover table-dark" }, [
           _vm._m(1),
@@ -80446,14 +80813,70 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
+    _c("h2", { staticClass: "mb-4" }, [_vm._v("Productos")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-inline" }, [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.search,
+            expression: "search"
+          }
+        ],
+        staticClass: "form-control mr-sm-2",
+        attrs: { type: "search", placeholder: "Buscar por nombre" },
+        domProps: { value: _vm.search },
+        on: {
+          keyup: function($event) {
+            if (
+              !$event.type.indexOf("key") &&
+              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+            ) {
+              return null
+            }
+            return _vm.searchit()
+          },
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.search = $event.target.value
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-success my-2 my-sm-0",
+          attrs: { type: "button" }
+        },
+        [
+          _c("font-awesome-icon", {
+            attrs: { icon: "search" },
+            on: {
+              click: function($event) {
+                return _vm.searchit()
+              }
+            }
+          })
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
     _c(
       "div",
       {
-        staticClass: "container; mt-4",
-        staticStyle: { height: "400px", "overflow-y": "scroll" }
+        staticClass: "container; mt-2",
+        staticStyle: { height: "450px", "overflow-y": "scroll" }
       },
       [
-        _c("h2", { staticClass: "mb-4" }, [_vm._v("Productos")]),
+        _c("hr"),
         _vm._v(" "),
         _c("table", { staticClass: "table table-hover table-dark" }, [
           _vm._m(1),
@@ -81013,14 +81436,70 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
+    _c("h2", { staticClass: "mb-4" }, [_vm._v("Proyectos")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-inline" }, [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.search,
+            expression: "search"
+          }
+        ],
+        staticClass: "form-control mr-sm-2",
+        attrs: { type: "search", placeholder: "Buscar por nombre" },
+        domProps: { value: _vm.search },
+        on: {
+          keyup: function($event) {
+            if (
+              !$event.type.indexOf("key") &&
+              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+            ) {
+              return null
+            }
+            return _vm.searchit()
+          },
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.search = $event.target.value
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-success my-2 my-sm-0",
+          attrs: { type: "button" }
+        },
+        [
+          _c("font-awesome-icon", {
+            attrs: { icon: "search" },
+            on: {
+              click: function($event) {
+                return _vm.searchit()
+              }
+            }
+          })
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
     _c(
       "div",
       {
-        staticClass: "container; mt-4",
-        staticStyle: { height: "400px", "overflow-y": "scroll" }
+        staticClass: "container; mt-2",
+        staticStyle: { height: "450px", "overflow-y": "scroll" }
       },
       [
-        _c("h2", { staticClass: "mb-4" }, [_vm._v("Proyectos")]),
+        _c("hr"),
         _vm._v(" "),
         _c("table", { staticClass: "table table-hover table-dark" }, [
           _vm._m(1),
@@ -98883,8 +99362,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _routes_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./routes.js */ "./resources/js/routes.js");
 /* harmony import */ var _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/fontawesome-svg-core */ "./node_modules/@fortawesome/fontawesome-svg-core/index.es.js");
-/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
-/* harmony import */ var _fortawesome_vue_fontawesome__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fortawesome/vue-fontawesome */ "./node_modules/@fortawesome/vue-fontawesome/index.es.js");
+/* harmony import */ var _fortawesome_vue_fontawesome__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/vue-fontawesome */ "./node_modules/@fortawesome/vue-fontawesome/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -98903,8 +99382,10 @@ Vue.use(vee_validate__WEBPACK_IMPORTED_MODULE_0__);
 
 
 
-_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_3__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faAngleDown"]);
-_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_3__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faAngleUp"]);
+
+_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_3__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faAngleDown"]);
+_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_3__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faAngleUp"]);
+_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_3__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["faSearch"]);
 Object(vee_validate__WEBPACK_IMPORTED_MODULE_0__["extend"])('positive', function (value) {
   return value >= 0;
 });
@@ -98939,7 +99420,7 @@ Vue.component('app-component', __webpack_require__(/*! ./components/App.vue */ "
 Vue.component('dash-component', __webpack_require__(/*! ./components/DashComponent.vue */ "./resources/js/components/DashComponent.vue")["default"]);
 Vue.component('validationProvider', vee_validate__WEBPACK_IMPORTED_MODULE_0__["ValidationProvider"]);
 Vue.component('validationObserver', vee_validate__WEBPACK_IMPORTED_MODULE_0__["ValidationObserver"]);
-Vue.component('font-awesome-icon', _fortawesome_vue_fontawesome__WEBPACK_IMPORTED_MODULE_5__["FontAwesomeIcon"]);
+Vue.component('font-awesome-icon', _fortawesome_vue_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

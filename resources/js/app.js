@@ -16,14 +16,17 @@ import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
 import swal from 'sweetalert2'
 import {  router } from './routes.js';
 import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 import { faAngleUp } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
+
 
 
 
 library.add(faAngleDown)
 library.add(faAngleUp)
+library.add(faSearch)
 
 
 

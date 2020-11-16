@@ -106,13 +106,21 @@
             </div>
          </div>
       </div>
-      <div class="container; mt-4" style="height:400px; width:max; overflow-y: scroll">
-         <h2 class="mb-4">Cursos</h2>
-         <button class="btn btn-outline-success my-2 my-sm-0"><font-awesome-icon icon="angle-down"/></button> 
+
+      <hr>
+
+       <h2 class="mb-4">Cursos</h2>
+        <div class="form-inline" style="position:sticky; top:0">
           
-            <input class="form-control mr-sm-2" v-model="search" type="search" @keyup.enter="searchit()" placeholder="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" >Search</button>
-         
+            <input class="form-control mr-sm-2" v-model="search" type="search" @keyup.enter="searchit()" placeholder="Buscar por nombre">
+            <button class="btn btn-success my-2 my-sm-0" type="button"><font-awesome-icon icon="search" @click="searchit()"/></button>
+         </div>
+      <div class="container; mt-2" style="height:450px; width:max; overflow-y: scroll">
+        
+    
+
+        
+         <hr>
          <table class="table table-hover table-dark">
             <thead>
                <tr>
@@ -254,18 +262,37 @@
        created(){
            this.traer();
            this.traerUsuarios();
+           console.log(this.cursos)
 
        },
 
 
        computed:{
          sortedCursos:function() {
+            
             return this.cursos.sort((a,b) => {
+
+               try {
+
+               //a.nombre.localeCompare(b.nombre, undefined, { sensitivity: 'base' })
+               // b.nombre.localeCompare(a.nombre, undefined, { sensitivity: 'base' })
+
                let modifier = 1;
+              
                if(this.currentSortDir === 'desc') modifier = -1;
                if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
                if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
                return 0;
+                  
+               } catch (error) {
+
+                  
+                  
+               }
+
+
+               
+            
             });
          }
          },
@@ -278,6 +305,7 @@
             this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
          }
          this.currentSort = s;
+        
   },
 
 

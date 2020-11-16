@@ -26,8 +26,8 @@
       </ul>
     </div>
     <form class="form-inline">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="button">{{user.nickname}}</button>
-          <button class="btn btn-outline-danger my-2 my-sm-0" type="button" v-on:click="logout()">Logout</button>
+          <button class="btn btn-outline-success my-2 my-sm-0" type="button">Usuario: {{user.nickname}}</button>
+          <button class="btn btn-outline-danger my-2 my-sm-0 ml-4" type="button" v-on:click="logout()">Logout</button>
           <!-- <input type="hidden" name="_token" v-bind:value="csrf"> -->
           
     </form>
