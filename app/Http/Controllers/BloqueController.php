@@ -16,6 +16,10 @@ class BloqueController extends Controller
         
     }
 
+    public function viewDetail(){
+        return view('pages.bloqueDetalle');
+    }
+
     public function index(){
 
         $bloques = Bloque::all();
@@ -88,6 +92,30 @@ class BloqueController extends Controller
             
         $bloque->save();
         return response()->json(['Bloque' => $bloque], 201);
+
+    }
+
+    public function search(){
+
+        if ($search = \Request::get('q')) {
+            $bloques = Bloque::where(function($query) use ($search){
+                $query->where('nombre','LIKE',"%$search%");
+                        
+            })->get();
+        }else{
+
+            return response()->json($bloques->messages(), 400);
+            
+        }
+
+        return $bloques;
+
+    }
+
+    public function show($clave){
+
+        $bloque = Bloque::find($clave);
+        return $bloque;
 
     }
 }

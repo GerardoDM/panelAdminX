@@ -6,6 +6,7 @@ import ProductoComponent from './components/ProductosComponent.vue';
 import ProyectoComponent from './components/ProyectosComponent.vue';
 import PivotComponent from './components/PivotComponent.vue';
 import DashComponent from './components/DashComponent.vue';
+import BloqueDetalleComponent from './components/BloqueDetalleComponent.vue';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
@@ -51,6 +52,12 @@ export const router = new VueRouter({
             name: 'pivot',
             path: '/pivot',
             component: PivotComponent
+        },
+
+        {
+            name: 'bloqueDetalle',
+            path: '/bloqueDetalle/:clave',
+            component: BloqueDetalleComponent
         },
     ],    
 

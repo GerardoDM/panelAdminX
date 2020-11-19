@@ -11,6 +11,7 @@
 |
 */
 
+Route::get('bloqueDetalle/{clave}', 'BloqueController@viewDetail');
 
 Route::group(['middleware' => 'auth'], function () {
         Route::get('productos', 'ProductoController@view');

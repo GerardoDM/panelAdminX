@@ -72,6 +72,7 @@ Vue.component('proyectos-component', require( './components/ProyectosComponent.v
 Vue.component('pivot-component', require( './components/PivotComponent.vue').default);
 Vue.component('curso-component', require( './components/CursoComponent.vue').default);
 Vue.component('bloque-component', require( './components/BloqueComponent.vue').default);
+Vue.component('bloqueDetalle-component', require( './components/BloqueDetalleComponent.vue').default);
 Vue.component('app-component', require( './components/App.vue').default);
 Vue.component('dash-component', require( './components/DashComponent.vue').default);
 Vue.component('validationProvider', ValidationProvider);

@@ -48,3 +48,5 @@ Route::get('/bloques', 'BloqueController@index');
 Route::post('/bloque', 'BloqueController@create');
 Route::delete('/bloque/{clave}', 'BloqueController@delete');
 Route::put('/bloque/{clave}', 'BloqueController@update');
+Route::get('/searchBloque', 'BloqueController@search');
+Route::get('/showBloque/{clave}', 'BloqueController@show');

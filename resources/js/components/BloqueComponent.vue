@@ -75,20 +75,21 @@
          <table class="table table-hover table-dark">
             <thead>
                <tr>
-                  <th style="position:sticky; top:0; background: #000000">Clave</th>
-                  <th style="position:sticky; top:0; background: #000000">Nombre</th>
-                  <th style="position:sticky; top:0; background: #000000">Clave Curso</th>
-                  <th style="position:sticky; top:0; background: #000000">Clave Status</th>
-                  <th style="position:sticky; top:0; background: #000000">Versión</th>
-                  <th style="position:sticky; top:0; background: #000000">Ruta Portal</th>
+                  <th style="position:sticky; top:0; background: #000000">Clave <font-awesome-icon icon="angle-down" @click="sortBy('clave')"/></th>
+                  <th style="position:sticky; top:0; background: #000000">Nombre <font-awesome-icon icon="angle-down" @click="sortBy('nombre')"/></th>
+                  <th style="position:sticky; top:0; background: #000000">Clave Curso <font-awesome-icon icon="angle-down" @click="sortBy('cve_curso')"/></th>
+                  <th style="position:sticky; top:0; background: #000000">Clave Status <font-awesome-icon icon="angle-down" @click="sortBy('cve_status')"/></th>
+                  <th style="position:sticky; top:0; background: #000000">Versión <font-awesome-icon icon="angle-down" @click="sortBy('version')"/></th>
+                  <th style="position:sticky; top:0; background: #000000">Ruta Portal <font-awesome-icon icon="angle-down" @click="sortBy('ruta_portal')"/></th>
                   <th style="position:sticky; top:0; background: #000000">Acciòn</th>
                   <th style="position:sticky; top:0; background: #000000">Acciòn</th>
                </tr>
             </thead>
             <tbody>
+               <!-- v-on:click="passData(bloque.clave)" -->
                <tr v-for="bloque in bloques" v-bind:key="bloque.clave">
-                  <th>{{bloque.clave}}</th>
-                  <th>{{bloque.nombre}}</th>
+                  <button ><router-link :to="{ name: 'bloqueDetalle', params: { clave: bloque.clave, bloque: bloque }  }">{{bloque.clave}}</router-link></button>
+                  <td>{{bloque.nombre}}</td>
                   <td>{{bloque.cve_curso}}</td>
                   <td>{{bloque.cve_status}}</td>
                   <td>{{bloque.version}}</td>
@@ -151,7 +152,13 @@
                errors: {},
                message: null,
                valid: true,
-               val : 'standard'
+               val : 'standard',
+               search:"",
+               query: "",
+               currentSort:'clave',
+               currentSortDir:'asc',
+               property: null
+               
             }
    
          },
@@ -160,8 +167,89 @@
            this.traer()
            this.traerCursos()
        },
+
+        computed:{
+         sortedBloques:function() {
+            
+            return this.bloques.sort((a,b) => {
+
+               try {
+
+               //a.nombre.localeCompare(b.nombre, undefined, { sensitivity: 'base' })
+               // b.nombre.localeCompare(a.nombre, undefined, { sensitivity: 'base' })
+
+               let modifier = 1;
+              
+               if(this.currentSortDir === 'desc') modifier = -1;
+               if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+               if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+               return 0;
+                  
+               } catch (error) {
+
+                  
+                  
+               }
+
+
+               
+            
+            });
+         }
+         },
    
        methods:{
+
+        
+
+
+              sortBy(s) {
+         //if s == current sort, reverse
+         if(s === this.currentSort) {
+            this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
+         }
+         this.currentSort = s;
+        
+         },
+
+           passData(clave){
+
+
+             self = this
+              axios.get(`api/showBloque/${clave}`)
+                   .then(response => {
+                      this.bloque = response.data
+                       console.log(this.bloque)
+                   })
+                   .catch(e => {
+                       
+                       console.log(e);
+                   })
+              
+            
+          },
+
+
+         searchit(){
+
+             
+              self = this
+
+              let query = this.search;
+
+              axios.get('api/searchBloque?q=' + query)
+             .then(response => {
+                       this.bloques = response.data;
+            
+                       console.log('success')
+                   })
+                   .catch(e => {
+                       console.log(e);
+                   })
+           
+
+          },
+
       
            traer(){
    
