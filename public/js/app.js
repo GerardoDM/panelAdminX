@@ -12434,6 +12434,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -12450,7 +12467,26 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.bloque.clave = this.$route.params.clave;
-    this.bloque.nombre = this.$route.params.bloque.nombre;
+  },
+  mounted: function mounted() {
+    this.traerDatos();
+    console.log('mounted');
+  },
+  methods: {
+    traerDatos: function traerDatos(clave) {
+      var _this = this;
+
+      self = this;
+      axios.get("/api/showBloque/".concat(this.bloque.clave)).then(function (response) {
+        _this.bloque = response.data;
+        _this.bloque.nombre = response.data.nombre;
+        _this.bloque.cve_curso = response.data.cve_curso;
+        _this.bloque.version = response.data.version;
+        _this.bloque.ruta_portal = response.data.ruta_portal;
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    }
   }
 });
 
@@ -78176,7 +78212,7 @@ var render = function() {
                         attrs: {
                           to: {
                             name: "bloqueDetalle",
-                            params: { clave: bloque.clave, bloque: bloque }
+                            params: { clave: bloque.clave }
                           }
                         }
                       },
@@ -78299,12 +78335,39 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h4", [
-      _vm._v(_vm._s(_vm.bloque.clave) + " + " + _vm._s(_vm.bloque.nombre))
-    ]),
+  return _c("div", { staticClass: "container" }, [
+    _c("br"),
     _vm._v(" "),
-    _c("h5", [_vm._v("Hola")])
+    _c("hr"),
+    _vm._v(" "),
+    _c("div", { staticClass: "card" }, [
+      _c("h5", { staticClass: "card-header" }, [
+        _vm._v("Clave: " + _vm._s(_vm.bloque.clave))
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c("h5", { staticClass: "card-title" }, [
+          _vm._v("Nombre: " + _vm._s(_vm.bloque.nombre))
+        ]),
+        _vm._v(" "),
+        _c("ul", [
+          _c("li", { staticClass: "card-text" }, [
+            _vm._v("Clave del curso: " + _vm._s(_vm.bloque.cve_curso))
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "card-text" }, [
+            _vm._v("Versión: " + _vm._s(_vm.bloque.version))
+          ])
+        ]),
+        _vm._v(" "),
+        _c("span", [
+          _vm._v("Ruta: "),
+          _c("a", { staticClass: "btn btn-primary", attrs: { href: "#" } }, [
+            _vm._v(_vm._s(_vm.bloque.ruta_portal))
+          ])
+        ])
+      ])
+    ])
   ])
 }
 var staticRenderFns = []

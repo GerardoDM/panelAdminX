@@ -88,7 +88,7 @@
             <tbody>
                <!-- v-on:click="passData(bloque.clave)" -->
                <tr v-for="bloque in bloques" v-bind:key="bloque.clave">
-                  <button ><router-link :to="{ name: 'bloqueDetalle', params: { clave: bloque.clave, bloque: bloque }  }">{{bloque.clave}}</router-link></button>
+                  <button ><router-link :to="{ name: 'bloqueDetalle', params: { clave: bloque.clave }  }">{{bloque.clave}}</router-link></button>
                   <td>{{bloque.nombre}}</td>
                   <td>{{bloque.cve_curso}}</td>
                   <td>{{bloque.cve_status}}</td>
