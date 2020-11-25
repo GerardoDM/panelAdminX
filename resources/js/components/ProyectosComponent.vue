@@ -76,7 +76,6 @@
          <table class="table table-hover table-dark" >
             <thead>
                <tr>
-                  <th style="position:sticky; top:0; background: #000000">Clave</th>
                   <th style="position:sticky; top:0; background: #000000">Nombre</th>
                   <th style="position:sticky; top:0; background: #000000">Fecha</th>
                   <th style="position:sticky; top:0; background: #000000">Descripción</th>
@@ -87,8 +86,7 @@
             </thead>
             <tbody>
                <tr v-for="proyecto in proyectos" v-bind:key="proyecto.clave">
-                  <th>{{proyecto.clave}}</th>
-                  <th>{{proyecto.nombre}}</th>
+                  <th><router-link :to="{ name: 'proyectoDetalle', params: { clave: proyecto.clave }  }" style="color:white">{{proyecto.nombre}}</router-link></th>
                   <td>{{proyecto.fecha}}</td>
                   <td>{{proyecto.descripcion}}</td>
                   <td>{{proyecto.nomenclatura}}</td>

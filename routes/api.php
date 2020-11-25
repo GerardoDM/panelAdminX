@@ -28,10 +28,14 @@ Route::post('/producto', 'ProductoController@create');
 Route::delete('/producto/{clave}', 'ProductoController@delete');
 Route::put('/producto/{clave}', 'ProductoController@update');
 
+Route::get('/showProducto/{clave}', 'ProductoController@show');
+
 Route::get('/proyectos', 'ProyectoController@index');
 Route::post('/proyecto', 'ProyectoController@create');
 Route::delete('/proyecto/{clave}', 'ProyectoController@delete');
 Route::put('/proyecto/{clave}', 'ProyectoController@update');
+
+Route::get('/showProyecto/{clave}', 'ProyectoController@show');
 
 Route::get('/pivots', 'PivotController@index');
 Route::post('/pivot', 'PivotController@create');
@@ -43,6 +47,7 @@ Route::post('/curso', 'CursoController@create');
 Route::delete('/curso/{clave}', 'CursoController@delete');
 Route::put('/curso/{clave}', 'CursoController@update');
 Route::get('/searchCurso', 'CursoController@search');
+Route::get('/showCurso/{clave}', 'CursoController@show');
 
 Route::get('/bloques', 'BloqueController@index');
 Route::post('/bloque', 'BloqueController@create');

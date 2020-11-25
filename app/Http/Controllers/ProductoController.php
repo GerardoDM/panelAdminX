@@ -15,6 +15,10 @@ class ProductoController extends Controller
         
     }
 
+    public function viewDetail(){
+        return view('pages.productoDetalle');
+    }
+
 
     public function index(){
 
@@ -80,6 +84,13 @@ class ProductoController extends Controller
     
         $producto->save();
         return response()->json(['Producto' => $producto], 201);
+
+    }
+
+    public function show($clave){
+
+        $producto = Producto::find($clave);
+        return $producto;
 
     }
 }

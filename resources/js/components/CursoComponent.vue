@@ -98,7 +98,6 @@
                            </validationProvider>
                         </div>
                         <button type="submit" id="btnAgregar" class="btn btn-primary" >Agregar</button>
-                        <!-- <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(curso.clave)">Actualizar</button> -->
                      </form>
                      </validationObserver>
                   </div>
@@ -117,15 +116,10 @@
          </div>
       <div class="container; mt-2" style="height:450px; width:max; overflow-y: scroll">
         
-    
-
-        
          <hr>
          <table class="table table-hover table-dark">
             <thead>
-               <tr>
-                  <th style="position:sticky; top:0; background: #000000">Clave<font-awesome-icon icon="angle-down" @click="sortBy('clave')"/></th>
-                  
+               <tr>                
                   <th style="position:sticky; top:0; background: #000000">Nombre
                       <font-awesome-icon icon="angle-down" @click="sortBy('nombre')"/>
                   </th>
@@ -143,22 +137,22 @@
                       <font-awesome-icon icon="angle-down" @click="sortBy('autor')"/>
                   </th>
                   <th style="position:sticky; top:0; background: #000000">Clave Usuario
-                      <font-awesome-icon icon="angle-down" @click="sortBy()"/>
+                      <font-awesome-icon icon="angle-down" @click="sortBy('cve_usuario')"/>
                   </th>
                   <th style="position:sticky; top:0; background: #000000">Ruta descarga
-                      <font-awesome-icon icon="angle-down" @click="sortBy()"/>
+                      <font-awesome-icon icon="angle-down" @click="sortBy('ruta_descarga')"/>
                   </th>
                   <th style="position:sticky; top:0; background: #000000">Ruta ver
-                      <font-awesome-icon icon="angle-down" @click="sortBy()"/>
+                      <font-awesome-icon icon="angle-down" @click="sortBy('ruta_ver')"/>
                   </th>
                   <th style="position:sticky; top:0; background: #000000">Status
-                      <font-awesome-icon icon="angle-down" @click="sortBy()"/>
+                      <font-awesome-icon icon="angle-down" @click="sortBy('status')"/>
                   </th>
                   <th style="position:sticky; top:0; background: #000000">Ruta operación
-                      <font-awesome-icon icon="angle-down" @click="sortBy()"/>
+                      <font-awesome-icon icon="angle-down" @click="sortBy('ruta_operacion')"/>
                   </th>
                   <th style="position:sticky; top:0; background: #000000">Clave status
-                      <font-awesome-icon icon="angle-down" @click="sortBy()"/>
+                      <font-awesome-icon icon="angle-down" @click="sortBy('cve_status')"/>
                   </th>
                   <th style="position:sticky; top:0; background: #000000">Acción</th>
                   <th style="position:sticky; top:0; background: #000000">Acción</th>
@@ -166,8 +160,7 @@
             </thead>
             <tbody>
                <tr v-for="curso in sortedCursos" v-bind:key="curso.clave">
-                  <th>{{curso.clave}}</th>
-                  <th>{{curso.nombre}}</th>
+                  <td><router-link :to="{ name: 'cursoDetalle', params: { clave: curso.clave }  }" style="color:white">{{curso.nombre}}</router-link></td>
                   <td>{{curso.nom_sep}}</td>
                   <td>{{curso.btotales}}</td>
                   <td>{{curso.blib}}</td>
@@ -309,9 +302,7 @@
   },
 
 
-          so(prop){
-             this.cursos.sort((a,b) => a[prop] < b[prop] ? -1 : 1)
-          },
+
 
           searchit(){
 

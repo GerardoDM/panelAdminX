@@ -48,7 +48,6 @@
                            </validationProvider>
                         </div>
                         <button type="submit" id="btnAgregar" class="btn btn-primary" >Agregar</button>
-                        <!-- <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(producto.clave)">Actualizar</button> -->
                      </form>
                      </validationObserver>
                   </div>
@@ -71,7 +70,6 @@
          <table class="table table-hover table-dark" >
             <thead>
                <tr>
-                  <th style="position:sticky; top:0; background: #000000">Clave</th>
                   <th style="position:sticky; top:0; background: #000000">Nombre</th>
                   <th style="position:sticky; top:0; background: #000000">Edicion</th>
                   <th style="position:sticky; top:0; background: #000000">Logo</th>
@@ -82,8 +80,8 @@
             </thead>
             <tbody>
                <tr v-for="producto in productos" v-bind:key="producto.clave">
-                  <th>{{producto.clave}}</th>
-                  <th>{{producto.nombre}}</th>
+                  
+                  <th><router-link :to="{ name: 'productoDetalle', params: { clave: producto.clave }  }" style="color:white">{{producto.nombre}}</router-link></th>
                   <td>{{producto.edicion}}</td>
                   <td>{{producto.logo_producto}}</td>
                   <td>{{producto.nomenclatura}}</td>

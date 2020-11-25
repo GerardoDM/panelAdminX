@@ -16,6 +16,10 @@ class CursoController extends Controller
         
     }
 
+    public function viewDetail(){
+        return view('pages.cursoDetalle');
+    }
+
     public function index(){
 
         $cursos = Curso::all();
@@ -125,6 +129,13 @@ class CursoController extends Controller
         }
 
         return $cursos;
+
+    }
+
+    public function show($clave){
+
+        $curso = Curso::find($clave);
+        return $curso;
 
     }
 }

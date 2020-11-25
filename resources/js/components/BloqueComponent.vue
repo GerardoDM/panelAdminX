@@ -52,7 +52,6 @@
                            </validationProvider>
                         </div>
                         <button type="submit" id="btnAgregar" class="btn btn-primary" >Agregar</button>
-                        <!-- <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(bloque.clave)">Actualizar</button> -->
                      </form>
                      </validationObserver>
                   </div>
@@ -75,7 +74,6 @@
          <table class="table table-hover table-dark">
             <thead>
                <tr>
-                  <th style="position:sticky; top:0; background: #000000">Clave <font-awesome-icon icon="angle-down" @click="sortBy('clave')"/></th>
                   <th style="position:sticky; top:0; background: #000000">Nombre <font-awesome-icon icon="angle-down" @click="sortBy('nombre')"/></th>
                   <th style="position:sticky; top:0; background: #000000">Clave Curso <font-awesome-icon icon="angle-down" @click="sortBy('cve_curso')"/></th>
                   <th style="position:sticky; top:0; background: #000000">Clave Status <font-awesome-icon icon="angle-down" @click="sortBy('cve_status')"/></th>
@@ -86,10 +84,9 @@
                </tr>
             </thead>
             <tbody>
-               <!-- v-on:click="passData(bloque.clave)" -->
-               <tr v-for="bloque in bloques" v-bind:key="bloque.clave">
-                  <button ><router-link :to="{ name: 'bloqueDetalle', params: { clave: bloque.clave }  }">{{bloque.clave}}</router-link></button>
-                  <td>{{bloque.nombre}}</td>
+               
+               <tr v-for="bloque in sortedBloques" v-bind:key="bloque.clave">
+                  <td><router-link :to="{ name: 'bloqueDetalle', params: { clave: bloque.clave }  }" style="color:white">{{bloque.nombre}}</router-link></td>
                   <td>{{bloque.cve_curso}}</td>
                   <td>{{bloque.cve_status}}</td>
                   <td>{{bloque.version}}</td>
@@ -174,9 +171,6 @@
             return this.bloques.sort((a,b) => {
 
                try {
-
-               //a.nombre.localeCompare(b.nombre, undefined, { sensitivity: 'base' })
-               // b.nombre.localeCompare(a.nombre, undefined, { sensitivity: 'base' })
 
                let modifier = 1;
               

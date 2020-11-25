@@ -17,6 +17,10 @@ class ProyectoController extends Controller
     
     }
 
+    public function viewDetail(){
+        return view('pages.proyectoDetalle');
+    }
+
 
     public function index(){
 
@@ -89,6 +93,13 @@ class ProyectoController extends Controller
 
         $proyecto->save();
         return response()->json(['Proyecto' => $proyecto], 201);
+
+    }
+
+    public function show($clave){
+
+        $proyecto = Proyecto::find($clave);
+        return $proyecto;
 
     }
 }

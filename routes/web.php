@@ -12,6 +12,10 @@
 */
 
 Route::get('bloqueDetalle/{clave}', 'BloqueController@viewDetail');
+Route::get('cursoDetalle/{clave}', 'CursoController@viewDetail');
+Route::get('productoDetalle/{clave}', 'ProductoController@viewDetail');
+Route::get('proyectoDetalle/{clave}', 'ProyectoController@viewDetail');
+
 
 Route::group(['middleware' => 'auth'], function () {
         Route::get('productos', 'ProductoController@view');
@@ -22,7 +26,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/', 'DashController@view')->name('/');
   });
 
-Auth::routes(['register' => false]);
+// Auth::routes(['register' => false]);
+// Auth::routes(['login' => false]);
 
 Route::prefix('usuario')
     ->as('usuario.')

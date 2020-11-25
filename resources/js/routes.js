@@ -7,6 +7,9 @@ import ProyectoComponent from './components/ProyectosComponent.vue';
 import PivotComponent from './components/PivotComponent.vue';
 import DashComponent from './components/DashComponent.vue';
 import BloqueDetalleComponent from './components/BloqueDetalleComponent.vue';
+import CursoDetalleComponent from './components/CursoDetalleComponent.vue';
+import ProductoDetalleComponent from './components/ProductoDetalleComponent.vue';
+import ProyectoDetalleComponent from './components/ProyectoDetalleComponent.vue';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
@@ -58,6 +61,21 @@ export const router = new VueRouter({
             name: 'bloqueDetalle',
             path: '/bloqueDetalle/:clave',
             component: BloqueDetalleComponent
+        },
+        {
+            name: 'cursoDetalle',
+            path: '/cursoDetalle/:clave',
+            component: CursoDetalleComponent
+        },
+        {
+            name: 'productoDetalle',
+            path: '/productoDetalle/:clave',
+            component: ProductoDetalleComponent
+        },
+        {
+            name: 'proyectoDetalle',
+            path: '/proyectoDetalle/:clave',
+            component: ProyectoDetalleComponent
         },
     ],    
 
