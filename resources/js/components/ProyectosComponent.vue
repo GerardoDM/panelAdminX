@@ -76,17 +76,17 @@
          <table class="table table-hover table-dark" >
             <thead>
                <tr>
-                  <th style="position:sticky; top:0; background: #000000">Nombre</th>
-                  <th style="position:sticky; top:0; background: #000000">Fecha</th>
-                  <th style="position:sticky; top:0; background: #000000">Descripción</th>
-                  <th style="position:sticky; top:0; background: #000000">Nomenclatura</th>
+                  <th style="position:sticky; top:0; background: #000000">Nombre <font-awesome-icon icon="angle-down" @click="sortBy('nombre')"/></th>
+                  <th style="position:sticky; top:0; background: #000000">Fecha <font-awesome-icon icon="angle-down" @click="sortBy('fecha')"/></th>
+                  <th style="position:sticky; top:0; background: #000000">Descripción <font-awesome-icon icon="angle-down" @click="sortBy('descripcion')"/></th>
+                  <th style="position:sticky; top:0; background: #000000">Nomenclatura <font-awesome-icon icon="angle-down" @click="sortBy('nomenclatura')"/></th>
                   <th style="position:sticky; top:0; background: #000000">Acción</th>
                   <th style="position:sticky; top:0; background: #000000">Acción</th>
                </tr>
             </thead>
             <tbody>
-               <tr v-for="proyecto in proyectos" v-bind:key="proyecto.clave">
-                  <th><router-link :to="{ name: 'proyectoDetalle', params: { clave: proyecto.clave }  }" style="color:white">{{proyecto.nombre}}</router-link></th>
+               <tr v-for="proyecto in sortedProyectos" v-bind:key="proyecto.clave">
+                  <td><router-link :to="{ name: 'proyectoDetalle', params: { clave: proyecto.clave }  }" style="color:white">{{proyecto.nombre}}</router-link></td>
                   <td>{{proyecto.fecha}}</td>
                   <td>{{proyecto.descripcion}}</td>
                   <td>{{proyecto.nomenclatura}}</td>
@@ -139,6 +139,8 @@
                   message: null,
                   valid: true,
                   val : 'standard',
+                  currentSort:'clave',
+                  currentSortDir:'asc',
 
                   
               }
@@ -149,6 +151,33 @@
               this.traer()
               console.log(this.val)
           },
+
+          computed:{
+         sortedProyectos:function() {
+            
+            return this.proyectos.sort((a,b) => {
+
+               try {
+
+               let modifier = 1;
+              
+               if(this.currentSortDir === 'desc') modifier = -1;
+               if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+               if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+               return 0;
+                  
+               } catch (error) {
+
+                  
+                  
+               }
+
+
+               
+            
+            });
+         }
+         },
       
           methods:{
    
@@ -176,6 +205,17 @@
                       })
                   
               },
+
+               sortBy(s) {
+         //if s == current sort, reverse
+         if(s === this.currentSort) {
+            this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
+         }
+         this.currentSort = s;
+        
+         },
+
+
           
               
               insert(clave){

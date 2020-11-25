@@ -13868,11 +13868,29 @@ __webpack_require__.r(__webpack_exports__);
       errors: {},
       message: null,
       valid: true,
-      val: 'standard'
+      val: 'standard',
+      currentSort: 'clave',
+      currentSortDir: 'asc',
+      property: null
     };
   },
   created: function created() {
     this.traer();
+  },
+  computed: {
+    sortedProductos: function sortedProductos() {
+      var _this = this;
+
+      return this.productos.sort(function (a, b) {
+        try {
+          var modifier = 1;
+          if (_this.currentSortDir === 'desc') modifier = -1;
+          if (a[_this.currentSort] < b[_this.currentSort]) return -1 * modifier;
+          if (a[_this.currentSort] > b[_this.currentSort]) return 1 * modifier;
+          return 0;
+        } catch (error) {}
+      });
+    }
   },
   methods: {
     onFileChange: function onFileChange(event) {
@@ -13914,17 +13932,25 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     traer: function traer() {
-      var _this = this;
+      var _this2 = this;
 
       self = this;
       axios.get('/api/productos').then(function (response) {
-        _this.productos = response.data;
+        _this2.productos = response.data;
       })["catch"](function (e) {
         console.log(e);
       });
     },
+    sortBy: function sortBy(s) {
+      //if s == current sort, reverse
+      if (s === this.currentSort) {
+        this.currentSortDir = this.currentSortDir === 'asc' ? 'desc' : 'asc';
+      }
+
+      this.currentSort = s;
+    },
     insert: function insert(clave) {
-      var _this2 = this;
+      var _this3 = this;
 
       self = this;
 
@@ -13936,12 +13962,12 @@ __webpack_require__.r(__webpack_exports__);
           logo_producto: this.producto.logo_producto.name,
           nomenclatura: this.producto.nomenclatura
         }).then(function (response) {
-          _this2.producto.clave = "";
-          _this2.producto.nombre = "";
-          _this2.producto.edicion = "";
-          _this2.producto.logo_producto = "";
-          _this2.producto.nomenclatura = "";
-          _this2.showPreview = false;
+          _this3.producto.clave = "";
+          _this3.producto.nombre = "";
+          _this3.producto.edicion = "";
+          _this3.producto.logo_producto = "";
+          _this3.producto.nomenclatura = "";
+          _this3.showPreview = false;
           $("#dd").val('');
           swal.fire({
             icon: 'success',
@@ -13950,7 +13976,7 @@ __webpack_require__.r(__webpack_exports__);
             index: 0
           });
 
-          _this2.traer();
+          _this3.traer();
         })["catch"](function (e) {
           console.log(e);
         });
@@ -13962,7 +13988,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     deleteU: function deleteU(clave) {
-      var _this3 = this;
+      var _this4 = this;
 
       self = this;
       axios["delete"]("/api/producto/".concat(clave)).then(function (response) {
@@ -13978,7 +14004,7 @@ __webpack_require__.r(__webpack_exports__);
           if (result.isConfirmed) {
             swal.fire('Eliminado', 'El producto ha sido borrado', 'success');
 
-            _this3.traer();
+            _this4.traer();
           }
         });
       })["catch"](function (e) {
@@ -14033,7 +14059,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     update: function update(clave) {
-      var _this4 = this;
+      var _this5 = this;
 
       self = this;
       axios.put("api/producto/".concat(clave), {
@@ -14043,12 +14069,12 @@ __webpack_require__.r(__webpack_exports__);
         logo_producto: this.producto.logo_producto.name,
         nomenclatura: this.producto.nomenclatura
       }).then(function (response) {
-        _this4.producto.clave = "";
-        _this4.producto.nombre = "";
-        _this4.producto.edicion = "";
-        _this4.producto.logo_producto = "";
-        _this4.producto.nomenclatura = "";
-        _this4.imagePreview = false;
+        _this5.producto.clave = "";
+        _this5.producto.nombre = "";
+        _this5.producto.edicion = "";
+        _this5.producto.logo_producto = "";
+        _this5.producto.nomenclatura = "";
+        _this5.imagePreview = false;
         swal.fire({
           icon: 'success',
           title: 'Hecho',
@@ -14056,7 +14082,7 @@ __webpack_require__.r(__webpack_exports__);
           index: 0
         });
 
-        _this4.traer();
+        _this5.traer();
       })["catch"](function (e) {
         console.log(e);
       });
@@ -14281,12 +14307,29 @@ __webpack_require__.r(__webpack_exports__);
       errors: {},
       message: null,
       valid: true,
-      val: 'standard'
+      val: 'standard',
+      currentSort: 'clave',
+      currentSortDir: 'asc'
     };
   },
   created: function created() {
     this.traer();
     console.log(this.val);
+  },
+  computed: {
+    sortedProyectos: function sortedProyectos() {
+      var _this = this;
+
+      return this.proyectos.sort(function (a, b) {
+        try {
+          var modifier = 1;
+          if (_this.currentSortDir === 'desc') modifier = -1;
+          if (a[_this.currentSort] < b[_this.currentSort]) return -1 * modifier;
+          if (a[_this.currentSort] > b[_this.currentSort]) return 1 * modifier;
+          return 0;
+        } catch (error) {}
+      });
+    }
   },
   methods: {
     customFormatter: function customFormatter(date) {
@@ -14296,17 +14339,25 @@ __webpack_require__.r(__webpack_exports__);
       return moment__WEBPACK_IMPORTED_MODULE_1___default()(date).format('yyyy-MM-DD');
     },
     traer: function traer() {
-      var _this = this;
+      var _this2 = this;
 
       self = this;
       axios.get('/api/proyectos').then(function (response) {
-        _this.proyectos = response.data;
+        _this2.proyectos = response.data;
       })["catch"](function (e) {
         console.log(e);
       });
     },
+    sortBy: function sortBy(s) {
+      //if s == current sort, reverse
+      if (s === this.currentSort) {
+        this.currentSortDir = this.currentSortDir === 'asc' ? 'desc' : 'asc';
+      }
+
+      this.currentSort = s;
+    },
     insert: function insert(clave) {
-      var _this2 = this;
+      var _this3 = this;
 
       self = this;
 
@@ -14319,11 +14370,11 @@ __webpack_require__.r(__webpack_exports__);
           descripcion: this.proyecto.descripcion,
           nomenclatura: this.proyecto.nomenclatura
         }).then(function (response) {
-          _this2.proyecto.clave = "";
-          _this2.proyecto.nombre = "";
-          _this2.proyecto.fecha = "";
-          _this2.proyecto.descripcion = "";
-          _this2.proyecto.nomenclatura = "";
+          _this3.proyecto.clave = "";
+          _this3.proyecto.nombre = "";
+          _this3.proyecto.fecha = "";
+          _this3.proyecto.descripcion = "";
+          _this3.proyecto.nomenclatura = "";
           $("#dd").val('');
           swal.fire({
             icon: 'success',
@@ -14332,7 +14383,7 @@ __webpack_require__.r(__webpack_exports__);
             index: 0
           });
 
-          _this2.traer();
+          _this3.traer();
         })["catch"](function (e) {
           console.log(e);
         });
@@ -14344,7 +14395,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     deleteU: function deleteU(clave) {
-      var _this3 = this;
+      var _this4 = this;
 
       self = this;
       axios["delete"]("/api/proyecto/".concat(clave)).then(function (response) {
@@ -14360,7 +14411,7 @@ __webpack_require__.r(__webpack_exports__);
           if (result.isConfirmed) {
             swal.fire('Eliminado', 'El proyecto ha sido borrado', 'success');
 
-            _this3.traer();
+            _this4.traer();
           }
         });
       })["catch"](function (e) {
@@ -14379,7 +14430,7 @@ __webpack_require__.r(__webpack_exports__);
       this.proyecto.nomenclatura = proyecto.nomenclatura;
     },
     update: function update(clave) {
-      var _this4 = this;
+      var _this5 = this;
 
       self = this;
       axios.put("api/proyecto/".concat(clave), {
@@ -14389,11 +14440,11 @@ __webpack_require__.r(__webpack_exports__);
         descripcion: this.proyecto.descripcion,
         nomenclatura: this.proyecto.nomenclatura
       }).then(function (response) {
-        _this4.proyecto.clave = "";
-        _this4.proyecto.nombre = "";
-        _this4.proyecto.fecha = "";
-        _this4.proyecto.descripcion = "";
-        _this4.proyecto.nomenclatura = "";
+        _this5.proyecto.clave = "";
+        _this5.proyecto.nombre = "";
+        _this5.proyecto.fecha = "";
+        _this5.proyecto.descripcion = "";
+        _this5.proyecto.nomenclatura = "";
         swal.fire({
           icon: 'success',
           title: 'Hecho',
@@ -14401,7 +14452,7 @@ __webpack_require__.r(__webpack_exports__);
           index: 0
         });
 
-        _this4.traer();
+        _this5.traer();
       })["catch"](function (e) {
         console.log(e);
       });
@@ -81495,14 +81546,132 @@ var render = function() {
         _c("hr"),
         _vm._v(" "),
         _c("table", { staticClass: "table table-hover table-dark" }, [
-          _vm._m(1),
+          _c("thead", [
+            _c("tr", [
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [
+                  _vm._v("Nombre "),
+                  _c("font-awesome-icon", {
+                    attrs: { icon: "angle-down" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sortBy("nombre")
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [
+                  _vm._v("Edicion "),
+                  _c("font-awesome-icon", {
+                    attrs: { icon: "angle-down" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sortBy("edicion")
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [
+                  _vm._v("Logo "),
+                  _c("font-awesome-icon", {
+                    attrs: { icon: "angle-down" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sortBy("logo_producto")
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [
+                  _vm._v("Nomenclatura "),
+                  _c("font-awesome-icon", {
+                    attrs: { icon: "angle-down" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sortBy("nomenclatura")
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [_vm._v("Acción")]
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [_vm._v("Acción")]
+              )
+            ])
+          ]),
           _vm._v(" "),
           _c(
             "tbody",
-            _vm._l(_vm.productos, function(producto) {
+            _vm._l(_vm.sortedProductos, function(producto) {
               return _c("tr", { key: producto.clave }, [
                 _c(
-                  "th",
+                  "td",
                   [
                     _c(
                       "router-link",
@@ -81606,62 +81775,6 @@ var staticRenderFns = [
         },
         [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
       )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Nombre")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Edicion")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Logo")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Nomenclatura")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Acción")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Acción")]
-        )
-      ])
     ])
   }
 ]
@@ -82180,14 +82293,132 @@ var render = function() {
         _c("hr"),
         _vm._v(" "),
         _c("table", { staticClass: "table table-hover table-dark" }, [
-          _vm._m(1),
+          _c("thead", [
+            _c("tr", [
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [
+                  _vm._v("Nombre "),
+                  _c("font-awesome-icon", {
+                    attrs: { icon: "angle-down" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sortBy("nombre")
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [
+                  _vm._v("Fecha "),
+                  _c("font-awesome-icon", {
+                    attrs: { icon: "angle-down" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sortBy("fecha")
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [
+                  _vm._v("Descripción "),
+                  _c("font-awesome-icon", {
+                    attrs: { icon: "angle-down" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sortBy("descripcion")
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [
+                  _vm._v("Nomenclatura "),
+                  _c("font-awesome-icon", {
+                    attrs: { icon: "angle-down" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sortBy("nomenclatura")
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [_vm._v("Acción")]
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [_vm._v("Acción")]
+              )
+            ])
+          ]),
           _vm._v(" "),
           _c(
             "tbody",
-            _vm._l(_vm.proyectos, function(proyecto) {
+            _vm._l(_vm.sortedProyectos, function(proyecto) {
               return _c("tr", { key: proyecto.clave }, [
                 _c(
-                  "th",
+                  "td",
                   [
                     _c(
                       "router-link",
@@ -82291,62 +82522,6 @@ var staticRenderFns = [
         },
         [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
       )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Nombre")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Fecha")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Descripción")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Nomenclatura")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Acción")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Acción")]
-        )
-      ])
     ])
   }
 ]

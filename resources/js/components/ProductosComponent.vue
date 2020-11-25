@@ -70,18 +70,18 @@
          <table class="table table-hover table-dark" >
             <thead>
                <tr>
-                  <th style="position:sticky; top:0; background: #000000">Nombre</th>
-                  <th style="position:sticky; top:0; background: #000000">Edicion</th>
-                  <th style="position:sticky; top:0; background: #000000">Logo</th>
-                  <th style="position:sticky; top:0; background: #000000">Nomenclatura</th>
+                  <th style="position:sticky; top:0; background: #000000">Nombre <font-awesome-icon icon="angle-down" @click="sortBy('nombre')"/></th>
+                  <th style="position:sticky; top:0; background: #000000">Edicion <font-awesome-icon icon="angle-down" @click="sortBy('edicion')"/></th>
+                  <th style="position:sticky; top:0; background: #000000">Logo <font-awesome-icon icon="angle-down" @click="sortBy('logo_producto')"/></th>
+                  <th style="position:sticky; top:0; background: #000000">Nomenclatura <font-awesome-icon icon="angle-down" @click="sortBy('nomenclatura')"/></th>
                   <th style="position:sticky; top:0; background: #000000">Acción</th>
                   <th style="position:sticky; top:0; background: #000000">Acción</th>
                </tr>
             </thead>
             <tbody>
-               <tr v-for="producto in productos" v-bind:key="producto.clave">
+               <tr v-for="producto in sortedProductos" v-bind:key="producto.clave">
                   
-                  <th><router-link :to="{ name: 'productoDetalle', params: { clave: producto.clave }  }" style="color:white">{{producto.nombre}}</router-link></th>
+                  <td><router-link :to="{ name: 'productoDetalle', params: { clave: producto.clave }  }" style="color:white">{{producto.nombre}}</router-link></td>
                   <td>{{producto.edicion}}</td>
                   <td>{{producto.logo_producto}}</td>
                   <td>{{producto.nomenclatura}}</td>
@@ -128,7 +128,10 @@
                errors: {},
                message: null,
                valid: true,
-               val : 'standard'
+               val : 'standard',
+               currentSort:'clave',
+               currentSortDir:'asc',
+               property: null
            }
    
        },
@@ -136,6 +139,33 @@
        created(){
            this.traer()
        },
+
+        computed:{
+         sortedProductos:function() {
+            
+            return this.productos.sort((a,b) => {
+
+               try {
+
+               let modifier = 1;
+              
+               if(this.currentSortDir === 'desc') modifier = -1;
+               if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+               if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+               return 0;
+                  
+               } catch (error) {
+
+                  
+                  
+               }
+
+
+               
+            
+            });
+         }
+         },
    
        methods:{
    
@@ -194,6 +224,15 @@
                    })
                
            },
+
+              sortBy(s) {
+         //if s == current sort, reverse
+         if(s === this.currentSort) {
+            this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
+         }
+         this.currentSort = s;
+        
+         },
             
            insert(clave){
    
