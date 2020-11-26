@@ -96,6 +96,23 @@ class ProyectoController extends Controller
 
     }
 
+    public function search(){
+
+        if ($search = \Request::get('q')) {
+            $proyectos = Proyecto::where(function($query) use ($search){
+                $query->where('nombre','LIKE',"%$search%");
+                        
+            })->get();
+        }else{
+
+            return response()->json($proyectos->messages(), 400);
+            
+        }
+
+        return $proyectos;
+
+    }
+
     public function show($clave){
 
         $proyecto = Proyecto::find($clave);

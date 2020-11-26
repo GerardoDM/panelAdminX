@@ -131,7 +131,7 @@
                val : 'standard',
                currentSort:'clave',
                currentSortDir:'asc',
-               property: null
+              
            }
    
        },
@@ -157,11 +157,8 @@
                } catch (error) {
 
                   
-                  
                }
 
-
-               
             
             });
          }
@@ -233,6 +230,25 @@
          this.currentSort = s;
         
          },
+         searchit(){
+
+             
+              self = this
+
+              let query = this.search;
+
+              axios.get('api/searchProducto?q=' + query)
+             .then(response => {
+                       this.productos = response.data;
+            
+                       console.log('success')
+                   })
+                   .catch(e => {
+                       console.log(e);
+                   })
+           
+
+          },
             
            insert(clave){
    
@@ -345,18 +361,7 @@
             this.producto.clave = producto.clave
             this.producto.nombre = producto.nombre;
             this.producto.edicion = producto.edicion;
-          // this.producto.logo_producto = producto.logo_producto;
             this.producto.nomenclatura = producto.nomenclatura;
-           // this.imagePreview = producto.logo_producto;
-           
-            
-            //console.log(this.imagePreview);
-            
-
-             
-   
-             
-            console.log(producto.logo_producto);
    
                     /*
             Initialize a File Reader object
@@ -397,11 +402,7 @@
                     
                 }
             }
-   
-        
-
-
-
+    
    
            },
    

@@ -27,14 +27,14 @@ Route::get('/productos', 'ProductoController@index');
 Route::post('/producto', 'ProductoController@create');
 Route::delete('/producto/{clave}', 'ProductoController@delete');
 Route::put('/producto/{clave}', 'ProductoController@update');
-
+Route::get('/searchProducto', 'ProductoController@search');
 Route::get('/showProducto/{clave}', 'ProductoController@show');
 
 Route::get('/proyectos', 'ProyectoController@index');
 Route::post('/proyecto', 'ProyectoController@create');
 Route::delete('/proyecto/{clave}', 'ProyectoController@delete');
 Route::put('/proyecto/{clave}', 'ProyectoController@update');
-
+Route::get('/searchProyecto', 'ProyectoController@search');
 Route::get('/showProyecto/{clave}', 'ProyectoController@show');
 
 Route::get('/pivots', 'PivotController@index');

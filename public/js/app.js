@@ -12224,8 +12224,7 @@ __webpack_require__.r(__webpack_exports__);
       search: "",
       query: "",
       currentSort: 'clave',
-      currentSortDir: 'asc',
-      property: null
+      currentSortDir: 'asc'
     };
   },
   created: function created() {
@@ -12374,7 +12373,6 @@ __webpack_require__.r(__webpack_exports__);
       this.bloque.version = bloque.version;
       this.bloque.ruta_portal = bloque.ruta_portal;
       this.selected = bloque.cve_curso;
-      console.log(this.bloque.cve_curso);
     },
     update: function update(clave) {
       var _this8 = this;
@@ -12744,8 +12742,6 @@ __webpack_require__.r(__webpack_exports__);
 
       return this.cursos.sort(function (a, b) {
         try {
-          //a.nombre.localeCompare(b.nombre, undefined, { sensitivity: 'base' })
-          // b.nombre.localeCompare(a.nombre, undefined, { sensitivity: 'base' })
           var modifier = 1;
           if (_this.currentSortDir === 'desc') modifier = -1;
           if (a[_this.currentSort] < b[_this.currentSort]) return -1 * modifier;
@@ -13032,6 +13028,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
 //
 //
 //
@@ -13870,8 +13870,7 @@ __webpack_require__.r(__webpack_exports__);
       valid: true,
       val: 'standard',
       currentSort: 'clave',
-      currentSortDir: 'asc',
-      property: null
+      currentSortDir: 'asc'
     };
   },
   created: function created() {
@@ -13949,8 +13948,20 @@ __webpack_require__.r(__webpack_exports__);
 
       this.currentSort = s;
     },
-    insert: function insert(clave) {
+    searchit: function searchit() {
       var _this3 = this;
+
+      self = this;
+      var query = this.search;
+      axios.get('api/searchProducto?q=' + query).then(function (response) {
+        _this3.productos = response.data;
+        console.log('success');
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    },
+    insert: function insert(clave) {
+      var _this4 = this;
 
       self = this;
 
@@ -13962,12 +13973,12 @@ __webpack_require__.r(__webpack_exports__);
           logo_producto: this.producto.logo_producto.name,
           nomenclatura: this.producto.nomenclatura
         }).then(function (response) {
-          _this3.producto.clave = "";
-          _this3.producto.nombre = "";
-          _this3.producto.edicion = "";
-          _this3.producto.logo_producto = "";
-          _this3.producto.nomenclatura = "";
-          _this3.showPreview = false;
+          _this4.producto.clave = "";
+          _this4.producto.nombre = "";
+          _this4.producto.edicion = "";
+          _this4.producto.logo_producto = "";
+          _this4.producto.nomenclatura = "";
+          _this4.showPreview = false;
           $("#dd").val('');
           swal.fire({
             icon: 'success',
@@ -13976,7 +13987,7 @@ __webpack_require__.r(__webpack_exports__);
             index: 0
           });
 
-          _this3.traer();
+          _this4.traer();
         })["catch"](function (e) {
           console.log(e);
         });
@@ -13988,7 +13999,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     deleteU: function deleteU(clave) {
-      var _this4 = this;
+      var _this5 = this;
 
       self = this;
       axios["delete"]("/api/producto/".concat(clave)).then(function (response) {
@@ -14004,7 +14015,7 @@ __webpack_require__.r(__webpack_exports__);
           if (result.isConfirmed) {
             swal.fire('Eliminado', 'El producto ha sido borrado', 'success');
 
-            _this4.traer();
+            _this5.traer();
           }
         });
       })["catch"](function (e) {
@@ -14017,12 +14028,8 @@ __webpack_require__.r(__webpack_exports__);
       this.val = 'auto';
       this.producto.clave = producto.clave;
       this.producto.nombre = producto.nombre;
-      this.producto.edicion = producto.edicion; // this.producto.logo_producto = producto.logo_producto;
-
-      this.producto.nomenclatura = producto.nomenclatura; // this.imagePreview = producto.logo_producto;
-      //console.log(this.imagePreview);
-
-      console.log(producto.logo_producto);
+      this.producto.edicion = producto.edicion;
+      this.producto.nomenclatura = producto.nomenclatura;
       /*
       Initialize a File Reader object
       */
@@ -14059,7 +14066,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     update: function update(clave) {
-      var _this5 = this;
+      var _this6 = this;
 
       self = this;
       axios.put("api/producto/".concat(clave), {
@@ -14069,12 +14076,12 @@ __webpack_require__.r(__webpack_exports__);
         logo_producto: this.producto.logo_producto.name,
         nomenclatura: this.producto.nomenclatura
       }).then(function (response) {
-        _this5.producto.clave = "";
-        _this5.producto.nombre = "";
-        _this5.producto.edicion = "";
-        _this5.producto.logo_producto = "";
-        _this5.producto.nomenclatura = "";
-        _this5.imagePreview = false;
+        _this6.producto.clave = "";
+        _this6.producto.nombre = "";
+        _this6.producto.edicion = "";
+        _this6.producto.logo_producto = "";
+        _this6.producto.nomenclatura = "";
+        _this6.imagePreview = false;
         swal.fire({
           icon: 'success',
           title: 'Hecho',
@@ -14082,7 +14089,7 @@ __webpack_require__.r(__webpack_exports__);
           index: 0
         });
 
-        _this5.traer();
+        _this6.traer();
       })["catch"](function (e) {
         console.log(e);
       });
@@ -14356,8 +14363,20 @@ __webpack_require__.r(__webpack_exports__);
 
       this.currentSort = s;
     },
-    insert: function insert(clave) {
+    searchit: function searchit() {
       var _this3 = this;
+
+      self = this;
+      var query = this.search;
+      axios.get('api/searchProyecto?q=' + query).then(function (response) {
+        _this3.proyectos = response.data;
+        console.log('success');
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    },
+    insert: function insert(clave) {
+      var _this4 = this;
 
       self = this;
 
@@ -14370,11 +14389,11 @@ __webpack_require__.r(__webpack_exports__);
           descripcion: this.proyecto.descripcion,
           nomenclatura: this.proyecto.nomenclatura
         }).then(function (response) {
-          _this3.proyecto.clave = "";
-          _this3.proyecto.nombre = "";
-          _this3.proyecto.fecha = "";
-          _this3.proyecto.descripcion = "";
-          _this3.proyecto.nomenclatura = "";
+          _this4.proyecto.clave = "";
+          _this4.proyecto.nombre = "";
+          _this4.proyecto.fecha = "";
+          _this4.proyecto.descripcion = "";
+          _this4.proyecto.nomenclatura = "";
           $("#dd").val('');
           swal.fire({
             icon: 'success',
@@ -14383,7 +14402,7 @@ __webpack_require__.r(__webpack_exports__);
             index: 0
           });
 
-          _this3.traer();
+          _this4.traer();
         })["catch"](function (e) {
           console.log(e);
         });
@@ -14395,7 +14414,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     deleteU: function deleteU(clave) {
-      var _this4 = this;
+      var _this5 = this;
 
       self = this;
       axios["delete"]("/api/proyecto/".concat(clave)).then(function (response) {
@@ -14411,7 +14430,7 @@ __webpack_require__.r(__webpack_exports__);
           if (result.isConfirmed) {
             swal.fire('Eliminado', 'El proyecto ha sido borrado', 'success');
 
-            _this4.traer();
+            _this5.traer();
           }
         });
       })["catch"](function (e) {
@@ -14430,7 +14449,7 @@ __webpack_require__.r(__webpack_exports__);
       this.proyecto.nomenclatura = proyecto.nomenclatura;
     },
     update: function update(clave) {
-      var _this5 = this;
+      var _this6 = this;
 
       self = this;
       axios.put("api/proyecto/".concat(clave), {
@@ -14440,11 +14459,11 @@ __webpack_require__.r(__webpack_exports__);
         descripcion: this.proyecto.descripcion,
         nomenclatura: this.proyecto.nomenclatura
       }).then(function (response) {
-        _this5.proyecto.clave = "";
-        _this5.proyecto.nombre = "";
-        _this5.proyecto.fecha = "";
-        _this5.proyecto.descripcion = "";
-        _this5.proyecto.nomenclatura = "";
+        _this6.proyecto.clave = "";
+        _this6.proyecto.nombre = "";
+        _this6.proyecto.fecha = "";
+        _this6.proyecto.descripcion = "";
+        _this6.proyecto.nomenclatura = "";
         swal.fire({
           icon: 'success',
           title: 'Hecho',
@@ -14452,7 +14471,7 @@ __webpack_require__.r(__webpack_exports__);
           index: 0
         });
 
-        _this5.traer();
+        _this6.traer();
       })["catch"](function (e) {
         console.log(e);
       });
@@ -80018,69 +80037,101 @@ var render = function() {
     _c("div", { staticClass: "card" }, [
       _c("div", { staticClass: "card-header" }),
       _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("h5", { staticClass: "card-title" }, [_vm._v("Bloques")]),
-        _vm._v(" "),
-        _c("p", { staticClass: "card-text" }, [
-          _vm._v("Cantidad actual de registros: " + _vm._s(_vm.contadorBloques))
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "btn btn-primary", attrs: { href: "#" } }, [
-          _vm._v("Ver")
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-header" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("h5", { staticClass: "card-title" }, [_vm._v("Cursos")]),
-        _vm._v(" "),
-        _c("p", { staticClass: "card-text" }, [
-          _vm._v("Cantidad actual de registros: " + _vm._s(_vm.contadorCursos))
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "btn btn-primary", attrs: { href: "#" } }, [
-          _vm._v("Ver")
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-header" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("h5", { staticClass: "card-title" }, [_vm._v("Productos")]),
-        _vm._v(" "),
-        _c("p", { staticClass: "card-text" }, [
-          _vm._v(
-            "Cantidad actual de registros: " + _vm._s(_vm.contadorProductos)
+      _c(
+        "div",
+        { staticClass: "card-body" },
+        [
+          _c("h5", { staticClass: "card-title" }, [_vm._v("Bloques")]),
+          _vm._v(" "),
+          _c("p", { staticClass: "card-text" }, [
+            _vm._v(
+              "Cantidad actual de registros: " + _vm._s(_vm.contadorBloques)
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "router-link",
+            { staticClass: "btn btn-primary", attrs: { to: "/bloques" } },
+            [_vm._v("Ver")]
           )
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "btn btn-primary", attrs: { href: "#" } }, [
-          _vm._v("Ver")
-        ])
-      ])
+        ],
+        1
+      )
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "card" }, [
       _c("div", { staticClass: "card-header" }),
       _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("h5", { staticClass: "card-title" }, [_vm._v("Proyectos")]),
-        _vm._v(" "),
-        _c("p", { staticClass: "card-text" }, [
-          _vm._v(
-            "Cantidad actual de registros: " + _vm._s(_vm.contadorProyectos)
+      _c(
+        "div",
+        { staticClass: "card-body" },
+        [
+          _c("h5", { staticClass: "card-title" }, [_vm._v("Cursos")]),
+          _vm._v(" "),
+          _c("p", { staticClass: "card-text" }, [
+            _vm._v(
+              "Cantidad actual de registros: " + _vm._s(_vm.contadorCursos)
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "router-link",
+            { staticClass: "btn btn-primary", attrs: { to: "/cursos" } },
+            [_vm._v("Ver")]
           )
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "btn btn-primary", attrs: { href: "#" } }, [
-          _vm._v("Ver")
-        ])
-      ])
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-header" }),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "card-body" },
+        [
+          _c("h5", { staticClass: "card-title" }, [_vm._v("Productos")]),
+          _vm._v(" "),
+          _c("p", { staticClass: "card-text" }, [
+            _vm._v(
+              "Cantidad actual de registros: " + _vm._s(_vm.contadorProductos)
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "router-link",
+            { staticClass: "btn btn-primary", attrs: { to: "/productos" } },
+            [_vm._v("Ver")]
+          )
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-header" }),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "card-body" },
+        [
+          _c("h5", { staticClass: "card-title" }, [_vm._v("Proyectos")]),
+          _vm._v(" "),
+          _c("p", { staticClass: "card-text" }, [
+            _vm._v(
+              "Cantidad actual de registros: " + _vm._s(_vm.contadorProyectos)
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "router-link",
+            { staticClass: "btn btn-primary", attrs: { to: "/proyectos" } },
+            [_vm._v("Ver")]
+          )
+        ],
+        1
+      )
     ])
   ])
 }

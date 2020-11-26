@@ -61,7 +61,10 @@ class UsuariosLoginController extends DefaultLoginController
              }
 
              else  {
-                 return redirect()->back();
+                 //return redirect()->back();
+                 return redirect()->back()->withErrors(['Credenciales incorrectas']);
+
+
              }
 
 
@@ -96,6 +99,13 @@ class UsuariosLoginController extends DefaultLoginController
 
     
         
+    }
+
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        throw ValidationException::withMessages([
+            $this->username() => [trans('auth.failed')],
+        ]);
     }
 
         

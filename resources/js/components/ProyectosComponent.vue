@@ -216,6 +216,27 @@
          },
 
 
+         searchit(){
+
+             
+              self = this
+
+              let query = this.search;
+
+              axios.get('api/searchProyecto?q=' + query)
+             .then(response => {
+                       this.proyectos = response.data;
+            
+                       console.log('success')
+                   })
+                   .catch(e => {
+                       console.log(e);
+                   })
+           
+
+          },
+
+
           
               
               insert(clave){

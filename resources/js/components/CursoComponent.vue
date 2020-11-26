@@ -267,8 +267,6 @@
 
                try {
 
-               //a.nombre.localeCompare(b.nombre, undefined, { sensitivity: 'base' })
-               // b.nombre.localeCompare(a.nombre, undefined, { sensitivity: 'base' })
 
                let modifier = 1;
               

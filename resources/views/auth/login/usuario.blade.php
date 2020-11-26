@@ -8,6 +8,19 @@
                 <div class="card-header text-white bg-dark">{{ __('Ingrese sus credenciales') }}</div>
 
                 <div class="card-body">
+
+                    @if (count($errors)>0)
+
+                    <ul>
+                        @foreach ($errors->all() as $error)
+
+                        <li>{{$error}}</li>
+                            
+                        @endforeach
+
+                    </ul>
+                        
+                    @endif
                     <form method="POST" action="{{ route('usuario.login') }}">
                         @csrf
 

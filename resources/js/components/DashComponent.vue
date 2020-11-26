@@ -9,7 +9,7 @@
   <div class="card-body">
     <h5 class="card-title">Bloques</h5>
     <p class="card-text">Cantidad actual de registros: {{contadorBloques}}</p>
-    <a href="#" class="btn btn-primary">Ver</a>
+    <router-link to='/bloques' class="btn btn-primary">Ver</router-link> 
   </div>
 </div>
 
@@ -20,7 +20,9 @@
   <div class="card-body">
     <h5 class="card-title">Cursos</h5>
     <p class="card-text">Cantidad actual de registros: {{contadorCursos}}</p>
-    <a href="#" class="btn btn-primary">Ver</a>
+    <router-link to='/cursos' class="btn btn-primary">Ver</router-link> 
+
+    
   </div>
 </div>
 
@@ -32,7 +34,8 @@
   <div class="card-body">
     <h5 class="card-title">Productos</h5>
     <p class="card-text">Cantidad actual de registros: {{contadorProductos}}</p>
-    <a href="#" class="btn btn-primary">Ver</a>
+     <router-link to='/productos' class="btn btn-primary">Ver</router-link> 
+    
   </div>
 </div>
 
@@ -44,7 +47,8 @@
   <div class="card-body">
     <h5 class="card-title">Proyectos</h5>
     <p class="card-text">Cantidad actual de registros: {{contadorProyectos}}</p>
-    <a href="#" class="btn btn-primary">Ver</a>
+    <router-link to='/proyectos' class="btn btn-primary">Ver</router-link> 
+    
   </div>
 </div>
 </div>

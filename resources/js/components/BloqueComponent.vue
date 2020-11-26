@@ -154,7 +154,7 @@
                query: "",
                currentSort:'clave',
                currentSortDir:'asc',
-               property: null
+              
                
             }
    
@@ -394,7 +394,6 @@
             this.bloque.ruta_portal = bloque.ruta_portal
             
             this.selected = bloque.cve_curso
-            console.log(this.bloque.cve_curso)
     
            },
    

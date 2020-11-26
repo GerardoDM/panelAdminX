@@ -87,6 +87,23 @@ class ProductoController extends Controller
 
     }
 
+    public function search(){
+
+        if ($search = \Request::get('q')) {
+            $productos = Producto::where(function($query) use ($search){
+                $query->where('nombre','LIKE',"%$search%");
+                        
+            })->get();
+        }else{
+
+            return response()->json($productos->messages(), 400);
+            
+        }
+
+        return $productos;
+
+    }
+
     public function show($clave){
 
         $producto = Producto::find($clave);
