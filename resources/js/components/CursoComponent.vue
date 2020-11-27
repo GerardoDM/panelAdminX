@@ -33,14 +33,14 @@
                         </div>
                         <div class="form-group">
                            <label>btotales</label>
-                           <validationProvider v-slot="v" rules='required'>
+                           <validationProvider v-slot="v" rules='required|numeric'>
                            <input type="numeric" class="form-control" v-model="curso.btotales">
                            <span>{{ v.errors[0] }}</span>
                            </validationProvider>
                         </div>
                         <div class="form-group">
                            <label>blib</label>
-                           <validationProvider v-slot="v" rules='required'>
+                           <validationProvider v-slot="v" rules='required|numeric'>
                            <input type="numeric" class="form-control" v-model="curso.blib">
                            <span>{{ v.errors[0] }}</span>
                            </validationProvider>
@@ -75,14 +75,14 @@
                            <span>{{ v.errors[0] }}</span>
                            </validationProvider>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                            <label>Status</label>
                            <validationProvider v-slot="v" rules='required'>
                            <input type="text" class="form-control" v-model="curso.status">
                            <span>{{ v.errors[0] }}</span>
                            </validationProvider>
                            
-                        </div>
+                        </div> -->
                         <div class="form-group">
                            <label>Ruta Operación</label>
                            <validationProvider v-slot="v" rules='required'>
@@ -90,13 +90,13 @@
                            <span>{{ v.errors[0] }}</span>
                            </validationProvider>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                            <label>Clave Status</label>
                            <validationProvider v-slot="v" rules='required'>
                            <input type="numeric" class="form-control" v-model="curso.cve_status">
                            <span>{{ v.errors[0] }}</span>
                            </validationProvider>
-                        </div>
+                        </div> -->
                         <button type="submit" id="btnAgregar" class="btn btn-primary" >Agregar</button>
                      </form>
                      </validationObserver>
@@ -145,15 +145,11 @@
                   <th style="position:sticky; top:0; background: #000000">Ruta ver
                       <font-awesome-icon icon="angle-down" @click="sortBy('ruta_ver')"/>
                   </th>
-                  <th style="position:sticky; top:0; background: #000000">Status
-                      <font-awesome-icon icon="angle-down" @click="sortBy('status')"/>
-                  </th>
+                
                   <th style="position:sticky; top:0; background: #000000">Ruta operación
                       <font-awesome-icon icon="angle-down" @click="sortBy('ruta_operacion')"/>
                   </th>
-                  <th style="position:sticky; top:0; background: #000000">Clave status
-                      <font-awesome-icon icon="angle-down" @click="sortBy('cve_status')"/>
-                  </th>
+                  
                   <th style="position:sticky; top:0; background: #000000">Acción</th>
                   <th style="position:sticky; top:0; background: #000000">Acción</th>
                </tr>
@@ -168,9 +164,9 @@
                   <th>{{curso.cve_usuario}}</th>
                   <td>{{curso.ruta_descarga}}</td>
                   <td>{{curso.ruta_ver}}</td>
-                  <td>{{curso.status}}</td>
+                
                   <td>{{curso.ruta_operacion}}</td>
-                  <td>{{curso.cve_status}}</td>
+                  
                   <td>
                      <button type="button" class="btn btn-secondary" v-on:click="edit(curso)" data-toggle="modal" data-target="#exampleModal">
                      Editar
@@ -371,9 +367,9 @@
                   cve_usuario : this.usuario.clave,
                   ruta_descarga : this.curso.ruta_descarga,
                   ruta_ver : this.curso.ruta_ver,
-                  status : this.curso.status,
+                  status : "Completo",
                   ruta_operacion : this.curso.ruta_operacion,
-                  cve_status : this.curso.cve_status
+                  cve_status : 5
                        
                        })
                        

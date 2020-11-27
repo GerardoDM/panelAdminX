@@ -8,10 +8,10 @@
       <ul class="navbar-nav">
      
        <li class="nav-item">
-        <router-link to='/cursos' class="nav-link">Cursos</router-link> 
+        <router-link to='/bloques' class="nav-link">Bloques</router-link> 
        </li>
         <li class="nav-item">
-          <router-link to='/bloques' class="nav-link">Bloques</router-link> 
+          <router-link to='/cursos' class="nav-link">Cursos</router-link> 
         </li>
         <li class="nav-item">
           <router-link to='/productos' class="nav-link">Productos</router-link> 

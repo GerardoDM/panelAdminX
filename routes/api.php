@@ -41,6 +41,7 @@ Route::get('/pivots', 'PivotController@index');
 Route::post('/pivot', 'PivotController@create');
 Route::delete('/pivot/{clave}', 'PivotController@delete');
 Route::put('/pivot/{clave}', 'PivotController@update');
+Route::get('/pivotsJoin', 'PivotController@join');
 
 Route::get('/cursos', 'CursoController@index');
 Route::post('/curso', 'CursoController@create');

@@ -33,13 +33,12 @@
                         </div>
                         <div class="form-group">
                            <label># de Licencias</label>
-                           <validationProvider v-slot="v" rules='required'>
-                           <input type="numeric" class="form-control" v-model="pivot.nolicencias">
+                           <validationProvider v-slot="v" rules='required|numeric'>
+                           <input type="numeric" class="form-control" v-model="pivot.nolicencias" >
                            <span>{{v.errors[0]}}</span>
                            </validationProvider>
                         </div>
                         <button type="submit" id="btnAgregar" class="btn btn-primary" >Agregar</button>
-                        <!-- <button type="button" id="btnActualizar" disabled class="btn btn-primary" v-on:click="update(pivot.clave)">Actualizar</button> -->
                      </form>
                      </validationObserver>
                   </div>
@@ -51,8 +50,8 @@
        <h2 class="mb-4">Productos-Proyectos</h2>
            <div class="form-inline">
           
-            <input class="form-control mr-sm-2" v-model="search" type="search" @keyup.enter="searchit()" placeholder="Buscar por nombre">
-             <button class="btn btn-success my-2 my-sm-0" type="button"><font-awesome-icon icon="search" @click="searchit()"/></button>
+            <!-- <input class="form-control mr-sm-2" v-model="search" type="search" @keyup.enter="searchit()" placeholder="Buscar por nombre">
+             <button class="btn btn-success my-2 my-sm-0" type="button"><font-awesome-icon icon="search" @click="searchit()"/></button> -->
          </div>
       <div class="container; mt-2" style="height:450px; overflow-y: scroll">
        
@@ -61,7 +60,6 @@
          <table class="table table-hover table-dark" >
             <thead>
                <tr>
-                  <th style="position:sticky; top:0; background: #000000">Clave</th>
                   <th style="position:sticky; top:0; background: #000000">Clave Producto</th>
                   <th style="position:sticky; top:0; background: #000000">Clave Proyecto</th>
                   <th style="position:sticky; top:0; background: #000000"># de Licencias</th>
@@ -71,8 +69,7 @@
             </thead>
             <tbody>
                <tr v-for="pivot in pivots" v-bind:key="pivot.clave">
-                  <th>{{pivot.clave}}</th>
-                  <th>{{pivot.cve_producto}}</th>
+                  <td>{{pivot.cve_producto}}</td>
                   <td>{{pivot.cve_proyecto}}</td>
                   <td>{{pivot.nolicencias}}</td>
                   <td>
@@ -97,12 +94,12 @@ import { ValidationProvider } from 'vee-validate';
        mounted(){
    
             $("#selectProducto").change(function(){
-                this.producto.clave = $("#selectProducto").val();
+                this.pivot.cve_producto = $("#selectProducto").val();
                 }.bind(this)); 
    
    
                 $("#selectProyecto").change(function(){
-                this.proyecto.clave = $("#selectProyecto").val();
+                this.pivot.cve_proyecto = $("#selectProyecto").val();
                 }.bind(this)); 
         
             
@@ -117,12 +114,16 @@ import { ValidationProvider } from 'vee-validate';
                pivots: [],
                productos: [],
                proyectos: [],
+               pivotsJoin:[],
+              
    
                 pivot: {
                     clave: "",
                     cve_producto: "",
                     cve_proyecto: "",
                     nolicencias: "",
+                    proyNombre: "",
+                    prodNombre: ""
                             
                 },
    
@@ -156,6 +157,7 @@ import { ValidationProvider } from 'vee-validate';
    
        created(){
            this.traer()
+           this.traerJoin()
            this.traerProductos()
            this.traerProyectos()
        },
@@ -175,13 +177,28 @@ import { ValidationProvider } from 'vee-validate';
                    })
                
            },
+
+           traerJoin(){
+
+               self = this
+               axios.get('/api/pivotsJoin')
+                   .then(response => {
+                       this.pivotsJoin = response.data;
+                   })
+                   .catch(e => {
+                       
+                       console.log(e);
+                   })
+               
+
+           },
    
            traerProductos(){
    
               self = this
                axios.get('/api/productos')
                    .then(response => {
-                       this.productos = response.data;
+                     this.productos = response.data;
                    })
                    .catch(e => {
                        
@@ -215,8 +232,8 @@ import { ValidationProvider } from 'vee-validate';
                        {
    
                      clave : this.pivot.clave,
-                     cve_producto : this.producto.clave,
-                     cve_proyecto : this.proyecto.clave,
+                     cve_producto : this.pivot.cve_producto,
+                     cve_proyecto : this.pivot.cve_proyecto,
                      nolicencias : this.pivot.nolicencias,
                      
                        })
@@ -242,6 +259,7 @@ import { ValidationProvider } from 'vee-validate';
                        })
    
                        this.traer();
+                       this.traerJoin()
    
                       
                    })
@@ -323,8 +341,8 @@ import { ValidationProvider } from 'vee-validate';
              axios.put(`api/pivot/${clave}`,
               {
                 clave : this.pivot.clave,
-                cve_producto : this.producto.clave,
-                cve_proyecto : this.proyecto.clave,
+                cve_producto : this.pivot.cve_producto,
+                cve_proyecto : this.pivot.cve_proyecto,
                 nolicencias : this.pivot.nolicencias,
                 })
               

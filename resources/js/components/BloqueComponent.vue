@@ -30,16 +30,16 @@
                            <span>{{v.errors[0]}}</span>
                            </validationProvider>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                            <label>Clave Status</label>
                            <validationProvider v-slot="v" rules='required'>
                            <input type="numeric" class="form-control" v-model="bloque.cve_status">
                            <span>{{v.errors[0]}}</span>
                            </validationProvider>
-                        </div>
+                        </div> -->
                         <div class="form-group">
                            <label>Versión</label>
-                           <validationProvider v-slot="v" rules='required'>
+                           <validationProvider v-slot="v" rules='required|numeric'>
                            <input type="numeric" class="form-control" v-model="bloque.version">
                            <span>{{v.errors[0]}}</span>
                            </validationProvider>
@@ -76,7 +76,6 @@
                <tr>
                   <th style="position:sticky; top:0; background: #000000">Nombre <font-awesome-icon icon="angle-down" @click="sortBy('nombre')"/></th>
                   <th style="position:sticky; top:0; background: #000000">Clave Curso <font-awesome-icon icon="angle-down" @click="sortBy('cve_curso')"/></th>
-                  <th style="position:sticky; top:0; background: #000000">Clave Status <font-awesome-icon icon="angle-down" @click="sortBy('cve_status')"/></th>
                   <th style="position:sticky; top:0; background: #000000">Versión <font-awesome-icon icon="angle-down" @click="sortBy('version')"/></th>
                   <th style="position:sticky; top:0; background: #000000">Ruta Portal <font-awesome-icon icon="angle-down" @click="sortBy('ruta_portal')"/></th>
                   <th style="position:sticky; top:0; background: #000000">Acciòn</th>
@@ -88,7 +87,6 @@
                <tr v-for="bloque in sortedBloques" v-bind:key="bloque.clave">
                   <td><router-link :to="{ name: 'bloqueDetalle', params: { clave: bloque.clave }  }" style="color:white">{{bloque.nombre}}</router-link></td>
                   <td>{{bloque.cve_curso}}</td>
-                  <td>{{bloque.cve_status}}</td>
                   <td>{{bloque.version}}</td>
                   <td>{{bloque.ruta_portal}}</td>
                   <td>
@@ -206,23 +204,6 @@
         
          },
 
-           passData(clave){
-
-
-             self = this
-              axios.get(`api/showBloque/${clave}`)
-                   .then(response => {
-                      this.bloque = response.data
-                       console.log(this.bloque)
-                   })
-                   .catch(e => {
-                       
-                       console.log(e);
-                   })
-              
-            
-          },
-
 
          searchit(){
 
@@ -287,7 +268,7 @@
                   clave  : this.bloque.clave,
                   nombre : this.bloque.nombre,
                   cve_curso : this.curso.clave,
-                  cve_status : this.bloque.cve_status,
+                  cve_status : 5,
                   version : this.bloque.version,
                   ruta_portal : this.bloque.ruta_portal
                        

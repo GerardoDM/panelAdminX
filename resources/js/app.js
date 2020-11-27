@@ -12,6 +12,8 @@ Vue.use(VeeValidate);
 
 
 import * as VeeValidate from 'vee-validate'
+import { numeric } from 'vee-validate/dist/rules';
+
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
 import swal from 'sweetalert2'
 import {  router } from './routes.js';
@@ -27,6 +29,15 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 library.add(faAngleDown)
 library.add(faAngleUp)
 library.add(faSearch)
+
+
+extend('numeric', numeric);
+
+extend('numeric', {
+  
+  message: 'Debe ser numerico'
+});
+
 
 
 
@@ -46,6 +57,18 @@ extend('required', {
     message: 'Este campo es requerido'
 
   });
+
+  // extend('numeric', {
+  //   validate (value) {
+  //     return {
+        
+  //       regex: /\.(js|ts)$/ }
+      
+  //   },
+  //   computesRequired: true,
+  //   message: 'Este campo debe ser numerico'
+
+  // });
 
 
 

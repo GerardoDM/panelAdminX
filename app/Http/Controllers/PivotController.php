@@ -6,6 +6,7 @@ use App\Models\Pivot;
 use App\Models\Producto;
 use \Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PivotController extends Controller
 {
@@ -83,4 +84,15 @@ class PivotController extends Controller
         return response()->json(['Relación' => $pivot], 201);
 
     }
+
+    public function join(){
+
+        $pivots = DB::select('select producto.nombre as `prodNombre`, proyecto.nombre as `proyNombre`, `producto-proyecto`.nolicencias from `producto-proyecto` inner join producto on `producto-proyecto`.cve_producto = producto.clave inner join proyecto on
+        `producto-proyecto`.cve_proyecto = proyecto.clave');
+
+        return $pivots;
+
+    }
+
+    
 }

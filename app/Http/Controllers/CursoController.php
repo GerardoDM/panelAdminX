@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Curso;
 use \Validator;
+use Illuminate\Support\Facades\DB;
 
 
 class CursoController extends Controller
 {
+
+
 
     public function view(){
 
@@ -69,6 +72,9 @@ class CursoController extends Controller
     }
 
     public function delete($clave){
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
 
         $curso = curso::find($clave);
         $curso->delete();
