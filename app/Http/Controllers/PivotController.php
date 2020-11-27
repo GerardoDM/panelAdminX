@@ -18,6 +18,10 @@ class PivotController extends Controller
         
     }
 
+    public function viewDetail(){
+        return view('pages.pivotDetalle');
+    }
+
 
     public function index(){
 
@@ -85,12 +89,33 @@ class PivotController extends Controller
 
     }
 
-    public function join(){
+    public function join($clave){
 
         $pivots = DB::select('select producto.nombre as `prodNombre`, proyecto.nombre as `proyNombre`, `producto-proyecto`.nolicencias from `producto-proyecto` inner join producto on `producto-proyecto`.cve_producto = producto.clave inner join proyecto on
         `producto-proyecto`.cve_proyecto = proyecto.clave');
 
+        
+
         return $pivots;
+
+    }
+
+    public function joinShow($clave){
+
+        $pivot = DB::table('producto-proyecto')
+            ->join('producto', 'producto.clave', '=', 'producto-proyecto.cve_producto')
+            ->join('proyecto', 'proyecto.clave', '=', 'producto-proyecto.cve_proyecto')
+            ->select('producto.nombre as productoNombre', 'proyecto.nombre as proyectoNombre', 'producto-proyecto.nolicencias')
+            ->where('producto-proyecto.clave', '=', $clave)
+            ->get();
+
+         return $pivot;   
+    }
+
+    public function show($clave){
+
+        $pivot = Pivot::find($clave);
+        return $pivot;
 
     }
 

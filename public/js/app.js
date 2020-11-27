@@ -13457,6 +13457,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -13651,6 +13653,98 @@ __webpack_require__.r(__webpack_exports__);
         });
 
         _this7.traer();
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PivotDetalleComponent.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PivotDetalleComponent.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      name: 'detallePivot',
+      pivot: {
+        clave: "",
+        cve_producto: "",
+        cve_proyecto: "",
+        nolicencias: ""
+      },
+      pivot2: {
+        productoNombre: "",
+        proyectoNombre: ""
+      }
+    };
+  },
+  created: function created() {
+    this.pivot.clave = this.$route.params.clave;
+  },
+  mounted: function mounted() {
+    this.traerDatos();
+    this.traerJoin();
+  },
+  methods: {
+    traerDatos: function traerDatos(clave) {
+      var _this = this;
+
+      self = this;
+      axios.get("/api/showPivot/".concat(this.pivot.clave)).then(function (response) {
+        _this.pivot = response.data;
+        _this.pivot.clave = response.data.clave;
+        _this.pivot.cve_producto = response.data.cve_producto;
+        _this.pivot.cve_proyecto = response.data.cve_proyecto;
+        _this.pivot.nolicencias = response.data.nolicencias;
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    },
+    traerJoin: function traerJoin(clave) {
+      var _this2 = this;
+
+      self = this;
+      axios.get("/api/showJoin/".concat(this.pivot.clave)).then(function (response) {
+        _this2.pivot2 = response.data;
+        _this2.pivot2.productoNombre = response.data[0].productoNombre;
+        _this2.pivot2.proyectoNombre = response.data[0].proyectoNombre;
       })["catch"](function (e) {
         console.log(e);
       });
@@ -81387,6 +81481,26 @@ var render = function() {
             "tbody",
             _vm._l(_vm.pivots, function(pivot) {
               return _c("tr", { key: pivot.clave }, [
+                _c(
+                  "td",
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        staticStyle: { color: "white" },
+                        attrs: {
+                          to: {
+                            name: "pivotDetalle",
+                            params: { clave: pivot.clave }
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(pivot.clave))]
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(pivot.cve_producto))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(pivot.cve_proyecto))]),
@@ -81485,6 +81599,14 @@ var staticRenderFns = [
           {
             staticStyle: { position: "sticky", top: "0", background: "#000000" }
           },
+          [_vm._v("Clave")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticStyle: { position: "sticky", top: "0", background: "#000000" }
+          },
           [_vm._v("Clave Producto")]
         ),
         _vm._v(" "),
@@ -81523,6 +81645,66 @@ var staticRenderFns = [
     ])
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PivotDetalleComponent.vue?vue&type=template&id=1e356c4d&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PivotDetalleComponent.vue?vue&type=template&id=1e356c4d& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("br"),
+    _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
+    _c("div", { staticClass: "card" }, [
+      _c("h5", { staticClass: "card-header" }, [
+        _vm._v("Clave: " + _vm._s(_vm.pivot.clave))
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c("h5", { staticClass: "card-title" }, [_vm._v("Datos:")]),
+        _vm._v(" "),
+        _c("ul", [
+          _c("li", { staticClass: "card-text" }, [
+            _vm._v("Clave: " + _vm._s(_vm.pivot.cve_producto))
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "card-text" }, [
+            _vm._v("Nombre Producto: " + _vm._s(_vm.pivot2.productoNombre))
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "card-text" }, [
+            _vm._v("Clave Producto: " + _vm._s(_vm.pivot.cve_proyecto))
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "card-text" }, [
+            _vm._v("Nombre Proyecto: " + _vm._s(_vm.pivot2.proyectoNombre))
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "card-text" }, [
+            _vm._v("Clave Proyecto: " + _vm._s(_vm.pivot.nolicencias))
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -100763,6 +100945,7 @@ Vue.component('bloqueDetalle-component', __webpack_require__(/*! ./components/Bl
 Vue.component('cursoDetalle-component', __webpack_require__(/*! ./components/CursoDetalleComponent.vue */ "./resources/js/components/CursoDetalleComponent.vue")["default"]);
 Vue.component('productoDetalle-component', __webpack_require__(/*! ./components/ProductoDetalleComponent.vue */ "./resources/js/components/ProductoDetalleComponent.vue")["default"]);
 Vue.component('proyectoDetalle-component', __webpack_require__(/*! ./components/ProyectoDetalleComponent.vue */ "./resources/js/components/ProyectoDetalleComponent.vue")["default"]);
+Vue.component('pivotDetalle-component', __webpack_require__(/*! ./components/PivotDetalleComponent.vue */ "./resources/js/components/PivotDetalleComponent.vue")["default"]);
 Vue.component('app-component', __webpack_require__(/*! ./components/App.vue */ "./resources/js/components/App.vue")["default"]);
 Vue.component('dash-component', __webpack_require__(/*! ./components/DashComponent.vue */ "./resources/js/components/DashComponent.vue")["default"]);
 Vue.component('validationProvider', vee_validate__WEBPACK_IMPORTED_MODULE_0__["ValidationProvider"]);
@@ -101459,6 +101642,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/PivotDetalleComponent.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/PivotDetalleComponent.vue ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PivotDetalleComponent_vue_vue_type_template_id_1e356c4d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PivotDetalleComponent.vue?vue&type=template&id=1e356c4d& */ "./resources/js/components/PivotDetalleComponent.vue?vue&type=template&id=1e356c4d&");
+/* harmony import */ var _PivotDetalleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PivotDetalleComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/PivotDetalleComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _PivotDetalleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PivotDetalleComponent_vue_vue_type_template_id_1e356c4d___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PivotDetalleComponent_vue_vue_type_template_id_1e356c4d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/PivotDetalleComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/PivotDetalleComponent.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/PivotDetalleComponent.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PivotDetalleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./PivotDetalleComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PivotDetalleComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PivotDetalleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/PivotDetalleComponent.vue?vue&type=template&id=1e356c4d&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/PivotDetalleComponent.vue?vue&type=template&id=1e356c4d& ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PivotDetalleComponent_vue_vue_type_template_id_1e356c4d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./PivotDetalleComponent.vue?vue&type=template&id=1e356c4d& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PivotDetalleComponent.vue?vue&type=template&id=1e356c4d&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PivotDetalleComponent_vue_vue_type_template_id_1e356c4d___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PivotDetalleComponent_vue_vue_type_template_id_1e356c4d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/ProductoDetalleComponent.vue":
 /*!**************************************************************!*\
   !*** ./resources/js/components/ProductoDetalleComponent.vue ***!
@@ -101791,9 +102043,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_CursoDetalleComponent_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/CursoDetalleComponent.vue */ "./resources/js/components/CursoDetalleComponent.vue");
 /* harmony import */ var _components_ProductoDetalleComponent_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/ProductoDetalleComponent.vue */ "./resources/js/components/ProductoDetalleComponent.vue");
 /* harmony import */ var _components_ProyectoDetalleComponent_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/ProyectoDetalleComponent.vue */ "./resources/js/components/ProyectoDetalleComponent.vue");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var _components_PivotDetalleComponent_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/PivotDetalleComponent.vue */ "./resources/js/components/PivotDetalleComponent.vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 
 
 
@@ -101806,8 +102059,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_10___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_11__["default"]);
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_11__["default"]({
+
+vue__WEBPACK_IMPORTED_MODULE_11___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_12__["default"]);
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_12__["default"]({
   routes: [{
     name: 'dash',
     path: '/',
@@ -101848,6 +102102,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_11__["default"]({
     name: 'proyectoDetalle',
     path: '/proyectoDetalle/:clave',
     component: _components_ProyectoDetalleComponent_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
+  }, {
+    name: 'pivotDetalle',
+    path: '/pivotDetalle/:clave',
+    component: _components_PivotDetalleComponent_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
   }],
   mode: 'history'
 });

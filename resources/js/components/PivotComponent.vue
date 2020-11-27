@@ -60,6 +60,7 @@
          <table class="table table-hover table-dark" >
             <thead>
                <tr>
+                  <th style="position:sticky; top:0; background: #000000">Clave</th>
                   <th style="position:sticky; top:0; background: #000000">Clave Producto</th>
                   <th style="position:sticky; top:0; background: #000000">Clave Proyecto</th>
                   <th style="position:sticky; top:0; background: #000000"># de Licencias</th>
@@ -69,6 +70,7 @@
             </thead>
             <tbody>
                <tr v-for="pivot in pivots" v-bind:key="pivot.clave">
+                  <td><router-link :to="{ name: 'pivotDetalle', params: { clave: pivot.clave }  }" style="color:white">{{pivot.clave}}</router-link></td>
                   <td>{{pivot.cve_producto}}</td>
                   <td>{{pivot.cve_proyecto}}</td>
                   <td>{{pivot.nolicencias}}</td>
