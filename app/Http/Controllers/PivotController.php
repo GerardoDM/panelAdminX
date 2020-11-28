@@ -28,7 +28,15 @@ class PivotController extends Controller
         
         $pivots = Pivot::all();
         return $pivots;
-        
+
+        // $data = Pivot::select('pivot.cve_producto', 'pivot.cve_proyecto','pivot.nolicencias')
+        //         ->join('producto', function($query){
+        //                $query->leftjoin('pivot.cve_producto','=','producto.clave')
+        //                  ->select('producto.nombre ');
+        //     })->get();
+
+        // return $data;
+    
     }
 
     public function create(Request $request){
@@ -89,9 +97,9 @@ class PivotController extends Controller
 
     }
 
-    public function join($clave){
+    public function join(){
 
-        $pivots = DB::select('select producto.nombre as `prodNombre`, proyecto.nombre as `proyNombre`, `producto-proyecto`.nolicencias from `producto-proyecto` inner join producto on `producto-proyecto`.cve_producto = producto.clave inner join proyecto on
+        $pivots = DB::select('select `producto-proyecto`.clave , `producto-proyecto`.cve_producto, `producto-proyecto`.cve_proyecto ,producto.nombre as `prodNombre`, proyecto.nombre as `proyNombre`, `producto-proyecto`.nolicencias from `producto-proyecto` inner join producto on `producto-proyecto`.cve_producto = producto.clave inner join proyecto on
         `producto-proyecto`.cve_proyecto = proyecto.clave');
 
         

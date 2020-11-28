@@ -63,16 +63,20 @@
                   <th style="position:sticky; top:0; background: #000000">Clave</th>
                   <th style="position:sticky; top:0; background: #000000">Clave Producto</th>
                   <th style="position:sticky; top:0; background: #000000">Clave Proyecto</th>
+                  <th style="position:sticky; top:0; background: #000000">Nombre Producto</th>
+                  <th style="position:sticky; top:0; background: #000000">Nombre Proyecto</th>
                   <th style="position:sticky; top:0; background: #000000"># de Licencias</th>
                   <th style="position:sticky; top:0; background: #000000">Acción</th>
                   <th style="position:sticky; top:0; background: #000000">Acción</th>
                </tr>
             </thead>
             <tbody>
-               <tr v-for="pivot in pivots" v-bind:key="pivot.clave">
+               <tr v-for="pivot in pivotsJoin" v-bind:key="pivot.clave">
                   <td><router-link :to="{ name: 'pivotDetalle', params: { clave: pivot.clave }  }" style="color:white">{{pivot.clave}}</router-link></td>
                   <td>{{pivot.cve_producto}}</td>
                   <td>{{pivot.cve_proyecto}}</td>
+                  <td>{{pivot.prodNombre}}</td>
+                  <td>{{pivot.proyNombre}}</td>
                   <td>{{pivot.nolicencias}}</td>
                   <td>
                      <button type="button" class="btn btn-secondary" v-on:click="edit(pivot)" data-toggle="modal" data-target="#exampleModal">
@@ -117,6 +121,7 @@ import { ValidationProvider } from 'vee-validate';
                productos: [],
                proyectos: [],
                pivotsJoin:[],
+               pivotArray : [],
               
    
                 pivot: {
@@ -158,10 +163,11 @@ import { ValidationProvider } from 'vee-validate';
        },
    
        created(){
-           this.traer()
+           
            this.traerJoin()
            this.traerProductos()
            this.traerProyectos()
+           //this.showProducto()
        },
    
        methods:{
@@ -172,12 +178,68 @@ import { ValidationProvider } from 'vee-validate';
                axios.get('/api/pivots')
                    .then(response => {
                        this.pivots = response.data;
-                   })
-                   .catch(e => {
+                       console.log(this.pivots)
+
+                       this.pivots.forEach(function(pivot){
+
+                           axios.get(`/api/showProducto/${pivot.cve_producto}`)
+                            .then(response => {
+                               self.producto = response.data
+                               pivot.prodNombre = self.producto.nombre
+                            
+                            //   console.log(pivot.prodNombre)
+                    })
+                    .catch(e => {
                        
+                        console.log(e);
+                    })
+                      pivot.prodNombre = self.producto.nombre
+                     //console.log(pivot)
+                           
+               })
+                  })
+                   .catch(e => {                     
                        console.log(e);
                    })
                
+           },
+
+           er(){
+
+              
+   
+              self = this
+	     
+               axios.get('/api/pivots')
+                   .then(response => {
+                       this.pivots = response.data;
+                    //   console.log(this.pivots)
+
+                       this.pivots.forEach(function(pivot,index){
+
+                           axios.get(`/api/showProducto/${pivot.cve_producto}`)
+                            .then(response => {
+                               self.producto = response.data
+			       pivotArray[index].prodNombre = self.producto.nombre;
+                               //pivot.prodNombre = self.producto.nombre
+                            
+                              // console.log(pivot.prodNombre)
+                    })
+                    .catch(e => {
+                       
+                        console.log(e);
+                    })
+                      pivot.prodNombre = self.producto.nombre
+                  //   console.log(pivot)
+                           
+               })
+                  })
+                   .catch(e => {                     
+                       console.log(e);
+                   })
+               
+           
+
            },
 
            traerJoin(){
@@ -222,6 +284,23 @@ import { ValidationProvider } from 'vee-validate';
                    })
                
            },
+
+           showProducto(clave){
+              self = this
+              axios.get(`/api/showProducto/P002`)
+              .then(response => {
+                 console.log(response.data)
+
+
+              })
+              .catch(e => {
+                 console.log(e)
+              })
+           },
+
+           showProyecto(clave){
+
+           },
             
            insert(clave){
    
@@ -260,7 +339,7 @@ import { ValidationProvider } from 'vee-validate';
                         
                        })
    
-                       this.traer();
+                      
                        this.traerJoin()
    
                       
@@ -306,7 +385,7 @@ import { ValidationProvider } from 'vee-validate';
                    'success'
                    )
    
-                    this.traer();
+                    this.traerJoin();
    
                }
                })
@@ -366,7 +445,7 @@ import { ValidationProvider } from 'vee-validate';
                          index: 0,
                          })
    
-               this.traer();
+               this.traerJoin();
                        
                    })
    

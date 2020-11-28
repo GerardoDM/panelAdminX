@@ -13459,6 +13459,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -13478,6 +13482,7 @@ __webpack_require__.r(__webpack_exports__);
       productos: [],
       proyectos: [],
       pivotsJoin: [],
+      pivotArray: [],
       pivot: {
         clave: "",
         cve_producto: "",
@@ -13509,10 +13514,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.traer();
     this.traerJoin();
     this.traerProductos();
-    this.traerProyectos();
+    this.traerProyectos(); //this.showProducto()
   },
   methods: {
     traer: function traer() {
@@ -13521,42 +13525,83 @@ __webpack_require__.r(__webpack_exports__);
       self = this;
       axios.get('/api/pivots').then(function (response) {
         _this.pivots = response.data;
+        console.log(_this.pivots);
+
+        _this.pivots.forEach(function (pivot) {
+          axios.get("/api/showProducto/".concat(pivot.cve_producto)).then(function (response) {
+            self.producto = response.data;
+            pivot.prodNombre = self.producto.nombre; //   console.log(pivot.prodNombre)
+          })["catch"](function (e) {
+            console.log(e);
+          });
+          pivot.prodNombre = self.producto.nombre; //console.log(pivot)
+        });
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    },
+    er: function er() {
+      var _this2 = this;
+
+      self = this;
+      axios.get('/api/pivots').then(function (response) {
+        _this2.pivots = response.data; //   console.log(this.pivots)
+
+        _this2.pivots.forEach(function (pivot, index) {
+          axios.get("/api/showProducto/".concat(pivot.cve_producto)).then(function (response) {
+            self.producto = response.data;
+            pivotArray[index].prodNombre = self.producto.nombre; //pivot.prodNombre = self.producto.nombre
+            // console.log(pivot.prodNombre)
+          })["catch"](function (e) {
+            console.log(e);
+          });
+          pivot.prodNombre = self.producto.nombre; //   console.log(pivot)
+        });
       })["catch"](function (e) {
         console.log(e);
       });
     },
     traerJoin: function traerJoin() {
-      var _this2 = this;
+      var _this3 = this;
 
       self = this;
       axios.get('/api/pivotsJoin').then(function (response) {
-        _this2.pivotsJoin = response.data;
+        _this3.pivotsJoin = response.data;
       })["catch"](function (e) {
         console.log(e);
       });
     },
     traerProductos: function traerProductos() {
-      var _this3 = this;
+      var _this4 = this;
 
       self = this;
       axios.get('/api/productos').then(function (response) {
-        _this3.productos = response.data;
+        _this4.productos = response.data;
       })["catch"](function (e) {
         console.log(e);
       });
     },
     traerProyectos: function traerProyectos() {
-      var _this4 = this;
+      var _this5 = this;
 
       self = this;
       axios.get('/api/proyectos').then(function (response) {
-        _this4.proyectos = response.data;
+        _this5.proyectos = response.data;
       })["catch"](function (e) {
         console.log(e);
       });
     },
+    showProducto: function showProducto(clave) {
+      self = this;
+      axios.get("/api/showProducto/P002").then(function (response) {
+        console.log(response.data);
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    },
+    showProyecto: function showProyecto(clave) {},
     insert: function insert(clave) {
-      var _this5 = this;
+      var _this6 = this;
 
       self = this;
 
@@ -13567,12 +13612,12 @@ __webpack_require__.r(__webpack_exports__);
           cve_proyecto: this.pivot.cve_proyecto,
           nolicencias: this.pivot.nolicencias
         }).then(function (response) {
-          _this5.pivot.clave = "";
-          _this5.pivot.cve_producto = "";
-          _this5.pivot.cve_proyecto = "";
-          _this5.pivot.nolicencias = "";
-          _this5.selected = "";
-          _this5.selectedTwo = "";
+          _this6.pivot.clave = "";
+          _this6.pivot.cve_producto = "";
+          _this6.pivot.cve_proyecto = "";
+          _this6.pivot.nolicencias = "";
+          _this6.selected = "";
+          _this6.selectedTwo = "";
           $("#dd").val('');
           swal.fire({
             icon: 'success',
@@ -13581,9 +13626,7 @@ __webpack_require__.r(__webpack_exports__);
             index: 0
           });
 
-          _this5.traer();
-
-          _this5.traerJoin();
+          _this6.traerJoin();
         })["catch"](function (e) {
           console.log(e);
         });
@@ -13595,7 +13638,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     deleteU: function deleteU(clave) {
-      var _this6 = this;
+      var _this7 = this;
 
       self = this;
       axios["delete"]("/api/pivot/".concat(clave)).then(function (response) {
@@ -13611,7 +13654,7 @@ __webpack_require__.r(__webpack_exports__);
           if (result.isConfirmed) {
             swal.fire('Eliminado', 'La relación ha sido borrada', 'success');
 
-            _this6.traer();
+            _this7.traerJoin();
           }
         });
       })["catch"](function (e) {
@@ -13630,7 +13673,7 @@ __webpack_require__.r(__webpack_exports__);
       this.selectedTwo = pivot.cve_producto;
     },
     update: function update(clave) {
-      var _this7 = this;
+      var _this8 = this;
 
       self = this;
       axios.put("api/pivot/".concat(clave), {
@@ -13639,12 +13682,12 @@ __webpack_require__.r(__webpack_exports__);
         cve_proyecto: this.pivot.cve_proyecto,
         nolicencias: this.pivot.nolicencias
       }).then(function (response) {
-        _this7.pivot.clave = "";
-        _this7.pivot.cve_producto = "";
-        _this7.pivot.cve_proyecto = "";
-        _this7.pivot.nolicencias = "";
-        _this7.selected = "";
-        _this7.selectedTwo = "";
+        _this8.pivot.clave = "";
+        _this8.pivot.cve_producto = "";
+        _this8.pivot.cve_proyecto = "";
+        _this8.pivot.nolicencias = "";
+        _this8.selected = "";
+        _this8.selectedTwo = "";
         swal.fire({
           icon: 'success',
           title: 'Hecho',
@@ -13652,7 +13695,7 @@ __webpack_require__.r(__webpack_exports__);
           index: 0
         });
 
-        _this7.traer();
+        _this8.traerJoin();
       })["catch"](function (e) {
         console.log(e);
       });
@@ -81479,7 +81522,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "tbody",
-            _vm._l(_vm.pivots, function(pivot) {
+            _vm._l(_vm.pivotsJoin, function(pivot) {
               return _c("tr", { key: pivot.clave }, [
                 _c(
                   "td",
@@ -81504,6 +81547,10 @@ var render = function() {
                 _c("td", [_vm._v(_vm._s(pivot.cve_producto))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(pivot.cve_proyecto))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(pivot.prodNombre))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(pivot.proyNombre))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(pivot.nolicencias))]),
                 _vm._v(" "),
@@ -81616,6 +81663,22 @@ var staticRenderFns = [
             staticStyle: { position: "sticky", top: "0", background: "#000000" }
           },
           [_vm._v("Clave Proyecto")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticStyle: { position: "sticky", top: "0", background: "#000000" }
+          },
+          [_vm._v("Nombre Producto")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticStyle: { position: "sticky", top: "0", background: "#000000" }
+          },
+          [_vm._v("Nombre Proyecto")]
         ),
         _vm._v(" "),
         _c(
