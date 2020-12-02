@@ -74,10 +74,10 @@
          <table class="table table-hover table-dark">
             <thead>
                <tr>
-                  <th style="position:sticky; top:0; background: #000000">Nombre <font-awesome-icon icon="angle-down" @click="sortBy('nombre')"/></th>
-                  <th style="position:sticky; top:0; background: #000000">Clave Curso <font-awesome-icon icon="angle-down" @click="sortBy('cve_curso')"/></th>
-                  <th style="position:sticky; top:0; background: #000000">Versión <font-awesome-icon icon="angle-down" @click="sortBy('version')"/></th>
-                  <th style="position:sticky; top:0; background: #000000">Ruta Portal <font-awesome-icon icon="angle-down" @click="sortBy('ruta_portal')"/></th>
+                  <th style="position:sticky; top:0; background: #000000">Nombre  <font-awesome-icon icon="angle-down" @click="sortBy('nombre')"/></th>
+                  <th style="position:sticky; top:0; background: #000000">Clave Curso  <font-awesome-icon icon="angle-down" @click="sortBy('cve_curso')"/></th>
+                  <th style="position:sticky; top:0; background: #000000">Versión  <font-awesome-icon icon="angle-down" @click="sortBy('version')"/></th>
+                  <th style="position:sticky; top:0; background: #000000">Ruta Portal  <font-awesome-icon icon="angle-down" @click="sortBy('ruta_portal')"/></th>
                   <th style="position:sticky; top:0; background: #000000">Acciòn</th>
                   <th style="position:sticky; top:0; background: #000000">Acciòn</th>
                </tr>

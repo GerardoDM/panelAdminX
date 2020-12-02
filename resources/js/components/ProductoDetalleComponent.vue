@@ -4,22 +4,25 @@
     <div class="container">
         <br>
         <hr>
-        
-        
-        <div class="card">
-        <h5 class="card-header">Clave: {{producto.clave}}</h5>
-        
 
-        <div class="card-body">
-            <h5 class="card-title">Nombre: {{producto.nombre}}</h5>
-            <ul>
-                <li class="card-text">Edición: {{producto.edicion}}</li>
-                <li class="card-text">Nomenclatura: {{producto.nomenclatura}}</li>    
-            </ul>
-            
-            
-        </div>
-        </div>
+         <div class="jumbotron">
+  <h1 class="display-4">{{producto.nombre}}</h1>
+
+  <p class="lead">Clave: {{producto.clave}}</p>
+
+  <hr class="my-4">
+  <ul>
+      <li><h5>Edición: {{producto.edicion}}</h5></li>
+      <li><h5>Nomenclatura: {{producto.nomenclatura}}</h5></li>
+      
+  </ul>
+ 
+    
+
+</div>
+        
+        
+    
     </div>
 </template>
 

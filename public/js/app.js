@@ -12956,6 +12956,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -12988,6 +12992,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/api/showCurso/".concat(this.curso.clave)).then(function (response) {
         _this.curso = response.data;
         _this.curso.nombre = response.data.nombre;
+        _this.curso.autor = response.data.autor;
         _this.curso.btotales = response.data.btotales;
         _this.curso.blib = response.data.blib;
         _this.curso.ruta_descarga = response.data.ruta_descarga;
@@ -13460,9 +13465,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -13510,7 +13512,9 @@ __webpack_require__.r(__webpack_exports__);
       errors: {},
       valid: true,
       message: null,
-      val: 'standard'
+      val: 'standard',
+      currentSort: 'clave',
+      currentSortDir: 'asc'
     };
   },
   created: function created() {
@@ -13518,16 +13522,39 @@ __webpack_require__.r(__webpack_exports__);
     this.traerProductos();
     this.traerProyectos(); //this.showProducto()
   },
-  methods: {
-    traer: function traer() {
+  computed: {
+    sortedPivot: function sortedPivot() {
       var _this = this;
+
+      return this.pivotsJoin.sort(function (a, b) {
+        try {
+          var modifier = 1;
+          if (_this.currentSortDir === 'desc') modifier = -1;
+          if (a[_this.currentSort] < b[_this.currentSort]) return -1 * modifier;
+          if (a[_this.currentSort] > b[_this.currentSort]) return 1 * modifier;
+          return 0;
+        } catch (error) {}
+      });
+    }
+  },
+  methods: {
+    sortBy: function sortBy(s) {
+      //if s == current sort, reverse
+      if (s === this.currentSort) {
+        this.currentSortDir = this.currentSortDir === 'asc' ? 'desc' : 'asc';
+      }
+
+      this.currentSort = s;
+    },
+    traer: function traer() {
+      var _this2 = this;
 
       self = this;
       axios.get('/api/pivots').then(function (response) {
-        _this.pivots = response.data;
-        console.log(_this.pivots);
+        _this2.pivots = response.data;
+        console.log(_this2.pivots);
 
-        _this.pivots.forEach(function (pivot) {
+        _this2.pivots.forEach(function (pivot) {
           axios.get("/api/showProducto/".concat(pivot.cve_producto)).then(function (response) {
             self.producto = response.data;
             pivot.prodNombre = self.producto.nombre; //   console.log(pivot.prodNombre)
@@ -13541,13 +13568,13 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     er: function er() {
-      var _this2 = this;
+      var _this3 = this;
 
       self = this;
       axios.get('/api/pivots').then(function (response) {
-        _this2.pivots = response.data; //   console.log(this.pivots)
+        _this3.pivots = response.data; //   console.log(this.pivots)
 
-        _this2.pivots.forEach(function (pivot, index) {
+        _this3.pivots.forEach(function (pivot, index) {
           axios.get("/api/showProducto/".concat(pivot.cve_producto)).then(function (response) {
             self.producto = response.data;
             pivotArray[index].prodNombre = self.producto.nombre; //pivot.prodNombre = self.producto.nombre
@@ -13562,31 +13589,31 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     traerJoin: function traerJoin() {
-      var _this3 = this;
+      var _this4 = this;
 
       self = this;
       axios.get('/api/pivotsJoin').then(function (response) {
-        _this3.pivotsJoin = response.data;
+        _this4.pivotsJoin = response.data;
       })["catch"](function (e) {
         console.log(e);
       });
     },
     traerProductos: function traerProductos() {
-      var _this4 = this;
+      var _this5 = this;
 
       self = this;
       axios.get('/api/productos').then(function (response) {
-        _this4.productos = response.data;
+        _this5.productos = response.data;
       })["catch"](function (e) {
         console.log(e);
       });
     },
     traerProyectos: function traerProyectos() {
-      var _this5 = this;
+      var _this6 = this;
 
       self = this;
       axios.get('/api/proyectos').then(function (response) {
-        _this5.proyectos = response.data;
+        _this6.proyectos = response.data;
       })["catch"](function (e) {
         console.log(e);
       });
@@ -13601,7 +13628,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     showProyecto: function showProyecto(clave) {},
     insert: function insert(clave) {
-      var _this6 = this;
+      var _this7 = this;
 
       self = this;
 
@@ -13612,12 +13639,12 @@ __webpack_require__.r(__webpack_exports__);
           cve_proyecto: this.pivot.cve_proyecto,
           nolicencias: this.pivot.nolicencias
         }).then(function (response) {
-          _this6.pivot.clave = "";
-          _this6.pivot.cve_producto = "";
-          _this6.pivot.cve_proyecto = "";
-          _this6.pivot.nolicencias = "";
-          _this6.selected = "";
-          _this6.selectedTwo = "";
+          _this7.pivot.clave = "";
+          _this7.pivot.cve_producto = "";
+          _this7.pivot.cve_proyecto = "";
+          _this7.pivot.nolicencias = "";
+          _this7.selected = "";
+          _this7.selectedTwo = "";
           $("#dd").val('');
           swal.fire({
             icon: 'success',
@@ -13626,7 +13653,7 @@ __webpack_require__.r(__webpack_exports__);
             index: 0
           });
 
-          _this6.traerJoin();
+          _this7.traerJoin();
         })["catch"](function (e) {
           console.log(e);
         });
@@ -13638,7 +13665,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     deleteU: function deleteU(clave) {
-      var _this7 = this;
+      var _this8 = this;
 
       self = this;
       axios["delete"]("/api/pivot/".concat(clave)).then(function (response) {
@@ -13654,7 +13681,7 @@ __webpack_require__.r(__webpack_exports__);
           if (result.isConfirmed) {
             swal.fire('Eliminado', 'La relación ha sido borrada', 'success');
 
-            _this7.traerJoin();
+            _this8.traerJoin();
           }
         });
       })["catch"](function (e) {
@@ -13673,7 +13700,7 @@ __webpack_require__.r(__webpack_exports__);
       this.selectedTwo = pivot.cve_producto;
     },
     update: function update(clave) {
-      var _this8 = this;
+      var _this9 = this;
 
       self = this;
       axios.put("api/pivot/".concat(clave), {
@@ -13682,12 +13709,12 @@ __webpack_require__.r(__webpack_exports__);
         cve_proyecto: this.pivot.cve_proyecto,
         nolicencias: this.pivot.nolicencias
       }).then(function (response) {
-        _this8.pivot.clave = "";
-        _this8.pivot.cve_producto = "";
-        _this8.pivot.cve_proyecto = "";
-        _this8.pivot.nolicencias = "";
-        _this8.selected = "";
-        _this8.selectedTwo = "";
+        _this9.pivot.clave = "";
+        _this9.pivot.cve_producto = "";
+        _this9.pivot.cve_proyecto = "";
+        _this9.pivot.nolicencias = "";
+        _this9.selected = "";
+        _this9.selectedTwo = "";
         swal.fire({
           icon: 'success',
           title: 'Hecho',
@@ -13695,7 +13722,7 @@ __webpack_require__.r(__webpack_exports__);
           index: 0
         });
 
-        _this8.traerJoin();
+        _this9.traerJoin();
       })["catch"](function (e) {
         console.log(e);
       });
@@ -13714,6 +13741,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -13806,6 +13835,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -14241,6 +14273,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -79141,7 +79174,7 @@ var render = function() {
                   }
                 },
                 [
-                  _vm._v("Nombre "),
+                  _vm._v("Nombre  "),
                   _c("font-awesome-icon", {
                     attrs: { icon: "angle-down" },
                     on: {
@@ -79164,7 +79197,7 @@ var render = function() {
                   }
                 },
                 [
-                  _vm._v("Clave Curso "),
+                  _vm._v("Clave Curso  "),
                   _c("font-awesome-icon", {
                     attrs: { icon: "angle-down" },
                     on: {
@@ -79187,7 +79220,7 @@ var render = function() {
                   }
                 },
                 [
-                  _vm._v("Versión "),
+                  _vm._v("Versión  "),
                   _c("font-awesome-icon", {
                     attrs: { icon: "angle-down" },
                     on: {
@@ -79210,7 +79243,7 @@ var render = function() {
                   }
                 },
                 [
-                  _vm._v("Ruta Portal "),
+                  _vm._v("Ruta Portal  "),
                   _c("font-awesome-icon", {
                     attrs: { icon: "angle-down" },
                     on: {
@@ -79387,31 +79420,30 @@ var render = function() {
     _vm._v(" "),
     _c("hr"),
     _vm._v(" "),
-    _c("div", { staticClass: "card" }, [
-      _c("h5", { staticClass: "card-header" }, [
+    _c("div", { staticClass: "jumbotron" }, [
+      _c("h1", { staticClass: "display-4" }, [
+        _vm._v(_vm._s(_vm.bloque.nombre))
+      ]),
+      _vm._v(" "),
+      _c("p", { staticClass: "lead" }, [
         _vm._v("Clave: " + _vm._s(_vm.bloque.clave))
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("h5", { staticClass: "card-title" }, [
-          _vm._v("Nombre: " + _vm._s(_vm.bloque.nombre))
+      _c("hr", { staticClass: "my-4" }),
+      _vm._v(" "),
+      _c("ul", [
+        _c("li", [
+          _c("h5", [_vm._v("Clave del curso: " + _vm._s(_vm.bloque.cve_curso))])
         ]),
         _vm._v(" "),
-        _c("ul", [
-          _c("li", { staticClass: "card-text" }, [
-            _vm._v("Clave del curso: " + _vm._s(_vm.bloque.cve_curso))
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "card-text" }, [
-            _vm._v("Versión: " + _vm._s(_vm.bloque.version))
-          ])
-        ]),
+        _c("li", [_c("h5", [_vm._v("Versión: " + _vm._s(_vm.bloque.version))])])
+      ]),
+      _vm._v(" "),
+      _c("span", [
+        _c("h5", [_vm._v(" Ruta: ")]),
         _vm._v(" "),
-        _c("span", [
-          _vm._v("Ruta: "),
-          _c("a", { staticClass: "btn btn-primary", attrs: { href: "#" } }, [
-            _vm._v(_vm._s(_vm.bloque.ruta_portal))
-          ])
+        _c("a", { staticClass: "btn btn-primary", attrs: { href: "#" } }, [
+          _vm._v(_vm._s(_vm.bloque.ruta_portal))
         ])
       ])
     ])
@@ -80559,61 +80591,62 @@ var render = function() {
     _vm._v(" "),
     _c("hr"),
     _vm._v(" "),
-    _c("div", { staticClass: "card" }, [
-      _c("h5", { staticClass: "card-header" }, [
+    _c("div", { staticClass: "jumbotron" }, [
+      _c("h1", { staticClass: "display-4" }, [
+        _vm._v(_vm._s(_vm.curso.nombre))
+      ]),
+      _vm._v(" "),
+      _c("p", { staticClass: "lead" }, [
         _vm._v("Clave: " + _vm._s(_vm.curso.clave))
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("h5", { staticClass: "card-title" }, [
-          _vm._v("Nombre: " + _vm._s(_vm.curso.nombre))
+      _c("p", { staticClass: "lead" }, [
+        _vm._v("Autor: " + _vm._s(_vm.curso.autor))
+      ]),
+      _vm._v(" "),
+      _c("hr", { staticClass: "my-4" }),
+      _vm._v(" "),
+      _c("ul", [
+        _c("li", [
+          _c("h5", [_vm._v("Nombre separado: " + _vm._s(_vm.curso.nom_sep))])
         ]),
         _vm._v(" "),
-        _c("ul", [
-          _c("li", { staticClass: "card-text" }, [
-            _vm._v("Nombre Separado: " + _vm._s(_vm.curso.nom_sep))
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "card-text" }, [
-            _vm._v("Bloques Totales: " + _vm._s(_vm.curso.btotales))
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "card-text" }, [
-            _vm._v("Bloques Liberados: " + _vm._s(_vm.curso.blib))
+        _c("li", [
+          _c("h5", [_vm._v("Bloques Totales: " + _vm._s(_vm.curso.totales))])
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("h5", [_vm._v("Bloques Liberados: " + _vm._s(_vm.curso.blib))])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("ul", [
+        _c("li", [
+          _c("span", [
+            _c("h5", [_vm._v("Ruta Descarga:")]),
+            _vm._v(" "),
+            _c("a", { staticClass: "btn btn-primary", attrs: { href: "#" } }, [
+              _vm._v(_vm._s(_vm.curso.ruta_descarga))
+            ])
           ])
         ]),
         _vm._v(" "),
-        _c("ul", [
-          _c("li", [
-            _c("span", [
-              _vm._v("Ruta Descarga: "),
-              _c(
-                "a",
-                { staticClass: "btn btn-primary", attrs: { href: "#" } },
-                [_vm._v(_vm._s(_vm.curso.ruta_descarga))]
-              )
+        _c("li", [
+          _c("span", [
+            _c("h5", [_vm._v("Ruta Versión:")]),
+            _vm._v(" "),
+            _c("a", { staticClass: "btn btn-primary", attrs: { href: "#" } }, [
+              _vm._v(_vm._s(_vm.curso.ruta_ver))
             ])
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("span", [
-              _vm._v("Ruta Versión: "),
-              _c(
-                "a",
-                { staticClass: "btn btn-primary", attrs: { href: "#" } },
-                [_vm._v(_vm._s(_vm.curso.ruta_ver))]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("span", [
-              _vm._v("Ruta Operación: "),
-              _c(
-                "a",
-                { staticClass: "btn btn-primary", attrs: { href: "#" } },
-                [_vm._v(_vm._s(_vm.curso.ruta_operacion))]
-              )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("span", [
+            _c("h5", [_vm._v("Ruta Operación:")]),
+            _vm._v(" "),
+            _c("a", { staticClass: "btn btn-primary", attrs: { href: "#" } }, [
+              _vm._v(_vm._s(_vm.curso.ruta_operacion))
             ])
           ])
         ])
@@ -81518,11 +81551,129 @@ var render = function() {
         _c("hr"),
         _vm._v(" "),
         _c("table", { staticClass: "table table-hover table-dark" }, [
-          _vm._m(1),
+          _c("thead", [
+            _c("tr", [
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [
+                  _vm._v("Clave  "),
+                  _c("font-awesome-icon", {
+                    attrs: { icon: "angle-down" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sortBy("clave")
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [
+                  _vm._v("Nombre Producto  "),
+                  _c("font-awesome-icon", {
+                    attrs: { icon: "angle-down" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sortBy("prodNombre")
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [
+                  _vm._v("Nombre Proyecto  "),
+                  _c("font-awesome-icon", {
+                    attrs: { icon: "angle-down" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sortBy("proyNombre")
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [
+                  _vm._v("# de Licencias  "),
+                  _c("font-awesome-icon", {
+                    attrs: { icon: "angle-down" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sortBy("nolicencias")
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [_vm._v("Acción")]
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [_vm._v("Acción")]
+              )
+            ])
+          ]),
           _vm._v(" "),
           _c(
             "tbody",
-            _vm._l(_vm.pivotsJoin, function(pivot) {
+            _vm._l(_vm.sortedPivot, function(pivot) {
               return _c("tr", { key: pivot.clave }, [
                 _c(
                   "td",
@@ -81543,10 +81694,6 @@ var render = function() {
                   ],
                   1
                 ),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(pivot.cve_producto))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(pivot.cve_proyecto))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(pivot.prodNombre))]),
                 _vm._v(" "),
@@ -81634,78 +81781,6 @@ var staticRenderFns = [
         [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
       )
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Clave")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Clave Producto")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Clave Proyecto")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Nombre Producto")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Nombre Proyecto")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("# de Licencias")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Acción")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticStyle: { position: "sticky", top: "0", background: "#000000" }
-          },
-          [_vm._v("Acción")]
-        )
-      ])
-    ])
   }
 ]
 render._withStripped = true
@@ -81734,33 +81809,43 @@ var render = function() {
     _vm._v(" "),
     _c("hr"),
     _vm._v(" "),
-    _c("div", { staticClass: "card" }, [
-      _c("h5", { staticClass: "card-header" }, [
+    _c("div", { staticClass: "jumbotron" }, [
+      _c("h1", { staticClass: "display-4" }, [
         _vm._v("Clave: " + _vm._s(_vm.pivot.clave))
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("h5", { staticClass: "card-title" }, [_vm._v("Datos:")]),
+      _c("p", { staticClass: "lead" }, [_vm._v("Datos:")]),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _c("ul", [
+        _c("li", [
+          _c("h5", [
+            _vm._v("Clave Producto: " + _vm._s(_vm.pivot.cve_producto))
+          ])
+        ]),
         _vm._v(" "),
-        _c("ul", [
-          _c("li", { staticClass: "card-text" }, [
-            _vm._v("Clave: " + _vm._s(_vm.pivot.cve_producto))
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "card-text" }, [
+        _c("li", [
+          _c("h5", [
             _vm._v("Nombre Producto: " + _vm._s(_vm.pivot2.productoNombre))
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "card-text" }, [
-            _vm._v("Clave Producto: " + _vm._s(_vm.pivot.cve_proyecto))
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "card-text" }, [
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("h5", [
+            _vm._v("Clave Proyecto: " + _vm._s(_vm.pivot.cve_proyecto))
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("h5", [
             _vm._v("Nombre Proyecto: " + _vm._s(_vm.pivot2.proyectoNombre))
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "card-text" }, [
-            _vm._v("Clave Proyecto: " + _vm._s(_vm.pivot.nolicencias))
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("h5", [
+            _vm._v("Número de Licencias: " + _vm._s(_vm.pivot.nolicencias))
           ])
         ])
       ])
@@ -81794,22 +81879,24 @@ var render = function() {
     _vm._v(" "),
     _c("hr"),
     _vm._v(" "),
-    _c("div", { staticClass: "card" }, [
-      _c("h5", { staticClass: "card-header" }, [
+    _c("div", { staticClass: "jumbotron" }, [
+      _c("h1", { staticClass: "display-4" }, [
+        _vm._v(_vm._s(_vm.producto.nombre))
+      ]),
+      _vm._v(" "),
+      _c("p", { staticClass: "lead" }, [
         _vm._v("Clave: " + _vm._s(_vm.producto.clave))
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("h5", { staticClass: "card-title" }, [
-          _vm._v("Nombre: " + _vm._s(_vm.producto.nombre))
+      _c("hr", { staticClass: "my-4" }),
+      _vm._v(" "),
+      _c("ul", [
+        _c("li", [
+          _c("h5", [_vm._v("Edición: " + _vm._s(_vm.producto.edicion))])
         ]),
         _vm._v(" "),
-        _c("ul", [
-          _c("li", { staticClass: "card-text" }, [
-            _vm._v("Edición: " + _vm._s(_vm.producto.edicion))
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "card-text" }, [
+        _c("li", [
+          _c("h5", [
             _vm._v("Nomenclatura: " + _vm._s(_vm.producto.nomenclatura))
           ])
         ])
@@ -82517,26 +82604,26 @@ var render = function() {
     _vm._v(" "),
     _c("hr"),
     _vm._v(" "),
-    _c("div", { staticClass: "card" }, [
-      _c("h5", { staticClass: "card-header" }, [
+    _c("div", { staticClass: "jumbotron" }, [
+      _c("h1", { staticClass: "display-4" }, [
+        _vm._v(_vm._s(_vm.proyecto.nombre))
+      ]),
+      _vm._v(" "),
+      _c("p", { staticClass: "lead" }, [
         _vm._v("Clave: " + _vm._s(_vm.proyecto.clave))
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("h5", { staticClass: "card-title" }, [
-          _vm._v("Nombre: " + _vm._s(_vm.proyecto.nombre))
+      _c("hr", { staticClass: "my-4" }),
+      _vm._v(" "),
+      _c("ul", [
+        _c("li", [_c("h5", [_vm._v("Fecha: " + _vm._s(_vm.proyecto.fecha))])]),
+        _vm._v(" "),
+        _c("li", [
+          _c("h5", [_vm._v("Descripción: " + _vm._s(_vm.proyecto.descripcion))])
         ]),
         _vm._v(" "),
-        _c("ul", [
-          _c("li", { staticClass: "card-text" }, [
-            _vm._v("Fecha: " + _vm._s(_vm.proyecto.fecha))
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "card-text" }, [
-            _vm._v("Descripción: " + _vm._s(_vm.proyecto.descripcion))
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "card-text" }, [
+        _c("li", [
+          _c("h5", [
             _vm._v("Nomenclatura: " + _vm._s(_vm.proyecto.nomenclatura))
           ])
         ])

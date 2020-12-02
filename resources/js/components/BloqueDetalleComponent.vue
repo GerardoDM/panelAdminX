@@ -4,22 +4,22 @@
     <div class="container">
         <br>
         <hr>
-        
-        
-        <div class="card">
-        <h5 class="card-header">Clave: {{bloque.clave}}</h5>
-        
 
-        <div class="card-body">
-            <h5 class="card-title">Nombre: {{bloque.nombre}}</h5>
-            <ul>
-                <li class="card-text">Clave del curso: {{bloque.cve_curso}}</li>
-                <li class="card-text">Versión: {{bloque.version}}</li>    
-            </ul>
-            
-            <span>Ruta: <a href="#" class="btn btn-primary">{{bloque.ruta_portal}}</a></span>
-        </div>
-        </div>
+
+        <div class="jumbotron">
+  <h1 class="display-4">{{bloque.nombre}}</h1>
+  <p class="lead">Clave: {{bloque.clave}}</p>
+  <hr class="my-4">
+  <ul>
+      <li><h5>Clave del curso: {{bloque.cve_curso}}</h5></li>
+      <li><h5>Versión: {{bloque.version}}</h5></li>
+  </ul>
+    <span><h5> Ruta: </h5> <a href="#" class="btn btn-primary">{{bloque.ruta_portal}}</a></span>
+
+</div>
+        
+        
+       
     </div>
 </template>
 

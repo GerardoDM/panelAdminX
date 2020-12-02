@@ -60,21 +60,18 @@
          <table class="table table-hover table-dark" >
             <thead>
                <tr>
-                  <th style="position:sticky; top:0; background: #000000">Clave</th>
-                  <th style="position:sticky; top:0; background: #000000">Clave Producto</th>
-                  <th style="position:sticky; top:0; background: #000000">Clave Proyecto</th>
-                  <th style="position:sticky; top:0; background: #000000">Nombre Producto</th>
-                  <th style="position:sticky; top:0; background: #000000">Nombre Proyecto</th>
-                  <th style="position:sticky; top:0; background: #000000"># de Licencias</th>
+                  <th style="position:sticky; top:0; background: #000000">Clave  <font-awesome-icon icon="angle-down" @click="sortBy('clave')"/></th>
+                 
+                  <th style="position:sticky; top:0; background: #000000">Nombre Producto  <font-awesome-icon icon="angle-down" @click="sortBy('prodNombre')"/></th>
+                  <th style="position:sticky; top:0; background: #000000">Nombre Proyecto  <font-awesome-icon icon="angle-down" @click="sortBy('proyNombre')"/></th>
+                  <th style="position:sticky; top:0; background: #000000"># de Licencias  <font-awesome-icon icon="angle-down" @click="sortBy('nolicencias')"/></th>
                   <th style="position:sticky; top:0; background: #000000">Acción</th>
                   <th style="position:sticky; top:0; background: #000000">Acción</th>
                </tr>
             </thead>
             <tbody>
-               <tr v-for="pivot in pivotsJoin" v-bind:key="pivot.clave">
+               <tr v-for="pivot in sortedPivot" v-bind:key="pivot.clave">
                   <td><router-link :to="{ name: 'pivotDetalle', params: { clave: pivot.clave }  }" style="color:white">{{pivot.clave}}</router-link></td>
-                  <td>{{pivot.cve_producto}}</td>
-                  <td>{{pivot.cve_proyecto}}</td>
                   <td>{{pivot.prodNombre}}</td>
                   <td>{{pivot.proyNombre}}</td>
                   <td>{{pivot.nolicencias}}</td>
@@ -151,12 +148,14 @@ import { ValidationProvider } from 'vee-validate';
                     nomenclatura: "",
                 },
    
-                selected : "",
-                selectedTwo : "",
-                errors : {},
-                valid : true,
-                message : null,
-                val : 'standard'
+               selected : "",
+               selectedTwo : "",
+               errors : {},
+               valid : true,
+               message : null,
+               val : 'standard',
+               currentSort:'clave',
+               currentSortDir:'asc'
            
            }
    
@@ -169,8 +168,45 @@ import { ValidationProvider } from 'vee-validate';
            this.traerProyectos()
            //this.showProducto()
        },
+
+       computed:{
+         sortedPivot:function() {
+            
+            return this.pivotsJoin.sort((a,b) => {
+
+               try {
+
+
+               let modifier = 1;
+              
+               if(this.currentSortDir === 'desc') modifier = -1;
+               if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+               if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+               return 0;
+                  
+               } catch (error) {
+
+                  
+                  
+               }
+
+
+               
+            
+            });
+         }
+         },
    
        methods:{
+
+            sortBy(s) {
+         //if s == current sort, reverse
+         if(s === this.currentSort) {
+            this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
+         }
+         this.currentSort = s;
+        
+         },
    
            traer(){
    

@@ -4,25 +4,27 @@
     <div class="container">
         <br>
         <hr>
-        
-        
-        <div class="card">
-        <h5 class="card-header">Clave: {{pivot.clave}}</h5>
-        
 
-        <div class="card-body">
-            <h5 class="card-title">Datos:</h5>
-            <ul>
-                <li class="card-text">Clave: {{pivot.cve_producto}}</li>
-                <li class="card-text">Nombre Producto: {{pivot2.productoNombre}}</li> 
-                <li class="card-text">Clave Producto: {{pivot.cve_proyecto}}</li>
-                <li class="card-text">Nombre Proyecto: {{pivot2.proyectoNombre}}</li> 
-                <li class="card-text">Clave Proyecto: {{pivot.nolicencias}}</li>    
-            </ul>
+         <div class="jumbotron">
+        <h1 class="display-4">Clave: {{pivot.clave}}</h1>
+
+        <p class="lead">Datos:</p>
+
+        <hr>
+        <ul>
+            <li><h5>Clave Producto: {{pivot.cve_producto}}</h5></li>
+            <li><h5>Nombre Producto: {{pivot2.productoNombre}}</h5></li>
+            <li><h5>Clave Proyecto: {{pivot.cve_proyecto}}</h5></li>
+             <li><h5>Nombre Proyecto: {{pivot2.proyectoNombre}}</h5></li>
+              <li><h5>Número de Licencias: {{pivot.nolicencias}}</h5></li>
+        </ul>
+       
             
-            
+
         </div>
-        </div>
+        
+        
+       
     </div>
 </template>
 

@@ -4,27 +4,31 @@
     <div class="container">
         <br>
         <hr>
-        
-        
-        <div class="card">
-        <h5 class="card-header">Clave: {{curso.clave}}</h5>
-        
 
-        <div class="card-body">
-            <h5 class="card-title">Nombre: {{curso.nombre}}</h5>
-            <ul>
-                <li class="card-text">Nombre Separado: {{curso.nom_sep}}</li>
-                <li class="card-text">Bloques Totales: {{curso.btotales}}</li>
-                <li class="card-text">Bloques Liberados: {{curso.blib}}</li>
-                    
-            </ul>
-             <ul>   
-            <li><span>Ruta Descarga: <a href="#" class="btn btn-primary">{{curso.ruta_descarga}}</a></span></li>
-            <li><span>Ruta Versión: <a href="#" class="btn btn-primary">{{curso.ruta_ver}}</a></span></li>
-            <li><span>Ruta Operación: <a href="#" class="btn btn-primary">{{curso.ruta_operacion}}</a></span></li>
-            </ul>
-        </div>
-        </div>
+          <div class="jumbotron">
+  <h1 class="display-4">{{curso.nombre}}</h1>
+
+  <p class="lead">Clave: {{curso.clave}}</p>
+  <p class="lead">Autor: {{curso.autor}}</p>
+
+  <hr class="my-4">
+  <ul>
+      <li><h5>Nombre separado: {{curso.nom_sep}}</h5></li>
+      <li><h5>Bloques Totales: {{curso.totales}}</h5></li>
+      <li><h5>Bloques Liberados: {{curso.blib}}</h5></li>
+  </ul>
+  <ul>
+      <li><span><h5>Ruta Descarga:</h5> <a href="#" class="btn btn-primary">{{curso.ruta_descarga}}</a></span></li>
+        <li><span><h5>Ruta Versión:</h5> <a href="#" class="btn btn-primary">{{curso.ruta_ver}}</a></span></li>
+      <li><span><h5>Ruta Operación:</h5> <a href="#" class="btn btn-primary">{{curso.ruta_operacion}}</a></span></li>
+
+  </ul>
+    
+
+</div>
+        
+        
+       
     </div>
 </template>
 
@@ -71,6 +75,7 @@ export default {
                    .then(response => {
                         this.curso = response.data;
                         this.curso.nombre = response.data.nombre
+                        this.curso.autor = response.data.autor
                         this.curso.btotales = response.data.btotales
                         this.curso.blib = response.data.blib
                         this.curso.ruta_descarga = response.data.ruta_descarga
