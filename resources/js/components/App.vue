@@ -22,6 +22,9 @@
         <li class="nav-item">
           <router-link to='/pivot' class="nav-link">Productos-Proyectos</router-link>  
         </li>
+          <li class="nav-item">
+          <router-link to='/pivotProductoCurso' class="nav-link">Productos-Cursos</router-link>  
+        </li>
         
       </ul>
     </div>

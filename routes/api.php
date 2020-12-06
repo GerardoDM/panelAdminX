@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Producto;
 use Illuminate\Http\Request;
 
 /*
@@ -58,3 +59,10 @@ Route::delete('/bloque/{clave}', 'BloqueController@delete');
 Route::put('/bloque/{clave}', 'BloqueController@update');
 Route::get('/searchBloque', 'BloqueController@search');
 Route::get('/showBloque/{clave}', 'BloqueController@show');
+
+Route::get('/pivotProductoCurso', 'ProductoCursoController@index');
+Route::delete('/pivotProductoCurso/{cve_curso}/{cve_producto}', 'ProductoCursoController@delete');
+Route::put('/pivotProductoCurso/{cve_curso}/{cve_producto}', 'ProductoCursoController@update');
+Route::post('/pivotProductoCurso', 'ProductoCursoController@create');
+Route::get('/pivotProductoCursoJoin', 'ProductoCursoController@join');
+

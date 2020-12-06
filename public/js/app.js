@@ -12052,6 +12052,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user'],
   data: function data() {
@@ -13817,6 +13820,319 @@ __webpack_require__.r(__webpack_exports__);
         _this2.pivot2 = response.data;
         _this2.pivot2.productoNombre = response.data[0].productoNombre;
         _this2.pivot2.proyectoNombre = response.data[0].proyectoNombre;
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProductoCursoComponent.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ProductoCursoComponent.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    $("#selectCurso").change(function () {
+      this.curso.clave = $("#selectCurso").val();
+    }.bind(this));
+  },
+  components: {
+    ValidationProvider: vee_validate__WEBPACK_IMPORTED_MODULE_0__["ValidationProvider"]
+  },
+  data: function data() {
+    return {
+      bloques: [],
+      cursos: [],
+      pivotes: [],
+      pivote: {
+        nombreProducto: "",
+        nombreCurso: ""
+      },
+      curso: {
+        clave: "",
+        nombre: ""
+      },
+      selected: "",
+      errors: {},
+      message: null,
+      valid: true,
+      val: 'standard',
+      search: "",
+      query: "",
+      currentSort: 'clave',
+      currentSortDir: 'asc'
+    };
+  },
+  created: function created() {
+    this.traer();
+    this.traerCursos();
+    this.traerJoin();
+  },
+  computed: {
+    sortedPivotes: function sortedPivotes() {
+      var _this = this;
+
+      return this.pivotes.sort(function (a, b) {
+        try {
+          var modifier = 1;
+          if (_this.currentSortDir === 'desc') modifier = -1;
+          if (a[_this.currentSort] < b[_this.currentSort]) return -1 * modifier;
+          if (a[_this.currentSort] > b[_this.currentSort]) return 1 * modifier;
+          return 0;
+        } catch (error) {}
+      });
+    }
+  },
+  methods: {
+    sortBy: function sortBy(s) {
+      //if s == current sort, reverse
+      if (s === this.currentSort) {
+        this.currentSortDir = this.currentSortDir === 'asc' ? 'desc' : 'asc';
+      }
+
+      this.currentSort = s;
+    },
+    searchit: function searchit() {
+      var _this2 = this;
+
+      self = this;
+      var query = this.search;
+      axios.get('api/searchBloque?q=' + query).then(function (response) {
+        _this2.bloques = response.data;
+        console.log('success');
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    },
+    traerJoin: function traerJoin() {
+      var _this3 = this;
+
+      self = this;
+      axios.get('/api/pivotProductoCursoJoin').then(function (response) {
+        _this3.pivotes = response.data;
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    },
+    traer: function traer() {
+      var _this4 = this;
+
+      self = this;
+      axios.get('/api/pivotProductoCurso').then(function (response) {
+        _this4.bloques = response.data;
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    },
+    traerCursos: function traerCursos() {
+      var _this5 = this;
+
+      self = this;
+      axios.get('/api/cursos').then(function (response) {
+        _this5.cursos = response.data;
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    },
+    insert: function insert(clave) {
+      var _this6 = this;
+
+      self = this;
+
+      if (this.val == 'standard') {
+        axios.post('api/bloque', {
+          clave: this.bloque.clave,
+          nombre: this.bloque.nombre,
+          cve_curso: this.curso.clave,
+          cve_status: 5,
+          version: this.bloque.version,
+          ruta_portal: this.bloque.ruta_portal
+        }).then(function (response) {
+          _this6.bloque.clave = "";
+          _this6.bloque.nombre = "";
+          _this6.curso.clave = "";
+          _this6.bloque.cve_status = "";
+          _this6.bloque.version = "";
+          _this6.bloque.ruta_portal = "";
+          _this6.selected = "";
+          $("#dd").val('');
+          swal.fire({
+            icon: 'success',
+            title: 'Hecho',
+            text: 'El bloque se ha creado',
+            index: 0
+          });
+
+          _this6.traer();
+        })["catch"](function (e) {
+          console.log(e);
+        });
+      } else if (this.val == 'auto') {
+        this.update(this.bloque.clave);
+        this.val = 'standard';
+        document.getElementById("btnAgregar").innerHTML = 'Agregar';
+        document.getElementById("modalTitle").innerHTML = 'Agregar bloque';
+      }
+    },
+    deleteU: function deleteU(clave) {
+      var _this7 = this;
+
+      self = this;
+      axios["delete"]("/api/bloque/".concat(clave)).then(function (response) {
+        swal.fire({
+          title: '¿Estás seguro?',
+          text: "No podrás revertir la acción",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, eliminar'
+        }).then(function (result) {
+          if (result.isConfirmed) {
+            swal.fire('Eliminado', 'El bloque ha sido borrado', 'success');
+
+            _this7.traer();
+          }
+        });
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    },
+    edit: function edit(bloque) {
+      document.getElementById("btnAgregar").innerHTML = 'Actualizar';
+      document.getElementById("modalTitle").innerHTML = 'Actualizar producto';
+      this.val = 'auto';
+      this.bloque.clave = bloque.clave;
+      this.bloque.nombre = bloque.nombre;
+      this.bloque.cve_curso = bloque.cve_curso;
+      this.bloque.cve_status = bloque.cve_status;
+      this.bloque.version = bloque.version;
+      this.bloque.ruta_portal = bloque.ruta_portal;
+      this.selected = bloque.cve_curso;
+    },
+    update: function update(clave) {
+      var _this8 = this;
+
+      self = this;
+      axios.put("api/bloque/".concat(clave), {
+        clave: this.bloque.clave,
+        nombre: this.bloque.nombre,
+        cve_curso: this.bloque.cve_curso,
+        cve_status: this.bloque.cve_status,
+        version: this.bloque.version,
+        ruta_portal: this.bloque.ruta_portal
+      }).then(function (response) {
+        _this8.bloque.clave = "";
+        _this8.bloque.nombre = "";
+        _this8.bloque.cve_curso = "";
+        _this8.bloque.cve_status = "";
+        _this8.bloque.version = "";
+        _this8.bloque.ruta_portal = "";
+        _this8.selected = "";
+        swal.fire({
+          icon: 'success',
+          title: 'Hecho',
+          text: 'El bloque se ha actualizado',
+          index: 0
+        });
+
+        _this8.traer();
       })["catch"](function (e) {
         console.log(e);
       });
@@ -78684,6 +79000,22 @@ var render = function() {
                   )
                 ],
                 1
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                { staticClass: "nav-item" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "nav-link",
+                      attrs: { to: "/pivotProductoCurso" }
+                    },
+                    [_vm._v("Productos-Cursos")]
+                  )
+                ],
+                1
               )
             ])
           ]
@@ -81853,6 +82185,544 @@ var render = function() {
   ])
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProductoCursoComponent.vue?vue&type=template&id=46a880ec&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ProductoCursoComponent.vue?vue&type=template&id=46a880ec& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", [
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "exampleModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "exampleModalLabel",
+            "aria-hidden": "true"
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "modal-body" },
+                  [
+                    _c("validationObserver", {
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function(ref) {
+                            var handleSubmit = ref.handleSubmit
+                            return [
+                              _c(
+                                "form",
+                                {
+                                  attrs: { id: "form" },
+                                  on: {
+                                    submit: function($event) {
+                                      $event.preventDefault()
+                                      return handleSubmit(_vm.insert)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    { staticClass: "form-group" },
+                                    [
+                                      _c("label", [_vm._v("Clave Curso")]),
+                                      _vm._v(" "),
+                                      _c("validationProvider", {
+                                        attrs: { rules: "required" },
+                                        scopedSlots: _vm._u(
+                                          [
+                                            {
+                                              key: "default",
+                                              fn: function(v) {
+                                                return [
+                                                  _c(
+                                                    "select",
+                                                    {
+                                                      directives: [
+                                                        {
+                                                          name: "model",
+                                                          rawName: "v-model",
+                                                          value: _vm.selected,
+                                                          expression: "selected"
+                                                        }
+                                                      ],
+                                                      attrs: {
+                                                        id: "selectCurso"
+                                                      },
+                                                      on: {
+                                                        change: function(
+                                                          $event
+                                                        ) {
+                                                          var $$selectedVal = Array.prototype.filter
+                                                            .call(
+                                                              $event.target
+                                                                .options,
+                                                              function(o) {
+                                                                return o.selected
+                                                              }
+                                                            )
+                                                            .map(function(o) {
+                                                              var val =
+                                                                "_value" in o
+                                                                  ? o._value
+                                                                  : o.value
+                                                              return val
+                                                            })
+                                                          _vm.selected = $event
+                                                            .target.multiple
+                                                            ? $$selectedVal
+                                                            : $$selectedVal[0]
+                                                        }
+                                                      }
+                                                    },
+                                                    _vm._l(_vm.cursos, function(
+                                                      curso
+                                                    ) {
+                                                      return _c(
+                                                        "option",
+                                                        {
+                                                          key: curso.clave,
+                                                          domProps: {
+                                                            value: curso.clave
+                                                          }
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "Nombre : " +
+                                                              _vm._s(
+                                                                curso.nombre
+                                                              )
+                                                          )
+                                                        ]
+                                                      )
+                                                    }),
+                                                    0
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c("span", [
+                                                    _vm._v(_vm._s(v.errors[0]))
+                                                  ])
+                                                ]
+                                              }
+                                            }
+                                          ],
+                                          null,
+                                          true
+                                        )
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "form-group" },
+                                    [
+                                      _c("label", [_vm._v("Clave Curso")]),
+                                      _vm._v(" "),
+                                      _c("validationProvider", {
+                                        attrs: { rules: "required" },
+                                        scopedSlots: _vm._u(
+                                          [
+                                            {
+                                              key: "default",
+                                              fn: function(v) {
+                                                return [
+                                                  _c(
+                                                    "select",
+                                                    {
+                                                      directives: [
+                                                        {
+                                                          name: "model",
+                                                          rawName: "v-model",
+                                                          value: _vm.selected,
+                                                          expression: "selected"
+                                                        }
+                                                      ],
+                                                      attrs: {
+                                                        id: "selectCurso"
+                                                      },
+                                                      on: {
+                                                        change: function(
+                                                          $event
+                                                        ) {
+                                                          var $$selectedVal = Array.prototype.filter
+                                                            .call(
+                                                              $event.target
+                                                                .options,
+                                                              function(o) {
+                                                                return o.selected
+                                                              }
+                                                            )
+                                                            .map(function(o) {
+                                                              var val =
+                                                                "_value" in o
+                                                                  ? o._value
+                                                                  : o.value
+                                                              return val
+                                                            })
+                                                          _vm.selected = $event
+                                                            .target.multiple
+                                                            ? $$selectedVal
+                                                            : $$selectedVal[0]
+                                                        }
+                                                      }
+                                                    },
+                                                    _vm._l(_vm.cursos, function(
+                                                      curso
+                                                    ) {
+                                                      return _c(
+                                                        "option",
+                                                        {
+                                                          key: curso.clave,
+                                                          domProps: {
+                                                            value: curso.clave
+                                                          }
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "Nombre : " +
+                                                              _vm._s(
+                                                                curso.nombre
+                                                              )
+                                                          )
+                                                        ]
+                                                      )
+                                                    }),
+                                                    0
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c("span", [
+                                                    _vm._v(_vm._s(v.errors[0]))
+                                                  ])
+                                                ]
+                                              }
+                                            }
+                                          ],
+                                          null,
+                                          true
+                                        )
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-primary",
+                                      attrs: {
+                                        type: "submit",
+                                        id: "btnAgregar"
+                                      }
+                                    },
+                                    [_vm._v("Agregar")]
+                                  )
+                                ]
+                              )
+                            ]
+                          }
+                        }
+                      ])
+                    })
+                  ],
+                  1
+                )
+              ])
+            ]
+          )
+        ]
+      )
+    ]),
+    _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
+    _c("h2", { staticClass: "mb-4" }, [_vm._v("Producto-Curso")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-inline" }, [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.search,
+            expression: "search"
+          }
+        ],
+        staticClass: "form-control mr-sm-2",
+        attrs: { type: "search", placeholder: "Buscar por nombre" },
+        domProps: { value: _vm.search },
+        on: {
+          keyup: function($event) {
+            if (
+              !$event.type.indexOf("key") &&
+              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+            ) {
+              return null
+            }
+            return _vm.searchit()
+          },
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.search = $event.target.value
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-success my-2 my-sm-0",
+          attrs: { type: "button" }
+        },
+        [
+          _c("font-awesome-icon", {
+            attrs: { icon: "search" },
+            on: {
+              click: function($event) {
+                return _vm.searchit()
+              }
+            }
+          })
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "container; mt-2",
+        staticStyle: { height: "450px", width: "max", "overflow-y": "scroll" }
+      },
+      [
+        _c("hr"),
+        _vm._v(" "),
+        _c("table", { staticClass: "table table-hover table-dark" }, [
+          _c("thead", [
+            _c("tr", [
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [
+                  _vm._v("Nombre Curso  "),
+                  _c("font-awesome-icon", {
+                    attrs: { icon: "angle-down" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sortBy("version")
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [
+                  _vm._v("Nombre Producto  "),
+                  _c("font-awesome-icon", {
+                    attrs: { icon: "angle-down" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sortBy("ruta_portal")
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [_vm._v("DS")]
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [_vm._v("SD")]
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [_vm._v("Acciòn")]
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticStyle: {
+                    position: "sticky",
+                    top: "0",
+                    background: "#000000"
+                  }
+                },
+                [_vm._v("Acciòn")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.sortedPivotes, function(pivote) {
+              return _c("tr", { key: pivote.clave }, [
+                _c("td", [_vm._v(_vm._s(pivote.cve_curso))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(pivote.cve_producto))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(pivote.nombreCurso))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(pivote.nombreProducto))]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary",
+                      attrs: {
+                        type: "button",
+                        "data-toggle": "modal",
+                        "data-target": "#exampleModal"
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.edit(_vm.bloque)
+                        }
+                      }
+                    },
+                    [_vm._v("\n                  Editar\n                  ")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.deleteU(_vm.bloque.clave)
+                        }
+                      }
+                    },
+                    [_vm._v("Eliminar")]
+                  )
+                ])
+              ])
+            }),
+            0
+          )
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary btn-block mt-4",
+        attrs: {
+          type: "button",
+          "data-toggle": "modal",
+          "data-target": "#exampleModal"
+        }
+      },
+      [_vm._v("Agregar")]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h5", { staticClass: "modal-title", attrs: { id: "modalTitle" } }, [
+        _vm._v("Agregar relación")
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -101096,6 +101966,7 @@ Vue.component('cursoDetalle-component', __webpack_require__(/*! ./components/Cur
 Vue.component('productoDetalle-component', __webpack_require__(/*! ./components/ProductoDetalleComponent.vue */ "./resources/js/components/ProductoDetalleComponent.vue")["default"]);
 Vue.component('proyectoDetalle-component', __webpack_require__(/*! ./components/ProyectoDetalleComponent.vue */ "./resources/js/components/ProyectoDetalleComponent.vue")["default"]);
 Vue.component('pivotDetalle-component', __webpack_require__(/*! ./components/PivotDetalleComponent.vue */ "./resources/js/components/PivotDetalleComponent.vue")["default"]);
+Vue.component('productoCurso-component', __webpack_require__(/*! ./components/ProductoCursoComponent.vue */ "./resources/js/components/ProductoCursoComponent.vue")["default"]);
 Vue.component('app-component', __webpack_require__(/*! ./components/App.vue */ "./resources/js/components/App.vue")["default"]);
 Vue.component('dash-component', __webpack_require__(/*! ./components/DashComponent.vue */ "./resources/js/components/DashComponent.vue")["default"]);
 Vue.component('validationProvider', vee_validate__WEBPACK_IMPORTED_MODULE_0__["ValidationProvider"]);
@@ -101861,6 +102732,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/ProductoCursoComponent.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/ProductoCursoComponent.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ProductoCursoComponent_vue_vue_type_template_id_46a880ec___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProductoCursoComponent.vue?vue&type=template&id=46a880ec& */ "./resources/js/components/ProductoCursoComponent.vue?vue&type=template&id=46a880ec&");
+/* harmony import */ var _ProductoCursoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProductoCursoComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/ProductoCursoComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ProductoCursoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ProductoCursoComponent_vue_vue_type_template_id_46a880ec___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ProductoCursoComponent_vue_vue_type_template_id_46a880ec___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ProductoCursoComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ProductoCursoComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/ProductoCursoComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductoCursoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ProductoCursoComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProductoCursoComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductoCursoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ProductoCursoComponent.vue?vue&type=template&id=46a880ec&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/ProductoCursoComponent.vue?vue&type=template&id=46a880ec& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductoCursoComponent_vue_vue_type_template_id_46a880ec___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ProductoCursoComponent.vue?vue&type=template&id=46a880ec& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProductoCursoComponent.vue?vue&type=template&id=46a880ec&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductoCursoComponent_vue_vue_type_template_id_46a880ec___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductoCursoComponent_vue_vue_type_template_id_46a880ec___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/ProductoDetalleComponent.vue":
 /*!**************************************************************!*\
   !*** ./resources/js/components/ProductoDetalleComponent.vue ***!
@@ -102188,15 +103128,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_ProductosComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/ProductosComponent.vue */ "./resources/js/components/ProductosComponent.vue");
 /* harmony import */ var _components_ProyectosComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/ProyectosComponent.vue */ "./resources/js/components/ProyectosComponent.vue");
 /* harmony import */ var _components_PivotComponent_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/PivotComponent.vue */ "./resources/js/components/PivotComponent.vue");
-/* harmony import */ var _components_DashComponent_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/DashComponent.vue */ "./resources/js/components/DashComponent.vue");
-/* harmony import */ var _components_BloqueDetalleComponent_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/BloqueDetalleComponent.vue */ "./resources/js/components/BloqueDetalleComponent.vue");
-/* harmony import */ var _components_CursoDetalleComponent_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/CursoDetalleComponent.vue */ "./resources/js/components/CursoDetalleComponent.vue");
-/* harmony import */ var _components_ProductoDetalleComponent_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/ProductoDetalleComponent.vue */ "./resources/js/components/ProductoDetalleComponent.vue");
-/* harmony import */ var _components_ProyectoDetalleComponent_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/ProyectoDetalleComponent.vue */ "./resources/js/components/ProyectoDetalleComponent.vue");
-/* harmony import */ var _components_PivotDetalleComponent_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/PivotDetalleComponent.vue */ "./resources/js/components/PivotDetalleComponent.vue");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var _components_ProductoCursoComponent_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/ProductoCursoComponent.vue */ "./resources/js/components/ProductoCursoComponent.vue");
+/* harmony import */ var _components_DashComponent_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/DashComponent.vue */ "./resources/js/components/DashComponent.vue");
+/* harmony import */ var _components_BloqueDetalleComponent_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/BloqueDetalleComponent.vue */ "./resources/js/components/BloqueDetalleComponent.vue");
+/* harmony import */ var _components_CursoDetalleComponent_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/CursoDetalleComponent.vue */ "./resources/js/components/CursoDetalleComponent.vue");
+/* harmony import */ var _components_ProductoDetalleComponent_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/ProductoDetalleComponent.vue */ "./resources/js/components/ProductoDetalleComponent.vue");
+/* harmony import */ var _components_ProyectoDetalleComponent_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/ProyectoDetalleComponent.vue */ "./resources/js/components/ProyectoDetalleComponent.vue");
+/* harmony import */ var _components_PivotDetalleComponent_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/PivotDetalleComponent.vue */ "./resources/js/components/PivotDetalleComponent.vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 
 
 
@@ -102210,12 +103151,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_11___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_12__["default"]);
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_12__["default"]({
+
+vue__WEBPACK_IMPORTED_MODULE_12___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_13__["default"]);
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_13__["default"]({
   routes: [{
     name: 'dash',
     path: '/',
-    component: _components_DashComponent_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+    component: _components_DashComponent_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
   }, {
     name: 'bloques',
     path: '/bloques',
@@ -102237,25 +103179,29 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_12__["default"]({
     path: '/pivot',
     component: _components_PivotComponent_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   }, {
+    name: 'pivotProductoCurso',
+    path: '/pivotProductoCurso',
+    component: _components_ProductoCursoComponent_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+  }, {
     name: 'bloqueDetalle',
     path: '/bloqueDetalle/:clave',
-    component: _components_BloqueDetalleComponent_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
+    component: _components_BloqueDetalleComponent_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
   }, {
     name: 'cursoDetalle',
     path: '/cursoDetalle/:clave',
-    component: _components_CursoDetalleComponent_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
+    component: _components_CursoDetalleComponent_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
   }, {
     name: 'productoDetalle',
     path: '/productoDetalle/:clave',
-    component: _components_ProductoDetalleComponent_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
+    component: _components_ProductoDetalleComponent_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
   }, {
     name: 'proyectoDetalle',
     path: '/proyectoDetalle/:clave',
-    component: _components_ProyectoDetalleComponent_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
+    component: _components_ProyectoDetalleComponent_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
   }, {
     name: 'pivotDetalle',
     path: '/pivotDetalle/:clave',
-    component: _components_PivotDetalleComponent_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
+    component: _components_PivotDetalleComponent_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
   }],
   mode: 'history'
 });

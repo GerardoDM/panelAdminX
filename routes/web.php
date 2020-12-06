@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('pivot', 'PivotController@view');
         Route::get('bloques', 'BloqueController@view');
         Route::get('cursos', 'CursoController@view');
+        Route::get('pivotProductoCurso', 'ProductoCursoController@view');
         Route::get('/', 'DashController@view')->name('/');
   });
 

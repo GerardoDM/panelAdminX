@@ -5,6 +5,7 @@ import CursoComponent from './components/CursoComponent.vue';
 import ProductoComponent from './components/ProductosComponent.vue';
 import ProyectoComponent from './components/ProyectosComponent.vue';
 import PivotComponent from './components/PivotComponent.vue';
+import ProductoCursoComponent from './components/ProductoCursoComponent.vue'
 import DashComponent from './components/DashComponent.vue';
 import BloqueDetalleComponent from './components/BloqueDetalleComponent.vue';
 import CursoDetalleComponent from './components/CursoDetalleComponent.vue';
@@ -56,6 +57,12 @@ export const router = new VueRouter({
             name: 'pivot',
             path: '/pivot',
             component: PivotComponent
+        },
+
+        {
+            name: 'pivotProductoCurso',
+            path: '/pivotProductoCurso',
+            component: ProductoCursoComponent
         },
 
         {
