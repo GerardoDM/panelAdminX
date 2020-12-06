@@ -15,19 +15,19 @@
                      <validationObserver v-slot="{ handleSubmit }">
                      <form id="form" @submit.prevent="handleSubmit(insert)">
                         <div class="form-group">
-                           <label>Clave Curso</label>
+                           <label>Producto</label>
                            <validationProvider v-slot="v" rules='required'>
-                           <select id="selectCurso" v-model="selected">
-                              <option :value="curso.clave" v-for="curso in cursos" v-bind:key="curso.clave">Nombre : {{curso.nombre}}</option>
+                           <select id="selectProducto" v-model="selectedTwo">
+                              <option :value="producto.clave" v-for="producto in productos" v-bind:key="producto.clave">{{producto.nombre}}</option>
                            </select>
                            <span>{{v.errors[0]}}</span>
                            </validationProvider>
                         </div>
                         <div class="form-group">
-                           <label>Clave Curso</label>
+                           <label>Curso</label>
                            <validationProvider v-slot="v" rules='required'>
                            <select id="selectCurso" v-model="selected">
-                              <option :value="curso.clave" v-for="curso in cursos" v-bind:key="curso.clave">Nombre : {{curso.nombre}}</option>
+                              <option :value="curso.clave" v-for="curso in cursos" v-bind:key="curso.clave">{{curso.nombre}}</option>
                            </select>
                            <span>{{v.errors[0]}}</span>
                            </validationProvider>
@@ -44,11 +44,7 @@
       <hr>  
       <h2 class="mb-4">Producto-Curso</h2>
 
-           <div class="form-inline">
           
-            <input class="form-control mr-sm-2" v-model="search" type="search" @keyup.enter="searchit()" placeholder="Buscar por nombre">
-             <button class="btn btn-success my-2 my-sm-0" type="button"><font-awesome-icon icon="search" @click="searchit()"/></button>
-         </div>
       <div class="container; mt-2" style="height:450px; width:max; overflow-y: scroll">
        
          <hr>
@@ -56,27 +52,29 @@
          <table class="table table-hover table-dark">
             <thead>
                <tr>
-                  <th style="position:sticky; top:0; background: #000000">Nombre Curso  <font-awesome-icon icon="angle-down" @click="sortBy('version')"/></th>
-                  <th style="position:sticky; top:0; background: #000000">Nombre Producto  <font-awesome-icon icon="angle-down" @click="sortBy('ruta_portal')"/></th>
-                  <th style="position:sticky; top:0; background: #000000">DS</th>
-                  <th style="position:sticky; top:0; background: #000000">SD</th>
+                  <th style="position:sticky; top:0; background: #000000">Key</th>
+                  <th style="position:sticky; top:0; background: #000000">Clave Curso  <font-awesome-icon icon="angle-down" @click="sortBy('cve_curso')"/></th>
+                  <th style="position:sticky; top:0; background: #000000">Clave Producto  <font-awesome-icon icon="angle-down" @click="sortBy('cve_producto')"/></th>
+                  <th style="position:sticky; top:0; background: #000000">Nombre Curso <font-awesome-icon icon="angle-down" @click="sortBy('nombreCurso')"/></th>
+                  <th style="position:sticky; top:0; background: #000000">Nombre Producto <font-awesome-icon icon="angle-down" @click="sortBy('nombreProducto')"/></th>
                   <th style="position:sticky; top:0; background: #000000">Acciòn</th>
                   <th style="position:sticky; top:0; background: #000000">Acciòn</th>
                </tr>
             </thead>
             <tbody>
                
-               <tr v-for="pivote in sortedPivotes" v-bind:key="pivote.clave">
+               <tr v-for="pivote in itemsWithHash" v-bind:key="pivote.key">
+                  <td>{{pivote.key}}</td>
                   <td>{{pivote.cve_curso}}</td>
                   <td>{{pivote.cve_producto}}</td>
                   <td>{{pivote.nombreCurso}}</td>
                   <td>{{pivote.nombreProducto}}</td>
                   <td>
-                     <button type="button" class="btn btn-secondary" v-on:click="edit(bloque)" data-toggle="modal" data-target="#exampleModal">
+                     <button type="button" class="btn btn-secondary" v-on:click="edit(pivote)" data-toggle="modal" data-target="#exampleModal">
                      Editar
                      </button>
                   </td>
-                  <td><button type="button" class="btn btn-danger" v-on:click="deleteU(bloque.clave)">Eliminar</button></td>
+                  <td><button type="button" class="btn btn-danger" v-on:click="deleteU(pivote)">Eliminar</button></td>
                </tr>
             </tbody>
          </table>
@@ -87,6 +85,8 @@
 <script>
 
  import { ValidationProvider } from 'vee-validate';
+ var hash = require('object-hash');
+
 
 
    export default {
@@ -94,8 +94,13 @@
        mounted(){
    
             $("#selectCurso").change(function(){
-                this.curso.clave = $("#selectCurso").val();
+                this.pivote.cve_curso = $("#selectCurso").val();
                 }.bind(this)); 
+
+             $("#selectProducto").change(function(){
+                 this.pivote.cve_producto = $("#selectProducto").val();
+                 }.bind(this)); 
+
            
        },
 
@@ -107,22 +112,40 @@
    
           
            return {
-               bloques: [],
+               productos: [],
                cursos:[],
                pivotes:[],
    
                pivote:{
 
+
+                  cve_producto: "",
+                  cve_curso:null,
+
                   nombreProducto:"",
-                  nombreCurso:""
+                  nombreCurso:"",
+                  key:"",
+                  valorUno:"",
+                  valorDos: ""
 
                },
+
+               producto: {
+                    clave: "",
+                    nombre: "",
+                    edicion: "",
+                    logo_producto: "",
+                    nomenclatura: "",
+                   
+                },
+
                curso:{
                   clave: "",
                   nombre: ""
                },
    
                selected : "",
+               selectedTwo : "",
                errors: {},
                message: null,
                valid: true,
@@ -138,36 +161,40 @@
          },
    
        created(){
-           this.traer()
+           this.traerProductos()
            this.traerCursos()
            this.traerJoin()
+          
        },
 
         computed:{
-         sortedPivotes:function() {
+         // sortedPivotes:function() {
             
-            return this.pivotes.sort((a,b) => {
+         //    return this.pivotes.sort((a,b) => {
 
-               try {
+         //       try {
 
-               let modifier = 1;
+         //       let modifier = 1;
               
-               if(this.currentSortDir === 'desc') modifier = -1;
-               if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
-               if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
-               return 0;
+         //       if(this.currentSortDir === 'desc') modifier = -1;
+         //       if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+         //       if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+         //       return 0;
                   
-               } catch (error) {
+         //       } catch (error) {
 
                   
                   
-               }
+         //       }
 
 
                
             
-            });
-         }
+         //    });
+         // },
+         itemsWithHash:function() {
+               return this.pivotes.map(i => ({ ...i, key: hash(i) }));
+            }
          },
    
        methods:{
@@ -185,32 +212,15 @@
          },
 
 
-         searchit(){
-
-             
-              self = this
-
-              let query = this.search;
-
-              axios.get('api/searchBloque?q=' + query)
-             .then(response => {
-                       this.bloques = response.data;
-            
-                       console.log('success')
-                   })
-                   .catch(e => {
-                       console.log(e);
-                   })
-           
-
-          },
-
+         
           traerJoin(){
    
               self = this
                axios.get('/api/pivotProductoCursoJoin')
                    .then(response => {
                        this.pivotes = response.data;
+                       
+                      
                    })
                    .catch(e => {
                        
@@ -220,12 +230,12 @@
            },
 
       
-           traer(){
+           traerProductos(){
    
               self = this
-               axios.get('/api/pivotProductoCurso')
+               axios.get('/api/productos')
                    .then(response => {
-                       this.bloques = response.data;
+                       this.productos = response.data;
                    })
                    .catch(e => {
                        
@@ -255,42 +265,37 @@
 
                if (this.val == 'standard'){
 
-                  axios.post('api/bloque',
+                  axios.post('api/pivotProductoCurso',
    
                        {
    
-                  clave  : this.bloque.clave,
-                  nombre : this.bloque.nombre,
-                  cve_curso : this.curso.clave,
-                  cve_status : 5,
-                  version : this.bloque.version,
-                  ruta_portal : this.bloque.ruta_portal
+                  cve_curso : this.pivote.cve_curso,
+                  cve_producto : this.pivote.cve_producto,
+                  
+                  
                        
                        })
 
 
                    .then(response => {
    
-                this.bloque.clave  = ""
-                this.bloque.nombre = ""
-                this.curso.clave = ""
-                this.bloque.cve_status = ""
-                this.bloque.version = ""
-                this.bloque.ruta_portal = ""
+                this.pivote.cve_curso  = ""
+                this.pivote.cve_producto = ""
    
                 this.selected = ""
+                this.selectedTwo = ""
                 $("#dd").val('') 
                                             
                        swal.fire({
                          icon: 'success',
                          title: 'Hecho',
-                         text: 'El bloque se ha creado',
+                         text: 'El pivote se ha creado',
                          index: 0,
                         
                        })
    
 
-                       this.traer();
+                       this.traerJoin();
     
                    })
                    .catch(e => {
@@ -302,12 +307,74 @@
                }
 
                else if (this.val == 'auto'){
-                  this.update(this.bloque.clave)
+                  // this.update(this.pivote.cve_producto, this.pivote.cve_producto)
                   
-                  this.val = 'standard'
+             axios.put(`api/pivotProductoCurso/${this.valorUno}/${this.valorDos}`,
+              {
+                  
+                   cve_curso : this.pivote.cve_curso,
+                   cve_producto : this.pivote.cve_producto,
+                                      
+               })
+              
+              
+              .then(response => {
+
+
+                 this.pivote.key=""
+   
+                this.pivote.cve_curso  = ""
+                this.pivote.cve_producto = ""
+               
+                
+                this.selected = ""
+                this.selectedTwo = ""
+                                
+                      swal.fire({
+                         icon: 'success',
+                         title: 'Hecho',
+                         text: 'El pivote se ha actualizado',
+                         index: 0,
+                        
+                         })
+   
+               this.traerJoin();
+                       
+                   })
+   
+                   
+                   .catch(e => {
+                       
+                       console.log(e);
+                         swal.fire({
+               title: 'Error',
+               text: "Esta relación ya existe",
+               icon: 'warning',
+               showCancelButton: true,
+               confirmButtonColor: '#3085d6',
+               cancelButtonColor: '#d33',
+               confirmButtonText: 'Ok'
+            })
+
+             this.pivote.key=""
+   
+                this.pivote.cve_curso  = ""
+                this.pivote.cve_producto = ""
+               
+                
+                this.selected = ""
+                this.selectedTwo = ""
+
+                   })
+
+                this.val = 'standard'
                   document.getElementById("btnAgregar").innerHTML = 'Agregar'; 
-                  document.getElementById("modalTitle").innerHTML = 'Agregar bloque'; 
-               }
+                  document.getElementById("modalTitle").innerHTML = 'Agregar pivote';
+               
+           }
+                  
+                  
+               
    
                
                        
@@ -315,11 +382,20 @@
    
            },
    
-            deleteU(clave){
+            deleteU(pivote){
+
+               this.pivote.key = pivote.key
+
+               this.pivote.cve_producto = pivote.cve_producto
+               this.pivote.cve_curso = pivote.cve_curso
    
                self = this
-               axios.delete(`/api/bloque/${clave}`)
+               axios.delete(`/api/pivotProductoCurso/${this.pivote.cve_curso}/${this.pivote.cve_producto}`)
                    .then(response => {
+
+                     
+
+                      
    
             swal.fire({
                title: '¿Estás seguro?',
@@ -333,11 +409,11 @@
                if (result.isConfirmed) {
                   swal.fire(
                    'Eliminado',
-                   'El bloque ha sido borrado',
+                   'El pivote ha sido borrado',
                    'success'
                    )
    
-                    this.traer();
+                    this.traerJoin();
    
    
                }
@@ -346,76 +422,88 @@
                       
                    })
                    .catch(e => {
-                       
-                       console.log(e);
+
+                     
+                     console.log(e);
+                   
                    })
    
            },
    
-           edit(bloque){
+           edit(pivote){
    
    
             document.getElementById("btnAgregar").innerHTML = 'Actualizar';
-            document.getElementById("modalTitle").innerHTML = 'Actualizar producto'; 
+            document.getElementById("modalTitle").innerHTML = 'Actualizar pivote'; 
                
             this.val = 'auto';
-   
-            this.bloque.clave = bloque.clave
+
+            this.pivote.key = pivote.key;
+            this.pivote.cve_curso = pivote.cve_curso
+            this.pivote.cve_producto = pivote.cve_producto
+            this.selected = pivote.cve_curso
+            this.selectedTwo = pivote.cve_producto
+
+            this.valorUno = this.pivote.cve_curso
+            this.valorDos = this.pivote.cve_producto
+
+            console.log(this.pivote.cve_producto)
+            console.log(this.pivote.cve_curso)
+
+            // if (this.pivote.key.length == 0){
+            //    console.log('Llave vacía')
+            // }
+
+            // if (this.pivote.key.length > 0){
+            //    console.log('Llave NO vacia')
+            // }    
             
-            this.bloque.nombre = bloque.nombre
-            this.bloque.cve_curso = bloque.cve_curso
-            this.bloque.cve_status = bloque.cve_status
-            this.bloque.version = bloque.version
-            this.bloque.ruta_portal = bloque.ruta_portal
-            
-            this.selected = bloque.cve_curso
-    
            },
    
    
-           update(clave){
-             self = this;
-             axios.put(`api/bloque/${clave}`,
-              {
-                  clave  : this.bloque.clave,
-                  nombre : this.bloque.nombre,
-                  cve_curso : this.bloque.cve_curso,
-                  cve_status : this.bloque.cve_status,
-                  version : this.bloque.version,
-                  ruta_portal : this.bloque.ruta_portal                    
-               })
+         //   update(key){
+              
+         //     self = this;
+         //     axios.put(`api/pivotProductoCurso/${this.pivote.cve_curso}/${this.pivote.cve_producto}`,
+         //      {
+                  
+         //           cve_curso : 3,
+         //           cve_producto : 'ggg',
+                                      
+         //       })
               
               
-              .then(response => {
+         //      .then(response => {
+
+
+         //         this.pivote.key=""
    
-                this.bloque.clave  = ""
-                this.bloque.nombre = ""
-                this.bloque.cve_curso = ""
-                this.bloque.cve_status = ""
-                this.bloque.version = ""
-                this.bloque.ruta_portal = ""
+         //        this.pivote.cve_curso  = ""
+         //        this.pivote.cve_producto = ""
+               
                 
-                this.selected = ""
+         //        this.selected = ""
+         //        this.selectedTwo = ""
                                 
-                      swal.fire({
-                         icon: 'success',
-                         title: 'Hecho',
-                         text: 'El bloque se ha actualizado',
-                         index: 0,
+         //              swal.fire({
+         //                 icon: 'success',
+         //                 title: 'Hecho',
+         //                 text: 'El pivote se ha actualizado',
+         //                 index: 0,
                         
-                         })
+         //                 })
    
-               this.traer();
+         //       this.traerJoin();
                        
-                   })
+         //           })
    
                    
-                   .catch(e => {
+         //           .catch(e => {
                        
-                       console.log(e);
-                   })
+         //               console.log(e);
+         //           })
                
-           }
+         //   }
    
        }
    

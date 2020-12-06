@@ -98,7 +98,7 @@ class ProductoCursoController extends Controller
         
     
         
-        return response()->json(['Relación' => $pivot], 201);
+        return response()->json(['Relación actualizada' => $pivot], 201);
 
     }
 

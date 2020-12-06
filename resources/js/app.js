@@ -11,6 +11,8 @@ Vue.use(VeeValidate);
 
 
 
+
+
 import * as VeeValidate from 'vee-validate'
 import { numeric } from 'vee-validate/dist/rules';
 
@@ -58,17 +60,7 @@ extend('required', {
 
   });
 
-  // extend('numeric', {
-  //   validate (value) {
-  //     return {
-        
-  //       regex: /\.(js|ts)$/ }
-      
-  //   },
-  //   computesRequired: true,
-  //   message: 'Este campo debe ser numerico'
-
-  // });
+  
 
 
 

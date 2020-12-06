@@ -441,6 +441,8 @@ import { ValidationProvider } from 'vee-validate';
             document.getElementById("modalTitle").innerHTML = 'Actualizar relacion'; 
                
             this.val = 'auto';
+
+            
    
             this.pivot.clave = pivot.clave
             this.pivot.cve_producto = pivot.cve_producto;
@@ -449,6 +451,7 @@ import { ValidationProvider } from 'vee-validate';
             this.selected = pivot.cve_proyecto
             this.selectedTwo = pivot.cve_producto
    
+            
    
            },
    
