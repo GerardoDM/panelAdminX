@@ -26,6 +26,7 @@
           <router-link to='/pivotProductoCurso' class="nav-link">Productos-Cursos</router-link>  
         </li>
         
+        
       </ul>
     </div>
     <form class="form-inline">
@@ -59,12 +60,12 @@
 
         methods : {
           logout(){
-            axios.post('usuario/logout')   
+            axios.post('/usuario/logout')   
                                
                  .then(response => {
 
                    console.log('logged out');
-                   window.location.href = 'usuario/login';
+                   window.location.href = '/usuario/login';
 
    
                           

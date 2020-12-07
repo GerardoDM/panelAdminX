@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Usuario;
+use App\User;
 use \Validator;
 
 
@@ -13,7 +13,7 @@ class UsuarioController extends Controller
 {
     public function index(){
 
-        $usuarios = Usuario::all();
+        $usuarios = User::all();
         return $usuarios;
         
     }

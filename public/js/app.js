@@ -12055,6 +12055,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user'],
   data: function data() {
@@ -12065,9 +12066,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     logout: function logout() {
-      axios.post('usuario/logout').then(function (response) {
+      axios.post('/usuario/logout').then(function (response) {
         console.log('logged out');
-        window.location.href = 'usuario/login';
+        window.location.href = '/usuario/login';
       })["catch"](function (e) {
         console.log(e);
       });

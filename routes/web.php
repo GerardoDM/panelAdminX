@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/', 'DashController@view')->name('/');
   });
 
+
 // Auth::routes(['register' => false]);
 // Auth::routes(['login' => false]);
 
