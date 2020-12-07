@@ -138,6 +138,7 @@
                   errors: {},
                   message: null,
                   valid: true,
+                  search:"",
                   val : 'standard',
                   currentSort:'clave',
                   currentSortDir:'asc',
@@ -149,7 +150,6 @@
       
           created(){
               this.traer()
-              console.log(this.val)
           },
 
           computed:{

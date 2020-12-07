@@ -52,11 +52,8 @@
          <table class="table table-hover table-dark">
             <thead>
                <tr>
-                  <th style="position:sticky; top:0; background: #000000">Key</th>
-                  <th style="position:sticky; top:0; background: #000000">Clave Curso  <font-awesome-icon icon="angle-down" @click="sortBy('cve_curso')"/></th>
-                  <th style="position:sticky; top:0; background: #000000">Clave Producto  <font-awesome-icon icon="angle-down" @click="sortBy('cve_producto')"/></th>
-                  <th style="position:sticky; top:0; background: #000000">Nombre Curso <font-awesome-icon icon="angle-down" @click="sortBy('nombreCurso')"/></th>
-                  <th style="position:sticky; top:0; background: #000000">Nombre Producto <font-awesome-icon icon="angle-down" @click="sortBy('nombreProducto')"/></th>
+                  <th style="position:sticky; top:0; background: #000000">Nombre Producto <font-awesome-icon icon="angle-down" @click="sortBy('nombreCurso')"/></th>
+                  <th style="position:sticky; top:0; background: #000000">Nombre Curso <font-awesome-icon icon="angle-down" @click="sortBy('nombreProducto')"/></th>
                   <th style="position:sticky; top:0; background: #000000">Acciòn</th>
                   <th style="position:sticky; top:0; background: #000000">Acciòn</th>
                </tr>
@@ -64,11 +61,9 @@
             <tbody>
                
                <tr v-for="pivote in itemsWithHash" v-bind:key="pivote.key">
-                  <td>{{pivote.key}}</td>
-                  <td>{{pivote.cve_curso}}</td>
-                  <td>{{pivote.cve_producto}}</td>
-                  <td>{{pivote.nombreCurso}}</td>
-                  <td>{{pivote.nombreProducto}}</td>
+                  <td><router-link :to="{ name: 'productoCursoDetalle', params: { clave: pivote.cve_curso, claveDos: pivote.cve_producto }  }" style="color:white">{{pivote.nombreProducto}}</router-link></td>
+                  <td><router-link :to="{ name: 'productoCursoDetalle', params: { clave: pivote.cve_curso, claveDos: pivote.cve_producto }  }" style="color:white">{{pivote.nombreCurso}}</router-link></td>
+
                   <td>
                      <button type="button" class="btn btn-secondary" v-on:click="edit(pivote)" data-toggle="modal" data-target="#exampleModal">
                      Editar
@@ -348,7 +343,8 @@
                        console.log(e);
                          swal.fire({
                title: 'Error',
-               text: "Esta relación ya existe",
+               text: "Esta relación ya existe." + " " +
+               "Elija de nuevo para volver a editar",
                icon: 'warning',
                showCancelButton: true,
                confirmButtonColor: '#3085d6',

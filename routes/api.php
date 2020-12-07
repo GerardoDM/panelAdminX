@@ -65,4 +65,5 @@ Route::delete('/pivotProductoCurso/{cve_curso}/{cve_producto}', 'ProductoCursoCo
 Route::put('/pivotProductoCurso/{cve_curso}/{cve_producto}', 'ProductoCursoController@update');
 Route::post('/pivotProductoCurso', 'ProductoCursoController@create');
 Route::get('/pivotProductoCursoJoin', 'ProductoCursoController@join');
+Route::get('/pivotProductoCursoShow/{cve_curso}/{cve_producto}', 'ProductoCursoController@joinShow');
 

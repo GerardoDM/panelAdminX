@@ -22,7 +22,7 @@ class ProductoCursoController extends Controller
     }
 
     public function viewDetail(){
-        return view('pages.pivotDetalle');
+        return view('pages.productoCursoDetalle');
     }
 
 
@@ -32,7 +32,7 @@ class ProductoCursoController extends Controller
         $pivots = PivotProductoCurso::all();
         return $pivots;
 
-        // $data = Pivot::select('pivot.cve_producto', 'pivot.cve_proyecto','pivot.nolicencias')
+        // $data = Pivot::select('pivot.cve_producto', 'pivot.cve_curso','pivot.nolicencias')
         //         ->join('producto', function($query){
         //                $query->leftjoin('pivot.cve_producto','=','producto.clave')
         //                  ->select('producto.nombre ');
@@ -112,13 +112,16 @@ class ProductoCursoController extends Controller
 
     }
 
-    public function joinShow($clave){
+    public function joinShow($cve_curso, $cve_producto){
 
-        $pivot = DB::table('producto-proyecto')
-            ->join('producto', 'producto.clave', '=', 'producto-proyecto.cve_producto')
-            ->join('proyecto', 'proyecto.clave', '=', 'producto-proyecto.cve_proyecto')
-            ->select('producto.nombre as productoNombre', 'proyecto.nombre as proyectoNombre', 'producto-proyecto.nolicencias')
-            ->where('producto-proyecto.clave', '=', $clave)
+        $pivot = DB::table('producto_curso')
+            ->join('producto', 'producto.clave', '=', 'producto_curso.cve_producto')
+            ->join('curso', 'curso.clave', '=', 'producto_curso.cve_curso')
+            ->select('producto.nombre as productoNombre', 'curso.nombre as cursoNombre', 
+            'producto.nomenclatura as productoNomenclatura', 'producto.edicion as productoEdicion', 
+            'curso.blib as cursoBlib', 'curso.btotales as cursoBtotales', 'curso.autor as cursoAutor')
+            ->where('producto_curso.cve_curso', '=', $cve_curso)
+            ->where('producto_curso.cve_producto', '=', $cve_producto)
             ->get();
 
          return $pivot;   

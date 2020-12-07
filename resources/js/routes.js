@@ -6,6 +6,7 @@ import ProductoComponent from './components/ProductosComponent.vue';
 import ProyectoComponent from './components/ProyectosComponent.vue';
 import PivotComponent from './components/PivotComponent.vue';
 import ProductoCursoComponent from './components/ProductoCursoComponent.vue'
+import ProductoCursoDetalleComponent from './components/ProductoCursoDetalleComponent.vue'
 import DashComponent from './components/DashComponent.vue';
 import BloqueDetalleComponent from './components/BloqueDetalleComponent.vue';
 import CursoDetalleComponent from './components/CursoDetalleComponent.vue';
@@ -89,6 +90,11 @@ export const router = new VueRouter({
             name: 'pivotDetalle',
             path: '/pivotDetalle/:clave',
             component: PivotDetalleComponent
+        },
+        {
+            name: 'productoCursoDetalle',
+            path: '/productoCursoDetalle/:clave/:claveDos',
+            component: ProductoCursoDetalleComponent
         },
     ],    
 

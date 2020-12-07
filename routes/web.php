@@ -16,6 +16,7 @@ Route::get('cursoDetalle/{clave}', 'CursoController@viewDetail');
 Route::get('productoDetalle/{clave}', 'ProductoController@viewDetail');
 Route::get('proyectoDetalle/{clave}', 'ProyectoController@viewDetail');
 Route::get('pivotDetalle/{clave}', 'PivotController@viewDetail');
+Route::get('productoCursoDetalle/{clave}/{claveDos}', 'ProductoCursoController@viewDetail');
 
 
 Route::group(['middleware' => 'auth'], function () {

@@ -15,8 +15,10 @@
             <li><h5>Clave Producto: {{pivot.cve_producto}}</h5></li>
             <li><h5>Nombre Producto: {{pivot2.productoNombre}}</h5></li>
             <li><h5>Clave Proyecto: {{pivot.cve_proyecto}}</h5></li>
-             <li><h5>Nombre Proyecto: {{pivot2.proyectoNombre}}</h5></li>
-              <li><h5>Número de Licencias: {{pivot.nolicencias}}</h5></li>
+            <li><h5>Nombre Proyecto: {{pivot2.proyectoNombre}}</h5></li>
+            <li><h5>Número de Licencias: {{pivot.nolicencias}}</h5></li>
+            <li><h5>Proyecto Descripción: {{pivot2.proyectoDescripcion}}</h5></li>
+            <li><h5>Producto Edición: {{pivot2.productoEdicion}}</h5></li>
         </ul>
        
             
@@ -48,7 +50,9 @@ export default {
 
                pivot2:{
                    productoNombre:"",
-                   proyectoNombre:""
+                   proyectoNombre:"",
+                   productoEdicion:"",
+                   proyectoDescripcion:""
                }
                 
             }
@@ -90,7 +94,11 @@ export default {
                     this.pivot2 = response.data
                     this.pivot2.productoNombre = response.data[0].productoNombre
                     this.pivot2.proyectoNombre = response.data[0].proyectoNombre
-                       
+                    this.pivot2.proyectoDescripcion = response.data[0].proyectoDescripcion
+                    this.pivot2.productoEdicion = response.data[0].productoEdicion
+
+
+
                     })
                    .catch(e => {
                        

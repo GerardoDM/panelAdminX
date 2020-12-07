@@ -59,9 +59,7 @@
 
          <table class="table table-hover table-dark" >
             <thead>
-               <tr>
-                  <th style="position:sticky; top:0; background: #000000">Clave  <font-awesome-icon icon="angle-down" @click="sortBy('clave')"/></th>
-                 
+               <tr>                 
                   <th style="position:sticky; top:0; background: #000000">Nombre Producto  <font-awesome-icon icon="angle-down" @click="sortBy('prodNombre')"/></th>
                   <th style="position:sticky; top:0; background: #000000">Nombre Proyecto  <font-awesome-icon icon="angle-down" @click="sortBy('proyNombre')"/></th>
                   <th style="position:sticky; top:0; background: #000000"># de Licencias  <font-awesome-icon icon="angle-down" @click="sortBy('nolicencias')"/></th>
@@ -71,9 +69,8 @@
             </thead>
             <tbody>
                <tr v-for="pivot in sortedPivot" v-bind:key="pivot.clave">
-                  <td><router-link :to="{ name: 'pivotDetalle', params: { clave: pivot.clave }  }" style="color:white">{{pivot.clave}}</router-link></td>
-                  <td>{{pivot.prodNombre}}</td>
-                  <td>{{pivot.proyNombre}}</td>
+                  <td><router-link :to="{ name: 'pivotDetalle', params: { clave: pivot.clave }  }" style="color:white">{{pivot.prodNombre}}</router-link></td>
+                  <td><router-link :to="{ name: 'pivotDetalle', params: { clave: pivot.clave }  }" style="color:white">{{pivot.proyNombre}}</router-link></td>
                   <td>{{pivot.nolicencias}}</td>
                   <td>
                      <button type="button" class="btn btn-secondary" v-on:click="edit(pivot)" data-toggle="modal" data-target="#exampleModal">

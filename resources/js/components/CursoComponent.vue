@@ -251,7 +251,6 @@
        created(){
            this.traer();
            this.traerUsuarios();
-           console.log(this.cursos)
 
        },
 

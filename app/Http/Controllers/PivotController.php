@@ -113,7 +113,8 @@ class PivotController extends Controller
         $pivot = DB::table('producto-proyecto')
             ->join('producto', 'producto.clave', '=', 'producto-proyecto.cve_producto')
             ->join('proyecto', 'proyecto.clave', '=', 'producto-proyecto.cve_proyecto')
-            ->select('producto.nombre as productoNombre', 'proyecto.nombre as proyectoNombre', 'producto-proyecto.nolicencias')
+            ->select('producto.nombre as productoNombre', 'proyecto.nombre as proyectoNombre', 'producto-proyecto.nolicencias', 'producto.edicion as productoEdicion'
+            , 'proyecto.descripcion as proyectoDescripcion')
             ->where('producto-proyecto.clave', '=', $clave)
             ->get();
 
