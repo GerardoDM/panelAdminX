@@ -60,7 +60,7 @@
             </thead>
             <tbody>
                
-               <tr v-for="pivote in itemsWithHash" v-bind:key="pivote.key">
+               <tr v-for="pivote in sortedPivotes" v-bind:key="pivote.key">
                   <td><router-link :to="{ name: 'productoCursoDetalle', params: { clave: pivote.cve_curso, claveDos: pivote.cve_producto }  }" style="color:white">{{pivote.nombreProducto}}</router-link></td>
                   <td><router-link :to="{ name: 'productoCursoDetalle', params: { clave: pivote.cve_curso, claveDos: pivote.cve_producto }  }" style="color:white">{{pivote.nombreCurso}}</router-link></td>
 
@@ -163,30 +163,30 @@
        },
 
         computed:{
-         // sortedPivotes:function() {
+          sortedPivotes:function() {
             
-         //    return this.pivotes.sort((a,b) => {
+             return this.pivotes.sort((a,b) => {
 
-         //       try {
+                try {
 
-         //       let modifier = 1;
+                let modifier = 1;
               
-         //       if(this.currentSortDir === 'desc') modifier = -1;
-         //       if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
-         //       if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
-         //       return 0;
+                if(this.currentSortDir === 'desc') modifier = -1;
+                if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+                if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+                return 0;
                   
-         //       } catch (error) {
+                } catch (error) {
 
                   
                   
-         //       }
+                }
 
 
                
             
-         //    });
-         // },
+             });
+          },
          itemsWithHash:function() {
                return this.pivotes.map(i => ({ ...i, key: hash(i) }));
             }
