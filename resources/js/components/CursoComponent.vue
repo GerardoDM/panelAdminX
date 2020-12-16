@@ -14,7 +14,7 @@
                      </button>
                   </div>
                   <div class="modal-body">
-                     <validationObserver v-slot="{ handleSubmit }">
+                     <validationObserver v-slot="{ handleSubmit }" ref="form">
                      <form id="form" @submit.prevent="handleSubmit(insert)">
                         <div class="form-group">
                            <label>Nombre</label>
@@ -113,6 +113,8 @@
           
             <input class="form-control mr-sm-2" v-model="search" type="search" @keyup.enter="searchit()" placeholder="Buscar por nombre">
             <button class="btn btn-success my-2 my-sm-0" type="button"><font-awesome-icon icon="search" @click="searchit()"/></button>
+            <button type="button" class="btn btn-secondary ml-2" style="color:white" v-show="visible" v-on:click="traer()">Deshacer</button>
+
          </div>
       <div class="container; mt-2" style="height:450px; width:max; overflow-y: scroll">
         
@@ -241,7 +243,8 @@
                   search:"",
                   query: "",
                   currentSort:'clave',
-                  currentSortDir:'asc'
+                  currentSortDir:'asc',
+                  visible : false
                
    
            }
@@ -308,7 +311,7 @@
              .then(response => {
                        this.cursos = response.data;
             
-                       console.log('success')
+                       this.visible = true
                    })
                    .catch(e => {
                        console.log(e);
@@ -324,6 +327,7 @@
                axios.get('/api/cursos')
                    .then(response => {
                        this.cursos = response.data;
+                        this.visible = false
                    })
                    .catch(e => {
                        
@@ -401,6 +405,11 @@
                        })
    
                        this.traer();
+                       $("#exampleModal").modal('hide');
+                     
+                         this.$nextTick(() => {
+                           this.$refs.form.reset();
+                        });
     
                    })
                    .catch(e => {
@@ -534,6 +543,10 @@
                          })
    
                this.traer();
+               $("#exampleModal").modal('hide');
+                          this.$nextTick(() => {
+                            this.$refs.form.reset();
+                         });
                        
                    })
    

@@ -2,7 +2,10 @@
 
 
     <div class="container">
-        <br>
+          <hr>
+                  
+ <router-link to='/productos' class="nav-link"><button type="button" class="btn btn-primary btn-lg">Regresar</button></router-link>
+        
         <hr>
 
          <div class="jumbotron">
@@ -54,7 +57,6 @@ export default {
 
         mounted(){
             this.traerDatos();
-            console.log('mounted')
         },
 
         methods:{

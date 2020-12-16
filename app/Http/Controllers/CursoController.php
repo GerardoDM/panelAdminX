@@ -94,7 +94,7 @@ class CursoController extends Controller
             'ruta_ver' => 'required',
             'status' => 'required',
             'ruta_operacion' => 'required',
-            'cve_status' => 'required',
+          
             
          ]);
 

@@ -1,8 +1,5 @@
 <?php
 
-use App\Usuario;
-use App\User;
-
 
 return [
 

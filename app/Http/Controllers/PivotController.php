@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pivot;
-use App\Models\Producto;
 use \Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,13 +28,6 @@ class PivotController extends Controller
         $pivots = Pivot::all();
         return $pivots;
 
-        // $data = Pivot::select('pivot.cve_producto', 'pivot.cve_proyecto','pivot.nolicencias')
-        //         ->join('producto', function($query){
-        //                $query->leftjoin('pivot.cve_producto','=','producto.clave')
-        //                  ->select('producto.nombre ');
-        //     })->get();
-
-        // return $data;
     
     }
 
@@ -49,19 +41,42 @@ class PivotController extends Controller
          ]);
 
 
-         if($pivot->fails()){
-            return response()->json($pivot->messages(), 400);
-         }
+          if($pivot->fails()){
+             return response()->json($pivot->messages(), 400);
+          }
 
+        
         $pivot = new Pivot();
-
         $pivot->cve_producto = $request->input('cve_producto');
         $pivot->cve_proyecto = $request->input('cve_proyecto');
         $pivot->nolicencias = $request->input('nolicencias');
-    
-        $pivot->save();
+        
+        
 
-        return response()->json(['Relación' => $pivot], 201);
+        
+
+        if ($pivot = DB::table('producto-proyecto')
+        ->where('producto-proyecto.cve_producto' , $pivot->cve_producto)
+        ->where('producto-proyecto.cve_proyecto', $pivot->cve_proyecto)
+        ->first()){
+            return response()->json(['Relación' => 'Duplicado, error'], 400);
+        }
+        
+        $pivot = new Pivot();
+        $pivot->cve_producto = $request->input('cve_producto');
+        $pivot->cve_proyecto = $request->input('cve_proyecto');
+        $pivot->nolicencias = $request->input('nolicencias');
+        
+ 
+        
+
+            $pivot->save();
+
+            return response()->json(['Relación' => $pivot], 201);
+
+        
+
+        
 
         
     }
@@ -87,10 +102,10 @@ class PivotController extends Controller
          }
 
         $pivot = Pivot::find($clave);
-        
         $pivot->cve_producto = $request->input('cve_producto');
         $pivot->cve_proyecto = $request->input('cve_proyecto');
         $pivot->nolicencias = $request->input('nolicencias');
+
     
         $pivot->save();
         return response()->json(['Relación' => $pivot], 201);

@@ -11,10 +11,6 @@ use App\Models\PivotProductoCurso;
 class ProductoCursoController extends Controller
 {
     
-
-
-
-
     public function view(){
 
         return view('pages.pivotProductoCurso');
@@ -32,13 +28,6 @@ class ProductoCursoController extends Controller
         $pivots = PivotProductoCurso::all();
         return $pivots;
 
-        // $data = Pivot::select('pivot.cve_producto', 'pivot.cve_curso','pivot.nolicencias')
-        //         ->join('producto', function($query){
-        //                $query->leftjoin('pivot.cve_producto','=','producto.clave')
-        //                  ->select('producto.nombre ');
-        //     })->get();
-
-        // return $data;
     
     }
 

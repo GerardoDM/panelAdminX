@@ -12,8 +12,8 @@
                      </button>
                   </div>
                   <div class="modal-body">
-                     <validationObserver v-slot="{ handleSubmit }">
-                     <form id="form" @submit.prevent="handleSubmit(insert)">
+                     <validationObserver v-slot="{ handleSubmit }" ref="form">
+                     <form id="form" @submit.prevent="handleSubmit(insert)" >
                         <div class="form-group">
                            <label>Clave</label>
                            <validationProvider v-slot="v" rules='required'>
@@ -62,6 +62,8 @@
           
             <input class="form-control mr-sm-2" v-model="search" type="search" @keyup.enter="searchit()" placeholder="Buscar por nombre">
              <button class="btn btn-success my-2 my-sm-0" type="button"><font-awesome-icon icon="search" @click="searchit()"/></button>
+            <button type="button" class="btn btn-secondary ml-2" style="color:white" v-show="visible" v-on:click="traer()">Deshacer</button>
+
          </div>
       <div class="container; mt-2" style="height:450px; overflow-y: scroll">
         
@@ -132,6 +134,7 @@
                val : 'standard',
                currentSort:'clave',
                currentSortDir:'asc',
+               visible : false
               
            }
    
@@ -215,6 +218,7 @@
                axios.get('/api/productos')
                    .then(response => {
                        this.productos = response.data;
+                        this.visible = false
                    })
                    .catch(e => {
                        
@@ -242,7 +246,7 @@
              .then(response => {
                        this.productos = response.data;
             
-                       console.log('success')
+                       this.visible = true
                    })
                    .catch(e => {
                        console.log(e);
@@ -290,6 +294,11 @@
                        })
    
                        this.traer();
+                        $("#exampleModal").modal('hide');
+                     
+                         this.$nextTick(() => {
+                           this.$refs.form.reset();
+                        });
    
                       
                    })
@@ -348,6 +357,16 @@
                    .catch(e => {
                        
                        console.log(e);
+                        swal.fire({
+               title: 'Error',
+               text: "Este producto no puede ser eliminado." + " " +
+               "Elimine su relación primero.",
+               icon: 'warning',
+               showCancelButton: true,
+               confirmButtonColor: '#3085d6',
+               cancelButtonColor: '#d33',
+               confirmButtonText: 'Ok'
+            })
                    })
    
            },
@@ -439,6 +458,10 @@
                          })
    
                this.traer();
+               $("#exampleModal").modal('hide');
+                          this.$nextTick(() => {
+                            this.$refs.form.reset();
+                         });
                        
                    })
    
